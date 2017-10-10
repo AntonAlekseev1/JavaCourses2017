@@ -1,24 +1,23 @@
 
 public class AssemblyLine implements IAssemblyLine {
+	ILineStep carChassisLineStep, bodyLineStep, engineLineStep;
+
+	public AssemblyLine(CarChassisLineStep carChassisLineStep, BodyLineStep bodyLineStep,
+			EngineLineStep engineLineStep) {
+		this.bodyLineStep = bodyLineStep;
+		this.carChassisLineStep = carChassisLineStep;
+		this.engineLineStep = engineLineStep;
+	}
 
 	@Override
 	public IProduct assembleProduct(IProduct product) {
-		// TODO Auto-generated method stub
-		System.out.println("Start create product");
-		CarChassis carChassis = (CarChassis) new CarChassisLineStep().buildProductPart();
-        Body body = (Body) new BodyLineStep().buildProductPart();
-        Engine engine = (Engine) new EngineLineStep().buildProductPart();
-        product.instalFirstPart(carChassis);
-        product.instalSecondPart(body);
-        product.instalThirdPart(engine);
 
-        System.out.println("Car is created!");
+		System.out.println("Start create product");
+		product.instalFirstPart(carChassisLineStep.buildProductPart());
+		product.instalSecondPart(bodyLineStep.buildProductPart());
+		product.instalThirdPart(engineLineStep.buildProductPart());
+		System.out.println("Car is created!");
 		return product;
 	}
-	 public AssemblyLine(){
-	        assembleProduct(new Product());
-	    }
-	public static void main(String[] args) {
-        new AssemblyLine();
-    }
+
 }
