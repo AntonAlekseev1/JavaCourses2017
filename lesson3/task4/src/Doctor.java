@@ -1,60 +1,61 @@
 
-public class Doctor  implements IDoctor {
+public class Doctor implements IDoctor {
 	private String name;
-	private String specialization;
-	private int countPatient=0;
-	private Patient[] patient=new Patient[25];
-	private Registry reg;
+	private int countPatient = 0;
+	private Patient[] patients = new Patient[25];
+
 	public Doctor() {
-		
+
 	}
 
-	public Doctor(String name, String specialization) {
-		this.name=name;
-		this.specialization=specialization;
+	public Doctor(String name) {
+		this.name = name;
+
 	}
-	
+
+	public Patient[] getPatient() {
+		return patients;
+	}
+
 	@Override
 	public String getName() {
-		
+
 		return name;
 	}
-	@Override
-	public void setName(String name) {
-		this.name=name;
-		
-	}
-	@Override
-	public String getSpecialization() {
-		
-		return specialization;
-	}
-	@Override
-	public void setSpecialization(String specialization) {
-		this.specialization=specialization;
-		
+
+	public void addPatient(Patient patient) {
+
+		for (int i = 0; i < patients.length; i++) {
+			if (patients[i] == null) {
+				patients[i] = patient;
+				break;
+			}
+		}
 	}
 
-	public void addPatient(int id) {
-		reg=new Registry();
-		patient[id]= reg.getPatient(id);
-	}
-	public void removePatient(int id) {
-		
-		patient[id]= null;
+	public void removePatient(Patient patient) {
+		for (int i = 0; i < patients.length; i++) {
+			if (patients[i] == patient) {
+				patients[i] = null;
+			}
+		}
+
 	}
 
-public void showAllPatientsOfDoctor() {
+	public int countAllPatientsOfDoctor() {
+		for (int i = 0; i < patients.length; i++) {
+			if (patients[i] != null)
+				countPatient++;
+		}
 
-	for(int i=0;i<patient.length;i++) {
-		if(patient[i]!=null)
-			countPatient=countPatient+1;
+		return countPatient;
 	}
-	System.out.println("recorded patients = "+countPatient);
-	
-	for(int i=0;i<patient.length;i++) {
-		if(patient[i]!=null)	
-		System.out.println(patient[i].getName()+" "+patient[i].getllness());
+
+	public void showAllPatientsOfDoctor() {
+
+		for (int i = 0; i < patients.length; i++) {
+			if (patients[i] != null)
+				System.out.println("Patient: "+patients[i].getName());
+		}
 	}
-}
 }
