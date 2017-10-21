@@ -1,66 +1,104 @@
 
-public class Registry  {
+public class Registry {
 	private int countDoctor;
-	private int countPatient=0;
-	private Doctor[] doctorList={new Doctor("Sergey","Sawbones"),new Doctor("Boris","internist"),null,null,null,null,null,null};
-	private Patient[] patientList={new Patient("Dasha","illnes#1"),new Patient("Dima","illnes#2"),null,new Patient("Vania","illnes#5"),null,null,null,null};
-	 
-	 public Patient getPatient(int i) {
-		 return patientList[i];
-	 }
-	 public Doctor getDoctor(int id) {
-			return doctorList[id];
+	private int countPatient = 0;
+	private Doctor[] doctorList = new Doctor[15];
+	private Patient[] patientList = new Patient[30];
+
+	public Patient getPatient(int i) {
+		return patientList[i];
+	}
+
+	public Doctor getDoctor(int id) {
+		return doctorList[id];
+	}
+
+	public void addDoctor(Doctor doctor) {
+		for (int i = 0; i < doctorList.length; i++) {
+			if (doctorList[i] == null) {
+				doctorList[i] = doctor;
+				break;
+			}
+		}
+	}
+
+	public int countDoctors() {
+		for (int i = 0; i < doctorList.length; i++) {
+			if (doctorList[i] != null)
+				countDoctor = countDoctor + 1;
 		}
 
-	public void addDoctor(int id, String name,String specialization) {
-		doctorList[id]=new Doctor(name, specialization);
-	
+		return countDoctor;
 	}
+
 	public void showAllDoctors() {
 
-		for(int i=0;i<doctorList.length;i++) {
-			if(doctorList[i]!=null)
-				countDoctor=countDoctor+1;
-		}
-		System.out.println("amount doctors = "+countDoctor);
-		
-		for(int i=0;i<doctorList.length;i++) {
-			if(doctorList[i]!=null)
-			System.out.println("Doctor: "+doctorList[i].getName()+" Specialization "+doctorList[i].getSpecialization());
-			else
-				System.out.println("vacancy is open");
+		for (int i = 0; i < doctorList.length; i++) {
+			if (doctorList[i] != null)
+				System.out.println("Doctor: " + doctorList[i].getName());
+
 		}
 		System.out.println();
-		}
-	public void addPatient(int id,String name,String illness) {
+	}
 
-		patientList[id]=new Patient(name,illness);
-}
+	public void addPatient(Patient patient) {
+		for (int i = 0; i < patientList.length; i++) {
+			if (patientList[i] == null) {
+				patientList[i] = patient;
+				break;
+			}
+		}
+	}
+
+	public int countPatients() {
+		for (int i = 0; i < patientList.length; i++) {
+			if (patientList[i] != null)
+				countPatient = countPatient + 1;
+		}
+
+		return countPatient;
+	}
+
 	public void showAllPatients() {
 
-		for(int i=0;i<patientList.length;i++) {
-			if(patientList[i]!=null)
-				countPatient=countPatient+1;
-		}
-		System.out.println("amount patients = "+countPatient);
-		
-		for(int i=0;i<patientList.length;i++) {
-			if(patientList[i]!=null)
-			System.out.println(patientList[i].getName()+" "+patientList[i].getllness());
+		for (int i = 0; i < patientList.length; i++) {
+			if (patientList[i] != null)
+				System.out.println("Patient: "+patientList[i].getName());
 		}
 		System.out.println();
 	}
-	public void addPatientToDoctor(int id,int patientId) {
-		doctorList[id].addPatient(patientId);
+
+	public void addPatientToDoctor(Doctor doctor, Patient patient) {
+
+		doctor.addPatient(patient);
 	}
-	public void removePatientFromDoctor(int id,int patientId) {
-		doctorList[id].removePatient(patientId);;
+
+	public void removePatientFromDoctor(Doctor doctor, Patient patient) {
+
+		doctor.removePatient(patient);
 	}
-	public void removePatient(int id) {
-		patientList[id]=null;
+
+	public void removePatient(Patient patient) {
+
+		for (int j = 0; j < patientList.length; j++) {
+			if (patientList[j] == patient) {
+				patientList[j] = null;
+			}
+		}
+		for (int i = 0; i < doctorList.length; i++) {
+
+			if (doctorList[i] != null)
+				removePatientFromDoctor(doctorList[i], patient);
+		}
 	}
+
 	public void showPatientOfDoctor(int id) {
-		System.out.println("Doctor: "+getDoctor(id).getName()+" Specialization "+getDoctor(id).getSpecialization());
+		System.out.println("Doctor: " + getDoctor(id).getName());
 		getDoctor(id).showAllPatientsOfDoctor();
+	}
+
+	public int countPatientsOfDoctor(int id) {
+
+		return getDoctor(id).countAllPatientsOfDoctor();
 	}
 }
