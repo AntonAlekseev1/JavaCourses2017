@@ -93,18 +93,6 @@ public class Hotel {
 		}
 	}
 
-	public void guestStart() {
-		guestService.settleGuestInRoom(0, roomService.getROOM().getRoomByNumber(401));
-		guestService.settleGuestInRoom(1, roomService.getROOM().getRoomByNumber(402));
-		guestService.printGuestList(guestService.getGUEST().getGuests());
 
-	}
-
-	public void roomStart() {
-		roomService.printRoomList();
-		roomService.printFreeRoomList();
-		roomService.getNumberOfRooms();
-	}
 }
 
-// }
