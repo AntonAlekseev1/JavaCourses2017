@@ -1,0 +1,4 @@
+1 2 3 21.0 true OPEN
+2 3 2 18.0 true OPEN
+3 1 5 32.0 true OPEN
+4 5 1 14.0 true OPEN
