@@ -27,4 +27,18 @@ public class ArrayWorker {
 		}
 		return count;
 	}
+
+	public static String[] toString(Entity[] entity) {
+
+		Integer size = getCount(entity);
+		if (size != null) {
+			String[] array = new String[size];
+			for (int i = 0; i < size; i++) {
+				array[i] = entity[i].toString();
+			}
+			return array;
+		} else {
+			return null;
+		}
+	}
 }

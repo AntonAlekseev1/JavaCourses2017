@@ -3,26 +3,35 @@ package com.hotel.fasad;
 import java.util.Arrays;
 import java.util.Calendar;
 
-import com.hotel.been.Entity;
 import com.hotel.been.Guest;
+import com.hotel.been.History;
 import com.hotel.been.Room;
+import com.hotel.been.Option;
 import com.hotel.been.RoomStatus;
 import com.hotel.comparator.SortedByCopacity;
 import com.hotel.comparator.SortedByName;
 import com.hotel.comparator.SortedByStars;
 import com.hotel.comparator.SortedRoomByPrice;
 import com.hotel.service.*;
-import com.hotel.utils.ArrayWorker;
-import com.hotel.utils.FileWorker;
 import com.hotel.utils.Printer;
 
 public class Hotel {
 	private RoomService roomService = new RoomService();
-	private GuestService guestService = new GuestService();
+	private OptionService optionService = new OptionService();
+	private GuestService guestService = new GuestService(optionService.getOptions());
 	private HistoryService historyService = new HistoryService(guestService.getGuest(), roomService.getRooms());
 
 	public void printRoomList() {
 		Printer.printArray(roomService.getRoom());
+	}
+
+	public void printRoonById(Integer id) {
+
+		Printer.println(roomService.getRooms().getRoomById(id).toString());
+	}
+
+	public void printOptionById(Integer id) {
+		Printer.println(optionService.getOptions().getOptionById(id).toString());
 	}
 
 	public void printFreeRoomsList() {
@@ -36,6 +45,25 @@ public class Hotel {
 		}
 	}
 
+	public void printGuestOptions(Integer guestId) {
+		Printer.printArray(guestService.getGuestOptions(guestId));
+	}
+
+	public void printGuestsRooms() {
+		Printer.printArray(historyService.getHistory());
+
+	}
+
+	public void addOption(Option option) {
+		optionService.addOption(option);
+
+	}
+
+	public void printOptionList() {
+		Printer.println("  Option list:");
+		Printer.printArray(optionService.getOption());
+	}
+
 	public void addGuest(Guest guest) {
 		guestService.addGuest(guest);
 	}
@@ -47,6 +75,15 @@ public class Hotel {
 	public void settleGuestInRoom(Integer guestId, Integer roomId, Calendar dateOfArival, Calendar evictDate) {
 		historyService.settleGuestInRoom(guestId, roomId, dateOfArival, evictDate);
 
+	}
+
+	public void addOptionToGuest(Integer optionId, Integer guestId) {
+
+		Printer.println(guestService.addOptionToGuest(optionId, guestId));
+	}
+
+	public void addHistory(History history) {
+		historyService.addHistory(history);
 	}
 
 	public void sortedGuestByName() {
@@ -86,50 +123,47 @@ public class Hotel {
 	}
 
 	public void sortedRoomsByPrice() {
-		Arrays.sort(roomService.getRoom(), new SortedRoomByPrice());
+		roomService.sortRooms(new SortedRoomByPrice());
 		Printer.println("   Room list sorted by price:");
 		Printer.printArray(roomService.getRoom());
 	}
 
 	public void sortedRoomsByCopaciti() {
-		Arrays.sort(roomService.getRoom(), new SortedByCopacity());
+		roomService.sortRooms(new SortedByCopacity());
+		;
 		Printer.println("   Room list sorted by copacity:");
 		Printer.printArray(roomService.getRoom());
 	}
 
 	public void sortedRoomsByStars() {
-		Arrays.sort(roomService.getRoom(), new SortedByStars());
+		roomService.sortRooms(new SortedByStars());
+		;
 		Printer.println("   Room list sorted by stars:");
 		Printer.printArray(roomService.getRoom());
 	}
 
-	public void writeInFile(String pathToGuests, String pathToRooms) {
-		Guest[] customers = guestService.getGuests();
-		Room[] rooms = roomService.getRoom();
+	public void getTotalPayment(Integer guestId) {
+		Printer.println(guestService.getGuestById(guestId).toString() + " totalPayment "
+				+ historyService.getTotalPayment(guestId) + "$");
+	}
 
-		FileWorker.writeToFile(pathToGuests, getArray(customers));
-		FileWorker.writeToFile(pathToRooms, getArray(rooms));
+	public void printFreeRoomsOnDate(Calendar date) {
+
+		Room[] rooms = historyService.getFreeRoomOnDate(date.getTime());
+		Printer.printArray(rooms);
+	}
+
+	public void writeInFile() {
+
+		roomService.writeInFile();
+		guestService.writeInFile();
+		optionService.writeInFile();
 
 	}
 
-	public void readFromFile(String pathToCustomers, String pathToRooms) {
-
-		for (String line : FileWorker.readFrom(pathToCustomers)) {
-			addGuest(new Guest(line));
-		}
-		for (String line : FileWorker.readFrom(pathToRooms)) {
-			addRoom(new Room(line));
-		}
-
+	public void readFromFile() {
+		Printer.printArray(guestService.readFromFile());
+		Printer.printArray(roomService.readFromFile());
+		Printer.printArray(optionService.readFromFile());
 	}
-
-	private String[] getArray(Entity[] array) {
-		int count = ArrayWorker.getCount(array);
-		String[] str = new String[count];
-		for (int i = 0; i < count; i++) {
-			str[i] = array[i].toString();
-		}
-		return str;
-	}
-
 }

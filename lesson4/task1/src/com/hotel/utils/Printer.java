@@ -12,14 +12,22 @@ public class Printer {
 
 	}
 
-	public static void println(Integer number) {
+	public static void println(Double number) {
 		System.out.println(number);
 
 	}
-	
-	public static void printArray(Entity [] entity) {
-		for(int i=0;i<entity.length;i++) {
-			if(entity[i]!=null) {
+
+	public static void printArray(Entity[] entity) {
+		for (int i = 0; i < entity.length; i++) {
+			if (entity[i] != null) {
+				System.out.println(entity[i].toString());
+			}
+		}
+	}
+
+	public static void printArray(String[] entity) {
+		for (int i = 0; i < entity.length; i++) {
+			if (entity[i] != null) {
 				System.out.println(entity[i].toString());
 			}
 		}

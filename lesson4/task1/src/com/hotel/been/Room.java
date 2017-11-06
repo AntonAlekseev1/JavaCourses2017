@@ -1,28 +1,27 @@
 package com.hotel.been;
 
+public class Room extends Entity {
 
-public class Room extends Entity{
-	
 	private Integer copacity;
 	private Integer numberOfStars;
 	private Double price;
 	private Boolean isFree = true;
 	private RoomStatus status;
-	
-	
+	private History[] history = new History[10];
+
 	public Room(String string) {
 
 		String[] arr = string.split(" ");
 		setId(Integer.valueOf(arr[0]));
-		this. copacity = Integer.valueOf(arr[1]);
+		this.copacity = Integer.valueOf(arr[1]);
 		this.numberOfStars = Integer.valueOf(arr[2]);
 		this.price = Double.valueOf(arr[3]);
 		isFree = true;
 		status = RoomStatus.OPEN;
 	}
 
-	public Room(Integer id, Integer copacity, Integer numberOfStars, Double price) {
-		super(id);
+	public Room(Integer copacity, Integer numberOfStars, Double price) {
+
 		this.copacity = copacity;
 		this.numberOfStars = numberOfStars;
 		this.price = price;
@@ -38,7 +37,7 @@ public class Room extends Entity{
 	public void setIsFree(Boolean isFree) {
 		this.isFree = isFree;
 	}
-	
+
 	public Integer getCopacity() {
 		return copacity;
 	}
@@ -70,7 +69,7 @@ public class Room extends Entity{
 	public void setStatus(RoomStatus status) {
 		this.status = status;
 	}
-	
+
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(getId());
@@ -85,6 +84,14 @@ public class Room extends Entity{
 		s.append(" ");
 		s.append(status);
 		return s.toString();
+	}
+
+	public History[] getHistory() {
+		return history;
+	}
+
+	public void setHistory(History[] history) {
+		this.history = history;
 	}
 
 }

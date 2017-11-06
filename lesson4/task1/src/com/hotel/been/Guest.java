@@ -3,6 +3,7 @@ package com.hotel.been;
 public class Guest extends Entity {
 	private String name;
 	private String lastName;
+	private History history;
 
 	public Guest(String string) {
 		String[] arr = string.split(" ");
@@ -12,8 +13,7 @@ public class Guest extends Entity {
 
 	}
 
-	public Guest(String name, String lastName, Integer id) {
-		super(id);
+	public Guest(String name, String lastName) {
 		this.name = name;
 		this.lastName = lastName;
 
@@ -33,6 +33,10 @@ public class Guest extends Entity {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public History getHistory() {
+		return history;
 	}
 
 	public String toString() {
