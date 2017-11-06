@@ -3,56 +3,38 @@ package com.hotel.fasad;
 import com.hotel.been.Guest;
 import com.hotel.been.Room;
 import com.hotel.been.RoomStatus;
-
-import java.util.Calendar;
-import java.util.Date;
+import com.hotel.been.Option;
 import java.util.GregorianCalendar;
-
-import com.danco.training.TextFileWorker;
-
     
 public class HotelApp {
 	
 	public static final Hotel hotel = new Hotel();
 	
-	private static void writeInFile() {
-		hotel.addRoom(new Room(401, 2, 3, 21.00));
-		hotel.addRoom(new Room(402, 3, 2, 18.00));
-		hotel.addRoom(new Room(403, 1, 5, 32.00));
-		hotel.addRoom(new Room(404, 5, 1, 14.00));
+	private static void createEntities() {
+		hotel.addRoom(new Room( 2, 3, 21.00));
+		hotel.addRoom(new Room( 3, 2, 18.00));
+		hotel.addRoom(new Room( 1, 5, 32.00));
+		hotel.addRoom(new Room( 5, 1, 14.00));
 		
-		hotel.addGuest(new Guest("Vasia", "Petin", 1));
-		hotel.addGuest( new Guest("Dasha", "Ersh", 2));
-		hotel.addGuest(new Guest("Ser", "Jhon", 3));
+		hotel.addGuest(new Guest("Vasia", "Petin"));
+		hotel.addGuest( new Guest("Dasha", "Ersh"));
+		hotel.addGuest(new Guest("Ser", "Jhon"));
+		
+		hotel.addOption(new Option("Bar", 10.0));
+		hotel.addOption(new Option("swimming pool", 15.3));
+		hotel.addOption(new Option("phone", 1.2));
+		
 	}
 	
 	
 	public static void main(String[] args) {
 		
-		String pathToGuests;
-		String pathToRooms;
-
 		
-		if (args.length > 0) {
-			pathToGuests = args[0];
-			pathToRooms = args[1];
-
-		}
-		else {
-			pathToGuests="D:\\1\\guests.txt";
-		    pathToRooms="D:\\1\\rooms.txt";
-
-		}
-//		writeInFile();
-		
-//		hotel.writeInFile(pathToGuests, pathToRooms);
-		
-		hotel.readFromFile(pathToGuests, pathToRooms);
-
+		createEntities();
 
 
 		hotel.settleGuestInRoom(1, 1, new GregorianCalendar(2102,01,01), new GregorianCalendar(2102,01,11));
-		hotel.settleGuestInRoom(2, 2, new GregorianCalendar(2102,01,01), new GregorianCalendar(2102,01,11));
+		hotel.settleGuestInRoom(2, 2, new GregorianCalendar(2102,01,01), new GregorianCalendar(2102,01,14));
 		hotel.chengeRoomStatus(1,RoomStatus.CLOSE);
 		hotel.chengePriceOfRoom(2, 20.2);
 
@@ -67,7 +49,19 @@ public class HotelApp {
 		hotel.sortedRoomsByCopaciti();
 		hotel.sortedRoomsByStars();
 		hotel.sortedGuestByName();
+		
+		hotel.printOptionList();
+		hotel.printGuestsRooms();
+		hotel.addOptionToGuest(1, 1);
+		hotel.addOptionToGuest(2, 1);
+		hotel.printGuestOptions(1);
+		hotel.printRoonById(1);
+		hotel.printOptionById(1);
+		hotel.getTotalPayment(1);
+		hotel.printFreeRoomsOnDate(new GregorianCalendar(2102,01,13));
 
+		hotel.writeInFile();
+		hotel.readFromFile();
 		
 	}
 	

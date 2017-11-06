@@ -1,58 +1,25 @@
 package com.hotel.service;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import com.hotel.been.Room;
-import com.hotel.been.RoomStatus;
 import com.hotel.repository.RoomRepository;
+import com.hotel.utils.FileWorker;
 
 public class RoomService {
 	private Integer numberOfRooms = 0;
 	private Integer numberOfFreeRooms = 0;
-	private static final Integer MIN_SIZE=5;
-	// private Integer numberOfFreeRoomsForDate;
-	private  RoomRepository rooms;
-	
+	private static final Integer MIN_SIZE = 5;
+	private String path = "D:\\1\\rooms.txt";
+	private RoomRepository rooms;
+
 	public RoomService() {
-		
-		rooms=new RoomRepository(MIN_SIZE);
-		
+
+		rooms = new RoomRepository(MIN_SIZE);
+
 	}
 
-
-/*	public Room getRoomById(Integer id) {
-
-		Room roomEntity = null;
-		for (int i = 0; i < rooms.getRooms().length; i++) {
-			if ( rooms.getRooms()[i] != null) {
-				if ( rooms.getRooms()[i].getId() == id) {
-
-					roomEntity =  rooms.getRooms()[i];
-					break;
-				}
-			}
-		}
-		return roomEntity;
-	}*/
-//	public Room[] getFreeRoomList() {
-//	//	RoomRepository freeRoom=new RoomRepository(MIN_SIZE);
-//		for (int i = 0; i < rooms.getRooms().length; i++) {
-//			if (rooms.getRooms() != null) {
-//				if (rooms.getRooms()[i].getIsFree() == true) {
-//					return rooms.getRooms();
-//				}
-//			}
-//
-//		}
-//		return null;
-//	}
-
-//	public RoomRepository getRoom() {
-//		return rooms;
-//	}
-
-	/*
-	 * public void addRoom(RoomRepository repository, Room room) {
-	 * repository.addRoom(room); numberOfRooms=numberOfRooms+1; }
-	 */
 	public void addRoom(Room room) {
 		rooms.addRoom(room);
 	}
@@ -60,18 +27,19 @@ public class RoomService {
 	public Room[] getRoom() {
 		return rooms.getRooms();
 	}
+
 	public RoomRepository getRooms() {
 		return rooms;
 	}
-	
+
 	public String chengePriseOfRoom(Integer roomId, Double price) {
-		Room room= getRooms().getRoomById(roomId);
-		if(room!=null) {
+		Room room = getRooms().getRoomById(roomId);
+		if (room != null) {
 			room.setPrice(price);
 		}
-		return "Price of room "+room.getId()+" is "+room.getPrice();
+		return "Price of room " + room.getId() + " is " + room.getPrice();
 	}
-	
+
 	public String getNumberOfRooms() {
 		for (int i = 0; i < rooms.getRooms().length; i++) {
 			if (rooms.getRooms()[i] != null) {
@@ -92,6 +60,18 @@ public class RoomService {
 			}
 		}
 		return "Nubber of free rooms: " + numberOfFreeRooms;
+	}
+
+	public void sortRooms(Comparator<Room> comparator) {
+		Arrays.sort(rooms.getRooms(), comparator);
+	}
+
+	public void writeInFile() {
+		rooms.writeInFile();
+	}
+
+	public String[] readFromFile() {
+		return FileWorker.readFrom(path);
 	}
 
 }

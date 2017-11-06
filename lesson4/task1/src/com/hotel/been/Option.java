@@ -4,15 +4,17 @@ public class Option extends Entity {
 	private String option;
 	private Double price;
 
-	public Option(Integer id) {
-		super(id);
+	public Option(String option, Double price) {
 
-	}
-
-	public Option(Integer id, String option, Double price) {
-		super(id);
 		this.option = option;
 		this.price = price;
+	}
+
+	public Option(String string) {
+		String[] arr = string.split(" ");
+		setId(Integer.valueOf(arr[0]));
+		this.option = String.valueOf(arr[1]);
+		this.price = Double.valueOf(arr[2]);
 	}
 
 	public String getOption() {
@@ -33,6 +35,8 @@ public class Option extends Entity {
 
 	public String toString() {
 		StringBuilder s = new StringBuilder();
+		s.append(getId());
+		s.append(" ");
 		s.append(option);
 		s.append(" ");
 		s.append(price);
