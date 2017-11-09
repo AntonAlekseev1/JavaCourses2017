@@ -13,5 +13,6 @@ public class SortedByCopacity implements Comparator<Room> {
 		}
 		return 0;
 	}
+	
 
 }

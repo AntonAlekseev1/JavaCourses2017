@@ -46,18 +46,17 @@ public class GuestService {
 		return guests;
 	}
 
-	public String addOptionToGuest(Integer optionId, Integer guestId) {
+	public void addOptionToGuest(Integer optionId, Integer guestId) {
 		Guest guest = guests.getGuestById(guestId);
 		Option option = optionRepository.getOptionById(optionId);
 		if (guest.getHistory() != null) {
 			for (int i = 0; i < guest.getHistory().getOptions().length; i++) {
-				if (guest.getHistory().getOptions()[i].equals(null)) {
+				if (guest.getHistory().getOptions()[i]==null) {
 					guest.getHistory().getOptions()[i] = option;
 					break;
 				}
 			}
 		}
-		return "option " + option.getOption() + " add to " + guest.getName();
 	}
 
 	public Option[] getGuestOptions(Integer id) {

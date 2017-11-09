@@ -22,7 +22,7 @@ public class Hotel {
 	private HistoryService historyService = new HistoryService(guestService.getGuest(), roomService.getRooms());
 
 	public void printRoomList() {
-		Printer.printArray(roomService.getRoom());
+		Printer.printArray(roomService.getAllRoom());
 	}
 
 	public void printRoonById(Integer id) {
@@ -35,10 +35,10 @@ public class Hotel {
 	}
 
 	public void printFreeRoomsList() {
-		for (int i = 0; i < roomService.getRoom().length; i++) {
-			if (roomService.getRoom()[i] != null) {
-				if (roomService.getRoom()[i].getIsFree() == true) {
-					Printer.println(roomService.getRoom()[i].toString());
+		for (int i = 0; i < roomService.getAllRoom().length; i++) {
+			if (roomService.getAllRoom()[i] != null) {
+				if (roomService.getAllRoom()[i].getIsFree() == true) {
+					Printer.println(roomService.getAllRoom()[i].toString());
 
 				}
 			}
@@ -46,6 +46,7 @@ public class Hotel {
 	}
 
 	public void printGuestOptions(Integer guestId) {
+		Printer.println("Options of guest "+guestService.getGuestById(guestId).getName());
 		Printer.printArray(guestService.getGuestOptions(guestId));
 	}
 
@@ -79,7 +80,7 @@ public class Hotel {
 
 	public void addOptionToGuest(Integer optionId, Integer guestId) {
 
-		Printer.println(guestService.addOptionToGuest(optionId, guestId));
+	guestService.addOptionToGuest(optionId, guestId);
 	}
 
 	public void addHistory(History history) {
@@ -111,11 +112,11 @@ public class Hotel {
 	}
 
 	public void printNumberOfRooms() {
-		Printer.println(roomService.getNumberOfRooms());
+		Printer.println("number of rooms "+roomService.getNumberOfRooms());
 	}
 
 	public void printNumberOfFreeRooms() {
-		Printer.println(roomService.getNumberOfFreeRooms());
+		Printer.println("number of free rooms "+roomService.getNumberOfFreeRooms());
 	}
 
 	public void addRoom(Room room) {
@@ -125,21 +126,20 @@ public class Hotel {
 	public void sortedRoomsByPrice() {
 		roomService.sortRooms(new SortedRoomByPrice());
 		Printer.println("   Room list sorted by price:");
-		Printer.printArray(roomService.getRoom());
+		Printer.printArray(roomService.getAllRoom());
 	}
 
 	public void sortedRoomsByCopaciti() {
 		roomService.sortRooms(new SortedByCopacity());
 		;
 		Printer.println("   Room list sorted by copacity:");
-		Printer.printArray(roomService.getRoom());
+		Printer.printArray(roomService.getAllRoom());
 	}
 
 	public void sortedRoomsByStars() {
 		roomService.sortRooms(new SortedByStars());
-		;
 		Printer.println("   Room list sorted by stars:");
-		Printer.printArray(roomService.getRoom());
+		Printer.printArray(roomService.getAllRoom());
 	}
 
 	public void getTotalPayment(Integer guestId) {
@@ -151,6 +151,15 @@ public class Hotel {
 
 		Room[] rooms = historyService.getFreeRoomOnDate(date.getTime());
 		Printer.printArray(rooms);
+	}
+	
+	public void evictGuestFromRoom(Integer guestId, Integer roomId) {
+		historyService.evictGuestFromRoom(guestId, roomId);
+	}
+	
+	public void printLastVisiors(Integer id) {
+		Printer.println("last guests of the room ("+roomService.getRooms().getRoomById(id).getId()+")");
+		roomService.printLastVisiors(id);
 	}
 
 	public void writeInFile() {

@@ -32,18 +32,32 @@ public class HistoryService {
 
 		Guest guest = guestRepository.getGuestById(guestId);
 		Room room = roomRepository.getRoomById(roomId);
+		History history=new History(guest, room, dateOfArival.getTime(),
+				evictDate.getTime());
 
 		for (int i = 0; i < historyRepository.getHistory().length; i++) {
 
-			if (historyRepository.getHistory()[i] == null) {
-				if (guest != null && room != null && room.getIsFree()) {
-					historyRepository.getHistory()[i] = new History(guest, room, dateOfArival.getTime(),
-							evictDate.getTime());
-					historyRepository.getHistory()[i].setId(IdGenerator.generateHistoryId());
-					room.getHistory()[i] = historyRepository.getHistory()[i];
+			if (room.getHistory()[i] == null) {
+				if (guest != null && room != null) {
+					room.getHistory()[i] = history;
+					history.setId(IdGenerator.generateHistoryId());
 					room.setIsFree(false);
+					guest.setHistory(history);
+
+					historyRepository.getHistory()[i]=history;
 					break;
 				}
+			}
+		}
+	}
+	
+	public void evictGuestFromRoom(Integer guestId, Integer roomId) {
+		Guest guest = guestRepository.getGuestById(guestId);
+		Room room = roomRepository.getRoomById(roomId);
+		for(int i=0;i<room.getHistory().length;i++) {
+			if(room.getHistory()[i]!=null && room.getHistory()[i].getGuest()==guest) {
+				guest.setHistory(null);
+				room.setIsFree(true);
 			}
 		}
 	}
@@ -70,7 +84,7 @@ public class HistoryService {
 
 	public Double getTotalPayment(Integer id) {
 
-		History history = historyRepository.getHistoryById(id);
+		History history =guestRepository.getGuestById(id).getHistory();
 		if (history != null) {
 			return history.getTotalPayment();
 		}

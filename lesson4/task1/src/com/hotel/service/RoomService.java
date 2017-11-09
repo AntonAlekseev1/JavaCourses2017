@@ -6,6 +6,7 @@ import java.util.Comparator;
 import com.hotel.been.Room;
 import com.hotel.repository.RoomRepository;
 import com.hotel.utils.FileWorker;
+import com.hotel.utils.Printer;
 
 public class RoomService {
 	private Integer numberOfRooms = 0;
@@ -24,7 +25,7 @@ public class RoomService {
 		rooms.addRoom(room);
 	}
 
-	public Room[] getRoom() {
+	public Room[] getAllRoom() {
 		return rooms.getRooms();
 	}
 
@@ -40,17 +41,17 @@ public class RoomService {
 		return "Price of room " + room.getId() + " is " + room.getPrice();
 	}
 
-	public String getNumberOfRooms() {
+	public Integer getNumberOfRooms() {
 		for (int i = 0; i < rooms.getRooms().length; i++) {
 			if (rooms.getRooms()[i] != null) {
 				numberOfRooms++;
 			}
 
 		}
-		return "Nubber of rooms: " + numberOfRooms;
+		return  numberOfRooms;
 	}
 
-	public String getNumberOfFreeRooms() {
+	public Integer getNumberOfFreeRooms() {
 		for (int i = 0; i < rooms.getRooms().length; i++) {
 			if (rooms.getRooms()[i] != null) {
 				if (rooms.getRooms()[i].getIsFree() == true) {
@@ -59,11 +60,21 @@ public class RoomService {
 				}
 			}
 		}
-		return "Nubber of free rooms: " + numberOfFreeRooms;
+		return  numberOfFreeRooms;
 	}
 
 	public void sortRooms(Comparator<Room> comparator) {
 		Arrays.sort(rooms.getRooms(), comparator);
+	}
+	
+	public void printLastVisiors(Integer id) {
+		Room room= rooms.getRoomById(id);
+		for(int i=0;i<4;i++) {
+			if(room.getHistory()[i]!=null&&room.getHistory()[i].getGuest()!=null) {
+				
+				Printer.println(room.getHistory()[i].getGuest().toString()+" date of arival "+room.getHistory()[i].getDateOfArrival());
+			}
+		}
 	}
 
 	public void writeInFile() {

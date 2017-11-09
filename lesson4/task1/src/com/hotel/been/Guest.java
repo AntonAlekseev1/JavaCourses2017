@@ -38,6 +38,10 @@ public class Guest extends Entity {
 	public History getHistory() {
 		return history;
 	}
+	
+	public void setHistory(History history) {
+		this.history=history;
+	}
 
 	public String toString() {
 		StringBuilder s = new StringBuilder();

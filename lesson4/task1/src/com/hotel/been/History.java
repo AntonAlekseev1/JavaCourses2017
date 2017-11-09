@@ -76,6 +76,14 @@ public class History extends Entity {
 	public Double getTotalPayment() {
 		Double sum = 0.0;
 		sum = room.getPrice() * daysOfArrival();
+		int optionNumber=ArrayWorker.getCount(options);
+		if(optionNumber!=0) {
+		for(int i=0;i<optionNumber;i++) {
+			if(options[i]!=null) {
+			sum+=(options[i].getPrice())*daysOfArrival();
+			}
+		}
+		}
 		return sum;
 
 	}
