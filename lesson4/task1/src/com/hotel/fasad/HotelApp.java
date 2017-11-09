@@ -37,6 +37,10 @@ public class HotelApp {
 		hotel.settleGuestInRoom(2, 2, new GregorianCalendar(2102,01,01), new GregorianCalendar(2102,01,14));
 		hotel.chengeRoomStatus(1,RoomStatus.CLOSE);
 		hotel.chengePriceOfRoom(2, 20.2);
+		
+		hotel.settleGuestInRoom(2, 1, new GregorianCalendar(2103,03,01), new GregorianCalendar(2103,03,11));
+		hotel.evictGuestFromRoom(2, 1);
+		hotel.settleGuestInRoom(3, 1, new GregorianCalendar(2104,04,15), new GregorianCalendar(2104,04,17));
 
 		hotel.printNumberOfRooms();
 		hotel.printRoomList();
@@ -58,7 +62,10 @@ public class HotelApp {
 		hotel.printRoonById(1);
 		hotel.printOptionById(1);
 		hotel.getTotalPayment(1);
-		hotel.printFreeRoomsOnDate(new GregorianCalendar(2102,01,13));
+		hotel.printFreeRoomsOnDate(new GregorianCalendar(2102,01,10));
+		hotel.printLastVisiors(1);
+		
+		
 
 		hotel.writeInFile();
 		hotel.readFromFile();
