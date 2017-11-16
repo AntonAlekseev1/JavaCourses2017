@@ -1,4 +1,4 @@
-package com.hotel.ui.action.option;
+package com.hotel.ui.actions.option;
 
 import java.io.BufferedReader;
 import java.io.IOException;

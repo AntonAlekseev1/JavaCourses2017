@@ -1,4 +1,4 @@
-package com.hotel.ui.action.room;
+package com.hotel.ui.actions.room;
 
 import java.io.BufferedReader;
 import java.io.IOException;

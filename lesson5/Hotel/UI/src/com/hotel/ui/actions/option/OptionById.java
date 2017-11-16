@@ -1,4 +1,4 @@
-package com.hotel.ui.action.room;
+package com.hotel.ui.actions.option;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,15 +8,14 @@ import com.hotel.fasad.Hotel;
 import com.hotel.ui.action.IAction;
 import com.hotel.utils.Printer;
 
-public class LastVisitors implements IAction {
+public class OptionById implements IAction {
 
 	@Override
 	public void execute() {
 		try(BufferedReader reader=new BufferedReader(new InputStreamReader(System.in))) {
-			Printer.print("Enter the room id ");
+			Printer.print("Enter the option id ");
 			Integer id=reader.read();
-			Printer.println("last guests of the room "+Hotel.getInstance().getRoonById(id).getId());
-			Hotel.getInstance().getLastGuests(id);
+			Printer.println(Hotel.getInstance().getOptionById(id));
 			
 		}catch (IOException e) {
 		
@@ -24,5 +23,6 @@ public class LastVisitors implements IAction {
 		}
 		
 	}
+
 
 }
