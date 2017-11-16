@@ -1,4 +1,4 @@
-package com.hotel.ui.action.option;
+package com.hotel.ui.actions.option;
 
 import com.hotel.fasad.Hotel;
 import com.hotel.ui.action.IAction;

@@ -1,4 +1,4 @@
-package com.hotel.ui.action.history;
+package com.hotel.ui.actions.history;
 
 import java.io.BufferedReader;
 import java.io.IOException;
