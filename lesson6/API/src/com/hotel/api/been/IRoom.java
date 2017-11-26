@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hotel.api.been.RoomStatus;
 
-public interface IRoom  {
+public interface IRoom extends IEntity {
 	
 	public Object clone() throws CloneNotSupportedException;
 	

@@ -8,14 +8,12 @@ public interface IRoomRepository {
 	
 	public List<IRoom> getRooms();
 	
+	public void setRooms(List<IRoom>rooms);
+	
 	public IRoom getRoomById(Integer id);
 	
 	public void addRoom(IRoom room);
 	
 	public Integer generateId();
-	
-	public void readFromFile(String path);
-	
-	
 
 }

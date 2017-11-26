@@ -29,9 +29,5 @@ public interface IRoomService {
 	public List<IGuest> getLastGuests(Integer id, Integer num);
 	
 	public List<IRoom> getFreeRooms();
-	
-	public void writeInFile();
-	
-	public void readFromFile();
 
 }

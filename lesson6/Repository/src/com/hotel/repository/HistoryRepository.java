@@ -24,6 +24,10 @@ public class HistoryRepository implements IHistoryRepository {
 	public List<IHistory> getHistory() {
 		return historyRepository;
 	}
+	
+	public void setHistory(List<IHistory> histories) {
+		historyRepository=histories;	
+	}
 
 	public IHistory getHistoryById(Integer id) {
 		IHistory entity = null;

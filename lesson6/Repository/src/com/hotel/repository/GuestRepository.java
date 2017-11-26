@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.hotel.api.been.IGuest;
 import com.hotel.api.repository.IGuestRepository;
-import com.hotel.been.Guest;
-import com.hotel.utils.FileWorker;
 
 public class GuestRepository implements IGuestRepository{
 	private List<IGuest> guestRepository;
@@ -28,6 +26,9 @@ public class GuestRepository implements IGuestRepository{
 		return guestRepository;
 	}
 	
+	public void setGuests(List<IGuest>guests) {
+		guestRepository=guests;
+	}
 
 	public void addGuest(IGuest guest) {
 		guest.setId(generateId());
@@ -64,10 +65,4 @@ public class GuestRepository implements IGuestRepository{
 		}
 		return (id+1);
 	}
-	public void readFromFile(String path) {
-		for(String line: FileWorker.readFrom(path)) {
-			guestRepository.add(new Guest(line));
-		}
-	}
-
 }

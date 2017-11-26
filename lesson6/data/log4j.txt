@@ -1,0 +1,7 @@
+2017-11-26 14:39:56 INFO  MenuController:41 - mesege
+java.lang.NullPointerException
+	at com.hotel.ui.actions.guest.TotalPayment.execute(TotalPayment.java:21)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.MainTest.main(MainTest.java:14)

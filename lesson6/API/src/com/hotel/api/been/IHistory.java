@@ -3,7 +3,7 @@ package com.hotel.api.been;
 import java.util.Date;
 import java.util.List;
 
-public interface IHistory {
+public interface IHistory extends IEntity {
 	
 	public Integer getId();
 	

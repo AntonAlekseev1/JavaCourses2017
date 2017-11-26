@@ -1,6 +1,6 @@
 package com.hotel.api.been;
 
-public interface IGuest {
+public interface IGuest extends IEntity {
 	
 	public Integer getId();
 	

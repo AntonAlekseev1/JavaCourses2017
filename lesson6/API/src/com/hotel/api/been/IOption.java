@@ -1,6 +1,6 @@
 package com.hotel.api.been;
 
-public interface IOption {
+public interface IOption extends IEntity {
 	
 	public Integer getId();
 	

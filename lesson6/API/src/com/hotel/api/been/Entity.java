@@ -1,6 +1,12 @@
-package com.hotel.been;
+package com.hotel.api.been;
 
-public class Entity {
+import java.io.Serializable;
+
+public class Entity implements Serializable, IEntity{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 
 	public Entity() {
