@@ -1,15 +1,22 @@
 package com.hotel.been;
 
+import java.io.Serializable;
+
+import com.hotel.api.been.Entity;
 import com.hotel.api.been.IGuest;
 import com.hotel.api.been.IHistory;
 
-public class Guest extends Entity implements IGuest {
+public class Guest extends Entity implements IGuest, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String lastName;
 	private IHistory history;
 
 	public Guest(String string) {
-		String[] arr = string.split(" ");
+		String[] arr = string.split(";");
 		setId(Integer.valueOf(arr[0]));
 		this.name = String.valueOf(arr[1]);
 		this.lastName = String.valueOf(arr[2]);
@@ -52,9 +59,9 @@ public class Guest extends Entity implements IGuest {
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(getId());
-		s.append(" ");
+		s.append(";");
 		s.append(name);
-		s.append(" ");
+		s.append(";");
 		s.append(lastName);
 		return s.toString();
 	}

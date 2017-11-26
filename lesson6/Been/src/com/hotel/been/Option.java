@@ -1,8 +1,15 @@
 package com.hotel.been;
 
+import java.io.Serializable;
+
+import com.hotel.api.been.Entity;
 import com.hotel.api.been.IOption;
 
-public class Option extends Entity implements IOption {
+public class Option extends Entity implements IOption, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String option;
 	private Double price;
 
@@ -13,7 +20,7 @@ public class Option extends Entity implements IOption {
 	}
 
 	public Option(String string) {
-		String[] arr = string.split(" ");
+		String[] arr = string.split(";");
 		setId(Integer.valueOf(arr[0]));
 		this.option = String.valueOf(arr[1]);
 		this.price = Double.valueOf(arr[2]);
@@ -38,9 +45,9 @@ public class Option extends Entity implements IOption {
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(getId());
-		s.append(" ");
+		s.append(";");
 		s.append(option);
-		s.append(" ");
+		s.append(";");
 		s.append(price);
 		return s.toString();
 	}

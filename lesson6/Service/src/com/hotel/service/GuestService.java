@@ -11,15 +11,12 @@ import com.hotel.api.repository.IOptionRepository;
 import com.hotel.api.service.IGuestService;
 import com.hotel.repository.GuestRepository;
 import com.hotel.repository.OptionRepository;
-import com.hotel.utils.ArrayWorker;
-import com.hotel.utils.FileWorker;
 
 public class GuestService implements IGuestService {
 
 	private Integer numberOfGuests = 0;
 	private IGuestRepository guestRepository = GuestRepository.getInstance();
 	private IOptionRepository optionRepository = OptionRepository.getInstance();
-	private String path = "../data/guests.txt";
 
 	public GuestService(IOptionRepository optionRepository) {
 		GuestRepository.getInstance();
@@ -70,14 +67,6 @@ public class GuestService implements IGuestService {
 		IGuest guest = guestRepository.getGuestById(id);
 
 		return guest.getHistory().getOptions();
-	}
-
-	public void writeInFile() {
-		FileWorker.writeToFile(path, ArrayWorker.toString(guestRepository.getGuests()));
-	}
-
-	public void readFromFile() {
-		guestRepository.readFromFile(path);
 	}
 
 }

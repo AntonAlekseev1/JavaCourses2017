@@ -16,8 +16,9 @@ public class AddOption implements IAction {
 		try {
 			Printer.print("Enter the option name ");
 			String name=reader.readLine();
-			Printer.print(" Enter the price ");
-			Double price=(double) reader.read();
+			Printer.print("Enter the price ");
+			String priceString = reader.readLine();
+			Double price= Double.valueOf(priceString);
 			Hotel.getInstance().addOption(name, price);
 
 		} catch (IOException e) {

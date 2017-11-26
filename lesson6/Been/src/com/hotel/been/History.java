@@ -1,15 +1,21 @@
 package com.hotel.been;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.hotel.api.been.Entity;
 import com.hotel.api.been.IGuest;
 import com.hotel.api.been.IHistory;
 import com.hotel.api.been.IOption;
 import com.hotel.api.been.IRoom;
 
-public class History extends Entity implements IHistory {
+public class History extends Entity implements IHistory, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private IRoom room;
 	private IGuest guest;
 	private Date dateOfArrival;

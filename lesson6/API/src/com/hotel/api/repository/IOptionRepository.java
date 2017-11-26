@@ -8,12 +8,12 @@ public interface IOptionRepository {
 	
 	public List<IOption> getOption();
 	
+	public void setOptions(List<IOption>options);
+	
 	public void addOption(IOption option);
 	
 	public IOption getOptionById(Integer id);
 	
 	public void removeOption(IOption option);
-	
-	public void readFromFile(String path);
 
 }

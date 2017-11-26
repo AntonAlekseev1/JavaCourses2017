@@ -1,11 +1,8 @@
 package com.hotel.ui.menucontroller;
 
-import java.io.IOException;
 import java.util.Scanner;
-import java.util.logging.FileHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import com.hotel.ui.builder.Builder;
 import com.hotel.ui.navigator.Navigator;
@@ -15,16 +12,10 @@ public class MenuController {
 
 	private Builder builder;
 	private Navigator navigator;
-	private static Logger logger = Logger.getLogger("Logger");
 
+    final static Logger logger = Logger.getLogger(MenuController.class);
 	public MenuController() {
-		Handler fh;
-		try {
-             fh = new FileHandler("../data/logger.log",true);
-           logger.addHandler(fh);
-       } catch ( IOException e) {
-           Printer.print("No logger file");
-       }
+
 		builder = new Builder();
 		builder.buildMenu();
 		navigator = new Navigator();
@@ -46,7 +37,7 @@ public class MenuController {
 		}
 		}catch(Exception e) {
 			Printer.println("Exception in class MenuController/in method run: "+e.getMessage());
-			logger.log(Level.SEVERE, "Exception in class MenuController/in method run: ", e.getMessage());
+			logger.info("mesege", e);
 		}
 		sc.close();
 		Printer.println("program closed");

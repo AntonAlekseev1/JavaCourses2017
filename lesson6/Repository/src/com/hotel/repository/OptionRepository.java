@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.hotel.api.been.IOption;
 import com.hotel.api.repository.IOptionRepository;
-import com.hotel.been.Option;
-import com.hotel.utils.FileWorker;
 
 public class OptionRepository implements IOptionRepository {
 	private List<IOption> optionRepository;
@@ -25,6 +23,10 @@ public class OptionRepository implements IOptionRepository {
 
 	public List<IOption> getOption() {
 		return optionRepository;
+	}
+
+	public void setOptions(List<IOption> options) {
+		optionRepository=options;	
 	}
 
 	public void addOption(IOption option) {
@@ -60,12 +62,6 @@ public class OptionRepository implements IOptionRepository {
 				option = null;
 				break;
 			}
-		}
-	}
-
-	public void readFromFile(String path) {
-		for (String line : FileWorker.readFrom(path)) {
-			optionRepository.add(new Option(line));
 		}
 	}
 

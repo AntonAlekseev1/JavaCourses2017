@@ -6,13 +6,10 @@ import com.hotel.api.been.IOption;
 import com.hotel.api.repository.IOptionRepository;
 import com.hotel.api.service.IOptionService;
 import com.hotel.repository.OptionRepository;
-import com.hotel.utils.ArrayWorker;
-import com.hotel.utils.FileWorker;
 
 public class OptionService implements IOptionService {
 
-	private IOptionRepository optionRepository=OptionRepository.getInstance();
-	private String path = "../data/options.txt";
+	private IOptionRepository optionRepository = OptionRepository.getInstance();
 
 	public OptionService() {
 
@@ -29,14 +26,6 @@ public class OptionService implements IOptionService {
 
 	public void addOption(IOption option) {
 		optionRepository.addOption(option);
-	}
-
-	public void writeInFile() {
-		FileWorker.writeToFile(path, ArrayWorker.toString(optionRepository.getOption()));
-	}
-
-	public void readFromFile() {
-		optionRepository.readFromFile(path);
 	}
 
 }

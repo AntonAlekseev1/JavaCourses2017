@@ -8,7 +8,7 @@ public class NumberOfGuests implements IAction{
 
 	@Override
 	public void execute() {
-		Printer.println(Hotel.getInstance().getNumberOfGuests());
+		Printer.println("Number of guests "+Hotel.getInstance().getNumberOfGuests());
 		
 	}
 	

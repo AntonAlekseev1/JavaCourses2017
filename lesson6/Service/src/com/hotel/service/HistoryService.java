@@ -55,7 +55,13 @@ public class HistoryService implements IHistoryService {
 		for (int i = 0; i < room.getHistory().size(); i++) {
 			if (room.getHistory().get(i) != null && room.getHistory().get(i).getGuest() == guest) {
 				guest.setHistory(null);
+				room.getHistory().remove(i);
 				room.setIsFree(true);
+			}
+		}
+		for (int i = 0; i < historyRepository.getHistory().size(); i++) {
+			if(historyRepository.getHistory().get(i).getRoom()==room) {
+				historyRepository.getHistory().remove(i);
 			}
 		}
 	}

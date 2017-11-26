@@ -12,9 +12,5 @@ public interface IOptionService {
 	public List<IOption> getOption();
 	
 	public void addOption(IOption option);
-	
-	public void writeInFile();
-	
-	public void readFromFile();
 
 }

@@ -25,10 +25,5 @@ public interface IGuestService {
 	public void addOptionToGuest(Integer optionId, Integer guestId);
 	
 	public List<IOption> getGuestOptions(Integer id);
-	
-	public void writeInFile();
-	
-	public void readFromFile();
-	
 
 }

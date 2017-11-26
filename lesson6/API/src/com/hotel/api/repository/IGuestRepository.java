@@ -8,12 +8,12 @@ public interface IGuestRepository {
 	
 	public List<IGuest> getGuests();
 	
+	public void setGuests(List<IGuest>guests);
+	
 	public void addGuest(IGuest guest);
 	
 	public IGuest getGuestById(Integer id);
 	
 	public void removeGuest(IGuest guest);
-	
-	public void readFromFile(String path);
 
 }

@@ -6,21 +6,29 @@ import com.hotel.ui.action.MenuItem;
 import com.hotel.ui.actions.guest.AddGuest;
 import com.hotel.ui.actions.guest.AddOptionToGuest;
 import com.hotel.ui.actions.guest.AllGuests;
+import com.hotel.ui.actions.guest.ExportGuest;
 import com.hotel.ui.actions.guest.GuestOptions;
+import com.hotel.ui.actions.guest.ImportGuests;
 import com.hotel.ui.actions.guest.NumberOfGuests;
 import com.hotel.ui.actions.guest.SortGuestsByName;
 import com.hotel.ui.actions.guest.TotalPayment;
+import com.hotel.ui.actions.history.EvictGuest;
+import com.hotel.ui.actions.history.GetGuestsOfRooms;
 import com.hotel.ui.actions.history.PrintFreeRoomOnDate;
 import com.hotel.ui.actions.history.SettleGuestInRoom;
 import com.hotel.ui.actions.option.AddOption;
 import com.hotel.ui.actions.option.AllOptions;
+import com.hotel.ui.actions.option.ExportOptions;
+import com.hotel.ui.actions.option.ImportOptions;
 import com.hotel.ui.actions.option.OptionById;
 import com.hotel.ui.actions.room.AddRoom;
 import com.hotel.ui.actions.room.AllRooms;
 import com.hotel.ui.actions.room.ChangeRoomPrice;
 import com.hotel.ui.actions.room.ChangeRoomStatus;
 import com.hotel.ui.actions.room.Clone;
+import com.hotel.ui.actions.room.ExportRoom;
 import com.hotel.ui.actions.room.FreeRooms;
+import com.hotel.ui.actions.room.ImportRoom;
 import com.hotel.ui.actions.room.LastGuests;
 import com.hotel.ui.actions.room.NumberOfFreeRooms;
 import com.hotel.ui.actions.room.NumberOfRooms;
@@ -59,6 +67,8 @@ public class Builder {
 		guest.addItem(new MenuItem("Add option to guest", rootMenu, new AddOptionToGuest()));
 		guest.addItem(new MenuItem("Sort guests by name", rootMenu, new SortGuestsByName()));
 		guest.addItem(new MenuItem("Total payment", rootMenu, new TotalPayment()));
+		guest.addItem(new MenuItem("Export to csv file", rootMenu, new ExportGuest()));
+		guest.addItem(new MenuItem("Import to csv file", rootMenu, new ImportGuests()));
 
 	}
 
@@ -77,6 +87,8 @@ public class Builder {
 		room.addItem(new MenuItem("Show room list sorted by copacity", rootMenu, new SortRoomsByCopacity()));
 		room.addItem(new MenuItem("Show room list sorted by stars", rootMenu, new SortRoomsByStars()));
 		room.addItem(new MenuItem("Show room list sorted by price", rootMenu, new SortRoomsByPrice()));
+		room.addItem(new MenuItem("Export to csv file", rootMenu, new ExportRoom()));
+		room.addItem(new MenuItem("Import from csv file", rootMenu, new ImportRoom()));
 	}
 
 	private void optionMenu(Hotel hotel, Menu option) {
@@ -84,12 +96,16 @@ public class Builder {
 		option.addItem(new MenuItem("Add option", rootMenu, new AddOption()));
 		option.addItem(new MenuItem("Print all options", rootMenu, new AllOptions()));
 		option.addItem(new MenuItem("Option by id", rootMenu, new OptionById()));
+		option.addItem(new MenuItem("Export to csv file", rootMenu, new ExportOptions()));
+		option.addItem(new MenuItem("Import from csv file", rootMenu, new ImportOptions()));
 	}
 
 	private void historyMenu(Hotel hotel, Menu history) {
 		history.addItem(new MenuItem("Exit", rootMenu, new Exit()));
 		history.addItem(new MenuItem("Setle guest in room", rootMenu, new SettleGuestInRoom()));
+		history.addItem(new MenuItem("Evict guest from room", rootMenu, new EvictGuest()));
 		history.addItem(new MenuItem("Print free rooms on date", rootMenu, new PrintFreeRoomOnDate()));
+		history.addItem(new MenuItem("Show guests and their rooms", rootMenu, new GetGuestsOfRooms()));
 	}
 
 	private void rootMenuInit(final Menu room, final Menu guest, final Menu option,final  Menu history) {

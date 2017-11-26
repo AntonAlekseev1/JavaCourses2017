@@ -5,20 +5,16 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import com.hotel.api.been.IRoom;
 import com.hotel.api.been.IGuest;
+import com.hotel.api.been.IRoom;
 import com.hotel.api.repository.IRoomRepository;
 import com.hotel.api.service.IRoomService;
 import com.hotel.been.Room;
 import com.hotel.repository.RoomRepository;
-import com.hotel.utils.ArrayWorker;
-import com.hotel.utils.ExLogger;
-import com.hotel.utils.FileWorker;
 
 public class RoomService implements IRoomService {
 	private Integer numberOfRooms = 0;
 	private Integer numberOfFreeRooms = 0;
-	private String path = "../data/rooms.txt";
 	private IRoomRepository roomRepository = RoomRepository.getInstance();
 
 	public RoomService() {
@@ -30,6 +26,7 @@ public class RoomService implements IRoomService {
 	public IRoom clone(Integer id) throws CloneNotSupportedException {
 		Room clon = (Room) roomRepository.getRoomById(id).clone();
 		clon.setId(roomRepository.generateId());
+		clon.setIsFree(true);
 		return clon;
 	}
 
@@ -85,7 +82,7 @@ public class RoomService implements IRoomService {
 		Collections.sort(roomRepository.getRooms(), comparator);
 	}
 
-	public List<IGuest> getLastGuests(Integer id,Integer num) {
+	public List<IGuest> getLastGuests(Integer id, Integer num) {
 		List<IGuest> guests = new ArrayList<>();
 		IRoom room = roomRepository.getRoomById(id);
 		try {
@@ -97,16 +94,8 @@ public class RoomService implements IRoomService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			ExLogger.write(e);
 		}
 		return guests;
 	}
 
-	public void writeInFile() {
-		FileWorker.writeToFile(path, ArrayWorker.toString(roomRepository.getRooms()));
-	}
-
-	public void readFromFile() {
-		roomRepository.readFromFile(path);
-	}
 }
