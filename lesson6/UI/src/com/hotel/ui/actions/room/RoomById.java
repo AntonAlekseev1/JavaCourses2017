@@ -21,8 +21,6 @@ public class RoomById implements IAction {
 			
 		}catch (IOException e) {
 			Printer.println("Exception in the class RoomById: "+e.getMessage());
-		
-			e.printStackTrace();
 		}
 		
 	}

@@ -4,11 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.apache.log4j.Logger;
+
 import com.hotel.fasad.Hotel;
 import com.hotel.ui.action.IAction;
 import com.hotel.utils.Printer;
 
-public class AddOption implements IAction {
+public class AddOptionAction implements IAction {
+	
+	final static Logger logger = Logger.getLogger(AddOptionAction.class);
 
 	@Override
 	public void execute() {
@@ -21,9 +25,9 @@ public class AddOption implements IAction {
 			Double price= Double.valueOf(priceString);
 			Hotel.getInstance().addOption(name, price);
 
-		} catch (IOException e) {
-		
-			e.printStackTrace();
+		} catch (ArrayIndexOutOfBoundsException|IOException e) {
+			Printer.println("Incorrect input data: " + e.getMessage());
+			logger.error("Exception in the class SettleGuestInRoom: " + e.getMessage());
 		}
 		
 	}

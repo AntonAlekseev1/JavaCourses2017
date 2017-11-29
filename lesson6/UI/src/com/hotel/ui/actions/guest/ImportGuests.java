@@ -1,40 +1,41 @@
 package com.hotel.ui.actions.guest;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-import com.hotel.api.been.IGuest;
-import com.hotel.been.Guest;
+import org.apache.log4j.Logger;
+
 import com.hotel.configurations.Configuration;
 import com.hotel.fasad.Hotel;
 import com.hotel.ui.action.IAction;
-import com.hotel.utils.CsvWorker;
+import com.hotel.utils.Printer;
 
 public class ImportGuests implements IAction{
 	
+	private final static Logger logger = Logger.getLogger(ImportGuests.class);
 	private static final String PATH_TO_GUESTS_CSV= String.valueOf(Configuration.getProperties("PATH_TO_GUESTS_CSV"));
-	
-	public ImportGuests() {
-		Configuration.loadConfiguration();
-	}
+	private String path;
 
 	@Override
 	public void execute() {
-		List<IGuest> guests = Hotel.getInstance().getGuests();
-		List<IGuest> guestsImport = new ArrayList<>();
-		CsvWorker.Reader reader = new CsvWorker.Reader(PATH_TO_GUESTS_CSV);
-		reader.read();
-		for (int i = 0; i < reader.read().size(); i++) {
-			guestsImport.add(new Guest(reader.read().get(i)));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		try {
+		Printer.println("Enter the path to csv file in the format folder/filename.csv ");
+			path="../"+reader.readLine();
+		} catch (IOException e) {
+			logger.info("Exception in class ImportGuests "+e.getMessage());
 		}
-
-		for (int i = 0; i < guests.size(); i++) {
-			Collections.replaceAll(guests, guests.get(i), guestsImport.get(i));
+		File file = new File(path);
+		if(file.exists()&&file.isFile()) {
+			Hotel.getInstance().importGuest(path);
+			Printer.println("Import was successful");
+		}else {
+			Printer.println("File not found, import from default path");
+			Hotel.getInstance().importGuest(PATH_TO_GUESTS_CSV);
 		}
-		for (int i = guests.size(); i < reader.read().size(); i++) {
-			guests.add(guestsImport.get(i));
-		}
+		
 		
 	}
 

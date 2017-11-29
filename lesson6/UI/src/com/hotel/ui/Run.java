@@ -8,10 +8,9 @@ import com.hotel.ui.menucontroller.MenuController;
 
 public class Run {
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
-		Hotel.getInstance().demarshalingFrom();;
 		MenuController menu = new MenuController();
 		menu.run();
-		Hotel.getInstance().marshalingTo();
+		Hotel.getInstance().exit();
 	}
 
 }

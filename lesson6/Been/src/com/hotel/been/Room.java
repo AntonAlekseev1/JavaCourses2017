@@ -41,11 +41,6 @@ public class Room extends Entity implements IRoom, Cloneable, Serializable {
 		history=new ArrayList<>();
 
 	}
-	
-	@Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
 
 	public Boolean getIsFree() {
 
@@ -87,6 +82,22 @@ public class Room extends Entity implements IRoom, Cloneable, Serializable {
 	public void setStatus(RoomStatus status) {
 		this.status = status;
 	}
+	
+	public List<IHistory> getHistory() {
+		return history;
+	}
+
+	public void setHistory(List<IHistory> history) {
+		this.history = history;
+	}
+	
+	@Override
+    public IRoom clone() throws CloneNotSupportedException {
+		IRoom clon = (IRoom) super.clone();
+		clon.setId(null);
+		clon.setIsFree(null);
+        return clon;
+    }
 
 	public String toString() {
 		StringBuilder s = new StringBuilder();
@@ -102,14 +113,6 @@ public class Room extends Entity implements IRoom, Cloneable, Serializable {
 		s.append(";");
 		s.append(status);
 		return s.toString();
-	}
-
-	public List<IHistory> getHistory() {
-		return history;
-	}
-
-	public void setHistory(List<IHistory> history) {
-		this.history = history;
 	}
 
 }

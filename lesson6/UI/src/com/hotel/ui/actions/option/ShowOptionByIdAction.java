@@ -4,11 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.apache.log4j.Logger;
+
 import com.hotel.fasad.Hotel;
 import com.hotel.ui.action.IAction;
 import com.hotel.utils.Printer;
 
-public class OptionById implements IAction {
+public class ShowOptionByIdAction implements IAction {
+	
+	final static Logger logger = Logger.getLogger(ShowAllOptionsAction.class);
 
 	@Override
 	public void execute() {
@@ -20,8 +24,8 @@ public class OptionById implements IAction {
 			Printer.println(Hotel.getInstance().getOptionById(id));
 			
 		}catch (IOException e) {
-		
-			e.printStackTrace();
+			Printer.println("Incorrect input data: " + e.getMessage());
+			logger.error("Exception in the class ShowAllOptionsAction: " + e.getMessage());
 		}
 		
 	}

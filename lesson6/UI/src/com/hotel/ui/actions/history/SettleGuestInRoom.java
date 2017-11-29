@@ -5,11 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.GregorianCalendar;
 
+import org.apache.log4j.Logger;
+
 import com.hotel.fasad.Hotel;
 import com.hotel.ui.action.IAction;
 import com.hotel.utils.Printer;
 
 public class SettleGuestInRoom implements IAction{
+	
+	final static Logger logger = Logger.getLogger(SettleGuestInRoom.class);
 
 	@Override
 	public void execute() {
@@ -33,12 +37,16 @@ public class SettleGuestInRoom implements IAction{
 			Integer evictDay=Integer.valueOf(array[0]);
 			Integer evictMonth=Integer.valueOf(array[1]);
 			Integer evictYear=Integer.valueOf(array[2]);
+			if(Hotel.getInstance().getGuestById(guestId)!=null &&Hotel.getInstance().getRoonById(roomId)!=null) {
 			Hotel.getInstance().settleGuestInRoom(guestId, roomId, new GregorianCalendar(arivalYear, arivalMonth, arivalDay),
 					                                                  new GregorianCalendar(evictYear, evictMonth, evictDay));
+			}else {
+				Printer.println("Incorrect input data");
+			}
 
-		} catch (IOException e) {
-		
-			e.printStackTrace();
+		} catch (ArrayIndexOutOfBoundsException|IOException e) {
+			Printer.println("Incorrect input data: " + e.getMessage());
+			logger.error("Exception in the class SettleGuestInRoom: " + e.getMessage());
 		}
 		
 	}

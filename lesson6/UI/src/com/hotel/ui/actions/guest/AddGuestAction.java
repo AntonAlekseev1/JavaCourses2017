@@ -4,11 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.apache.log4j.Logger;
+
 import com.hotel.fasad.Hotel;
 import com.hotel.ui.action.IAction;
 import com.hotel.utils.Printer;
 
-public class AddGuest implements IAction {
+public class AddGuestAction implements IAction {
+	
+	final static Logger logger = Logger.getLogger(AddGuestAction.class);
 
 	@Override
 	public void execute() {
@@ -21,8 +25,8 @@ public class AddGuest implements IAction {
 			String lastName=reader.readLine();
 			Hotel.getInstance().addGuest(name, lastName);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Printer.println("Exception in the method addGuest: " + e.getMessage());
+			logger.error("Exception in the method addGuest: " + e.getMessage());
 		}
 	}
 }

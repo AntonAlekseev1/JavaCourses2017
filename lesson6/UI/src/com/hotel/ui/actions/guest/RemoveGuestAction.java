@@ -4,27 +4,31 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.apache.log4j.Logger;
+
 import com.hotel.fasad.Hotel;
 import com.hotel.ui.action.IAction;
 import com.hotel.utils.Printer;
 
-public class TotalPayment implements IAction {
+public class RemoveGuestAction implements IAction {
+	
+	Logger logger = Logger.getLogger(RemoveGuestAction.class);
 
 	@Override
 	public void execute() {
 BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
 		
 		try {
-			Printer.println("Enter guest id");
+			Printer.print("Enter the guest id ");
 			String idStr = reader.readLine();
 			Integer id = Integer.valueOf(idStr);
-			Printer.print("Total payment of guest "+Hotel.getInstance().getGuestById(id).getName()+" ");
-			Printer.println(Hotel.getInstance().getTotalPayment(id));
+		Hotel.getInstance().remuveGuest(id);
+		}catch(IOException e) {
+			logger.info("Exception in class RemoveGuestAction"+e.getMessage());
 			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
+		
 	}
 
 }

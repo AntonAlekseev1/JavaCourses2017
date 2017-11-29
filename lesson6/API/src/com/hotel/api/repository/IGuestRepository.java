@@ -14,6 +14,6 @@ public interface IGuestRepository {
 	
 	public IGuest getGuestById(Integer id);
 	
-	public void removeGuest(IGuest guest);
+	public void removeGuest(Integer id);
 
 }
