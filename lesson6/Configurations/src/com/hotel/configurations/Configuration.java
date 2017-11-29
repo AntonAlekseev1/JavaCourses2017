@@ -5,20 +5,26 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-public class Configuration {
+import org.apache.log4j.Logger;
 
+
+
+public class Configuration {
+	
+	private final static Logger logger = Logger.getLogger(Configuration.class);
 	private static Properties properties = new Properties();
 
 	public static void loadConfiguration() {
 		try {
-			FileInputStream fiStream = new FileInputStream("../data/configuratins.properties");
-			properties.load(fiStream);
+			FileInputStream inputStream = new FileInputStream("../Fasad/data/configuratins.properties");
+			properties.load(inputStream);
+			inputStream.close();	
 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			logger.info("File not found "+e.getMessage());
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			
 		}
 	}
 

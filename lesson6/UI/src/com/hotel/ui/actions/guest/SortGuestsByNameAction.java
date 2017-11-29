@@ -4,7 +4,7 @@ import com.hotel.fasad.Hotel;
 import com.hotel.ui.action.IAction;
 import com.hotel.utils.Printer;
 
-public class SortGuestsByName implements IAction {
+public class SortGuestsByNameAction implements IAction {
 
 	@Override
 	public void execute() {

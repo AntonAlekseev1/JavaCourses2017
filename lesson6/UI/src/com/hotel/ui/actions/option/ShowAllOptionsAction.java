@@ -4,7 +4,7 @@ import com.hotel.fasad.Hotel;
 import com.hotel.ui.action.IAction;
 import com.hotel.utils.Printer;
 
-public class AllOptions implements IAction {
+public class ShowAllOptionsAction implements IAction {
 
 	@Override
 	public void execute() {

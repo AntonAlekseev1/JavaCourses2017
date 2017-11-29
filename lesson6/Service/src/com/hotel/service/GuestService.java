@@ -57,7 +57,6 @@ public class GuestService implements IGuestService {
 		IGuest guest = guestRepository.getGuestById(guestId);
 		IOption option = optionRepository.getOptionById(optionId);
 			if (guest.getHistory() != null) {
-
 				guest.getHistory().getOptions().add(option);
 
 			}
@@ -67,6 +66,10 @@ public class GuestService implements IGuestService {
 		IGuest guest = guestRepository.getGuestById(id);
 
 		return guest.getHistory().getOptions();
+	}
+	
+	public void removeGuest(Integer id) {
+		guestRepository.removeGuest(id);
 	}
 
 }

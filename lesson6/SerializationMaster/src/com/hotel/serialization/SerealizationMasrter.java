@@ -24,10 +24,6 @@ public class SerealizationMasrter {
 	
 	private static final String PATH_TO_FILE= String.valueOf(Configuration.getProperties("PATH_TO_FILE"));
 	
-	public  SerealizationMasrter() {
-		Configuration.loadConfiguration();
-	}
-	
 	public static void marshaling(List<IGuest>guests, List<IRoom>rooms, List<IOption>options, List<IHistory>histories)
 			throws IOException, FileNotFoundException {
 		

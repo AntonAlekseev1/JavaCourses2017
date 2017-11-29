@@ -23,13 +23,6 @@ public class RoomService implements IRoomService {
 
 	}
 
-	public IRoom clone(Integer id) throws CloneNotSupportedException {
-		Room clon = (Room) roomRepository.getRoomById(id).clone();
-		clon.setId(roomRepository.generateId());
-		clon.setIsFree(true);
-		return clon;
-	}
-
 	public void addRoom(IRoom room) {
 		roomRepository.addRoom(room);
 	}
@@ -96,6 +89,13 @@ public class RoomService implements IRoomService {
 			e.printStackTrace();
 		}
 		return guests;
+	}
+	
+	public IRoom clone(Integer id) throws CloneNotSupportedException {
+		IRoom clon = (Room) roomRepository.getRoomById(id).clone();
+		clon.setId(roomRepository.generateId());
+		clon.setIsFree(true);
+		return clon;
 	}
 
 }

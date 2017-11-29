@@ -1,19 +1,22 @@
 package com.hotel.ui.actions.option;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-import com.hotel.api.been.IOption;
-import com.hotel.been.Option;
+import org.apache.log4j.Logger;
+
 import com.hotel.configurations.Configuration;
 import com.hotel.fasad.Hotel;
 import com.hotel.ui.action.IAction;
-import com.hotel.utils.CsvWorker;
+import com.hotel.utils.Printer;
 
 public class ImportOptions implements IAction{
 	
+	Logger logger = Logger.getLogger(ImportOptions.class);
 	private static final String PATH_TO_OPTIONS_CSV = String.valueOf(Configuration.getProperties("PATH_TO_OPTIONS_CSV"));
+	private String path;
 
 	public ImportOptions() {
 		Configuration.loadConfiguration();
@@ -21,19 +24,20 @@ public class ImportOptions implements IAction{
 
 	@Override
 	public void execute() {
-		List<IOption> options = Hotel.getInstance().getAllOptions();
-		List<IOption> optionsImport = new ArrayList<>();
-		CsvWorker.Reader reader = new CsvWorker.Reader(PATH_TO_OPTIONS_CSV);
-		reader.read();
-		for (int i = 0; i < reader.read().size(); i++) {
-			optionsImport.add(new Option(reader.read().get(i)));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		try {
+		Printer.println("Enter the path to csv file in the format folder/filename.csv ");
+			path="../"+reader.readLine();
+		} catch (IOException e) {
+			logger.info("Exception in class ImportOptions "+e.getMessage());
 		}
-
-		for (int i = 0; i < options.size(); i++) {
-			Collections.replaceAll(options, options.get(i), optionsImport.get(i));
-		}
-		for (int i = options.size(); i < reader.read().size(); i++) {
-			options.add(optionsImport.get(i));
+		File file = new File(path);
+		if(file.exists()&&file.isFile()) {
+			Hotel.getInstance().importOptions(path);;
+			Printer.println("Import was successful");
+		}else {
+			Printer.println("File not found, import from default path");
+			Hotel.getInstance().importOptions(PATH_TO_OPTIONS_CSV);
 		}
 		
 	}

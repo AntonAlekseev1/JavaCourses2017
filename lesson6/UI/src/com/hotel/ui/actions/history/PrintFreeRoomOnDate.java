@@ -5,11 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.GregorianCalendar;
 
+import org.apache.log4j.Logger;
+
 import com.hotel.fasad.Hotel;
 import com.hotel.ui.action.IAction;
 import com.hotel.utils.Printer;
 
 public class PrintFreeRoomOnDate implements IAction{
+	
+	final static Logger logger = Logger.getLogger(PrintFreeRoomOnDate.class);
 
 	@Override
 	public void execute() {
@@ -22,9 +26,9 @@ public class PrintFreeRoomOnDate implements IAction{
 			Integer manth=Integer.valueOf(arr[1]);
 			Integer year=Integer.valueOf(arr[2]);
 			Printer.printArray(Hotel.getInstance().getFreeRoomsOnDate( new GregorianCalendar(year,manth,day)));
-		}catch (IOException e) {
-		
-			e.printStackTrace();
+		}catch (ArrayIndexOutOfBoundsException|IOException e) {
+			Printer.println("Incorrect date format: " + e.getMessage());
+			logger.error("Exception in the class PrintFreeRoomOnDate: " + e.getMessage());
 		}
 		
 	}

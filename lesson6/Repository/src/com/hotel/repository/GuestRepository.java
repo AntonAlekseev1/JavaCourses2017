@@ -46,11 +46,10 @@ public class GuestRepository implements IGuestRepository{
 		return guest;
 	}
 
-	public void removeGuest(IGuest guest) {
+	public void removeGuest(Integer id) {
 		for (int i = 0; i < guestRepository.size(); i++) {
-			if (guestRepository.get(i) == guest) {
-				guest=guestRepository.get(i);
-				guest=null;
+			if (guestRepository.get(i).getId().equals(id)) {
+				guestRepository.remove(i);
 				break;
 			}
 		}

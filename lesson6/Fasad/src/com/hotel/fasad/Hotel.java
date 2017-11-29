@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -13,6 +14,7 @@ import com.hotel.api.been.IGuest;
 import com.hotel.api.been.IHistory;
 import com.hotel.api.been.IOption;
 import com.hotel.api.been.IRoom;
+import com.hotel.api.been.RoomStatus;
 import com.hotel.api.service.IGuestService;
 import com.hotel.api.service.IHistoryService;
 import com.hotel.api.service.IOptionService;
@@ -24,10 +26,13 @@ import com.hotel.comparator.SortedByCopacity;
 import com.hotel.comparator.SortedByName;
 import com.hotel.comparator.SortedByStars;
 import com.hotel.comparator.SortedRoomByPrice;
-import com.hotel.service.*;
-import com.hotel.utils.Printer;
 import com.hotel.configurations.Configuration;
 import com.hotel.serialization.SerealizationMasrter;
+import com.hotel.service.GuestService;
+import com.hotel.service.HistoryService;
+import com.hotel.service.OptionService;
+import com.hotel.service.RoomService;
+import com.hotel.utils.CsvWorker;
 
 public class Hotel {
 	private IRoomService roomService;
@@ -35,7 +40,7 @@ public class Hotel {
 	private IGuestService guestService;
 	private IHistoryService historyService;
 
-	final static Logger logger = Logger.getLogger(Hotel.class);
+	private final static Logger logger = Logger.getLogger(Hotel.class);
 	private static Hotel instance;
 
 	private Hotel() {
@@ -45,7 +50,11 @@ public class Hotel {
 		guestService = new GuestService(optionService.getOptions());
 		historyService = new HistoryService(guestService.getGuest(), roomService.getRooms());
 		Configuration.loadConfiguration();
-
+		try {
+			SerealizationMasrter.demarshaling();
+		} catch (ClassNotFoundException |IOException e) {
+			logger.error("File to demarshaling not found "+e.getMessage());
+		} 
 	}
 
 	public static Hotel getInstance() {
@@ -54,10 +63,32 @@ public class Hotel {
 		}
 		return instance;
 	}
+	
+	public void exportGuests(String path) {
+		CsvWorker.Writer writer = new CsvWorker.Writer(path);
+		List<IGuest> guests = Hotel.getInstance().getGuests();
+		writer.comment("id;name;lastName");
+		for(int i=0;i<guests.size();i++) {
+			writer.write(guests.get(i));
+		}	
+	}
+	
+	public void importGuest(String path) {
+		List<IGuest> guests = Hotel.getInstance().getGuests();
+		List<IGuest> guestsImport = new ArrayList<>();
+		CsvWorker.Reader reader = new CsvWorker.Reader(path);
+		reader.read();
+		for (int i = 0; i < reader.read().size(); i++) {
+			guestsImport.add(new Guest(reader.read().get(i)));
+		}
 
-	public IRoom clone(Integer id) throws CloneNotSupportedException {
-		return roomService.clone(id);
-
+		for (int i = 0; i < guests.size(); i++) {
+			Collections.replaceAll(guests, guests.get(i), guestsImport.get(i));
+		}
+		for (int i = guests.size(); i < reader.read().size(); i++) {
+			guests.add(guestsImport.get(i));
+		}
+		
 	}
 
 	public void addGuest(String name, String lastName) {
@@ -83,8 +114,7 @@ public class Hotel {
 	public void addOptionToGuest(Integer optionId, Integer guestId) {
 		try {
 			guestService.addOptionToGuest(optionId, guestId);
-		} catch (NullPointerException e) {
-			Printer.println("Exception in the method addOptionToGuest: " + e.getMessage());
+		} catch (Exception e) {
 			logger.error("Exception in the method addOptionToGuest", e);
 		}
 	}
@@ -94,12 +124,42 @@ public class Hotel {
 		return guestService.getGuests();
 
 	}
+	
+	public void remuveGuest(Integer id) {
+		guestService.removeGuest(id);
+	}
 
 	public Double getTotalPayment(Integer guestId) {
 		return historyService.getTotalPayment(guestId);
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------
+	public void exportRooms(String path) {
+		CsvWorker.Writer writer = new CsvWorker.Writer(path);
+		List<IRoom> rooms = getAllRooms();
+		writer.comment("id;copacity;stars;price;isFree;status");
+		for (int i = 0; i < rooms.size(); i++) {
+			writer.write(rooms.get(i));
+		}
+	}
+	
+	public void importRooms(String path) {
+		List<IRoom> rooms = getAllRooms();
+		List<IRoom> roomsImport = new ArrayList<>();
+		CsvWorker.Reader reader = new CsvWorker.Reader(path);
+		reader.read();
+		for (int i = 0; i < reader.read().size(); i++) {
+			roomsImport.add(new Room(reader.read().get(i)));
+		}
+
+		for (int i = 0; i < rooms.size(); i++) {
+			Collections.replaceAll(rooms, rooms.get(i), roomsImport.get(i));
+		}
+		for (int i = rooms.size(); i < reader.read().size(); i++) {
+			rooms.add(roomsImport.get(i));
+		}
+	}
+	
 	public void addRoom(Integer copacity, Integer numberOfStars, Double price) {
 		roomService.addRoom(new Room(copacity, numberOfStars, price));
 	}
@@ -142,15 +202,49 @@ public class Hotel {
 	public void chengePriceOfRoom(Integer id, Double price) {
 		roomService.chengePriseOfRoom(id, price);
 	}
+	
+	public void changeRoomStatus(Integer id, Integer n) {
+		Boolean changeStatus = Boolean.valueOf(Configuration.getProperties("CHANGE_STATUS"));
+		IRoom room=getRoonById(id);
+		if(changeStatus) {
+			switch(n) {
+			case(1):
+				room.setStatus(RoomStatus.OPEN);
+			       break;
+			case(2):
+				room.setStatus(RoomStatus.CLOSE);
+			        break;
+			case(3):
+				room.setStatus(RoomStatus.SERVICED);
+			        break;
+			case(4):
+				room.setStatus(RoomStatus.REPAIRABLE);
+			        break;
+			}
+			
+		}
+	}
 
 	public List<IGuest> getLastGuests(Integer id) {
 		try {
 			Integer num = Integer.valueOf(Configuration.getProperties("NUMBER_OF_RECORDS"));
 			return roomService.getLastGuests(id, num);
-		} catch (NullPointerException e) {
+		} catch (Exception e) {
 			logger.error("Exception in the method getLastGuests", e);
 		}
 		return null;
+	}
+	
+	public IRoom clone(Integer id, String answer, Integer copacity, Integer stars, Double price) throws CloneNotSupportedException {
+		IRoom clon = roomService.clone(id);
+		if(answer.equals("Y")|answer.equals("y")) {
+				clon.setCopacity(copacity);
+				clon.setNumberOfStars(stars);
+				clon.setPrice(price);
+		}
+		getAllRooms().add(clon);
+		return clon;
+
 	}
 
 	// ---------------------------------------------------------------------------------------------------
@@ -164,9 +258,8 @@ public class Hotel {
 
 			ArrayList<IRoom> rooms = (ArrayList<IRoom>) historyService.getFreeRoomOnDate(date.getTime());
 			return rooms;
-		} catch (NullPointerException | NoSuchElementException e) {
+		} catch ( NoSuchElementException e) {
 			logger.error("Exception in the method getFreeRoomsOnDate: ", e);
-			Printer.println("Exception in the method getFreeRoomsOnDate: " + e.getMessage());
 		}
 		return null;
 	}
@@ -188,6 +281,32 @@ public class Hotel {
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------------------
+	public void exportOptions(String path) {
+		CsvWorker.Writer writer = new CsvWorker.Writer(path);
+		List<IOption> options = getAllOptions();
+		writer.comment("id;name;price");
+		for(int i=0;i<options.size();i++) {
+			writer.write(options.get(i));
+		}
+	}
+	
+	public void importOptions(String path) {
+		List<IOption> options = getAllOptions();
+		List<IOption> optionsImport = new ArrayList<>();
+		CsvWorker.Reader reader = new CsvWorker.Reader(path);
+		reader.read();
+		for (int i = 0; i < reader.read().size(); i++) {
+			optionsImport.add(new Option(reader.read().get(i)));
+		}
+
+		for (int i = 0; i < options.size(); i++) {
+			Collections.replaceAll(options, options.get(i), optionsImport.get(i));
+		}
+		for (int i = options.size(); i < reader.read().size(); i++) {
+			options.add(optionsImport.get(i));
+		}
+	}
+	
 	public IOption getOptionById(Integer id) {
 		return optionService.getOptions().getOptionById(id);
 	}
@@ -200,7 +319,7 @@ public class Hotel {
 		return optionService.getOption();
 	}
 
-	public void marshalingTo() throws FileNotFoundException, IOException {
+	public void exit() throws FileNotFoundException, IOException {
 		SerealizationMasrter.marshaling(getGuests(), getAllRooms(), getAllOptions(), getHistory());
 	}
 

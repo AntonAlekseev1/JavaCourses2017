@@ -1,40 +1,40 @@
 package com.hotel.ui.actions.room;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-import com.hotel.api.been.IRoom;
-import com.hotel.been.Room;
+import org.apache.log4j.Logger;
+
 import com.hotel.configurations.Configuration;
 import com.hotel.fasad.Hotel;
 import com.hotel.ui.action.IAction;
-import com.hotel.utils.CsvWorker;
+import com.hotel.utils.Printer;
 
 
 public class ImportRoom implements IAction {
 	
+	private final static Logger logger = Logger.getLogger(ImportRoom.class);
 	private static final String PATH_TO_ROOMS_CSV= String.valueOf(Configuration.getProperties("PATH_TO_ROOMS_CSV"));
+	private String path;
 	
-	public ImportRoom() {
-		Configuration.loadConfiguration();
-	}
-
 	@Override
 	public void execute() {
-		List<IRoom> rooms = Hotel.getInstance().getAllRooms();
-		List<IRoom> roomsImport = new ArrayList<>();
-		CsvWorker.Reader reader = new CsvWorker.Reader(PATH_TO_ROOMS_CSV);
-		reader.read();
-		for (int i = 0; i < reader.read().size(); i++) {
-			roomsImport.add(new Room(reader.read().get(i)));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		try {
+		Printer.println("Enter the path to csv file in the format folder/filename.csv ");
+			path="../"+reader.readLine();
+		} catch (IOException e) {
+			logger.info("Exception in class ImportRoom "+e.getMessage());
 		}
-
-		for (int i = 0; i < rooms.size(); i++) {
-			Collections.replaceAll(rooms, rooms.get(i), roomsImport.get(i));
-		}
-		for (int i = rooms.size(); i < reader.read().size(); i++) {
-			rooms.add(roomsImport.get(i));
+		File file = new File(path);
+		if(file.exists()&&file.isFile()) {
+			Hotel.getInstance().importRooms(path);
+			Printer.println("Import was successful");
+		}else {
+			Printer.println("File not found, import from default path");
+			Hotel.getInstance().importRooms(PATH_TO_ROOMS_CSV);
 		}
 	}
 

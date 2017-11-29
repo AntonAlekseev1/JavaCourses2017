@@ -4,11 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.apache.log4j.Logger;
+
 import com.hotel.fasad.Hotel;
 import com.hotel.ui.action.IAction;
 import com.hotel.utils.Printer;
 
-public class EvictGuest implements IAction{
+public class EvictGuestAction implements IAction{
+	
+	final static Logger logger = Logger.getLogger(EvictGuestAction.class);
 
 	@Override
 	public void execute() {
@@ -20,11 +24,14 @@ public class EvictGuest implements IAction{
 			Printer.print("Enter the room id ");
 			String roomIdStr=reader.readLine();
 			Integer roomId=Integer.valueOf(roomIdStr);
-			
+			if(Hotel.getInstance().getGuestById(guestId)!=null) {
 			Hotel.getInstance().evictGuestFromRoom(guestId, roomId);
+			}else {
+				Printer.println("Incorrect guest id");
+			}
 		} catch (IOException e) {
-			
-			e.printStackTrace();
+			Printer.println("Exception in the class EvictGuestAction: " + e.getMessage());
+			logger.error("Exception in the class EvictGuestAction: " + e.getMessage());
 		}
 		
 		
