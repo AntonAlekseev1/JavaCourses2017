@@ -1,0 +1,131 @@
+2017-11-26 14:39:56 INFO  MenuController:41 - mesege
+java.lang.NullPointerException
+	at com.hotel.ui.actions.guest.TotalPayment.execute(TotalPayment.java:21)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.MainTest.main(MainTest.java:14)
+2017-11-27 20:52:17 INFO  MenuController:40 - mesege
+java.lang.NullPointerException
+	at com.hotel.service.HistoryService.getTotalPayment(HistoryService.java:99)
+	at com.hotel.fasad.Hotel.getTotalPayment(Hotel.java:98)
+	at com.hotel.ui.actions.guest.GetTotalPaymentAction.execute(GetTotalPaymentAction.java:26)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.Run.main(Run.java:13)
+2017-11-27 20:55:05 INFO  MenuController:40 - mesege
+java.lang.NullPointerException
+	at com.hotel.service.HistoryService.getTotalPayment(HistoryService.java:99)
+	at com.hotel.fasad.Hotel.getTotalPayment(Hotel.java:98)
+	at com.hotel.ui.actions.guest.GetTotalPaymentAction.execute(GetTotalPaymentAction.java:26)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.Run.main(Run.java:13)
+2017-11-27 20:55:42 INFO  MenuController:40 - mesege
+java.lang.NullPointerException
+	at com.hotel.service.HistoryService.getTotalPayment(HistoryService.java:99)
+	at com.hotel.fasad.Hotel.getTotalPayment(Hotel.java:98)
+	at com.hotel.ui.actions.guest.GetTotalPaymentAction.execute(GetTotalPaymentAction.java:26)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.Run.main(Run.java:13)
+2017-11-27 20:56:02 INFO  MenuController:40 - mesege
+java.lang.NullPointerException
+	at com.hotel.service.HistoryService.getTotalPayment(HistoryService.java:99)
+	at com.hotel.fasad.Hotel.getTotalPayment(Hotel.java:98)
+	at com.hotel.ui.actions.guest.GetTotalPaymentAction.execute(GetTotalPaymentAction.java:26)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.Run.main(Run.java:13)
+2017-11-27 20:56:29 INFO  MenuController:40 - mesege
+java.lang.NullPointerException
+	at com.hotel.service.HistoryService.getTotalPayment(HistoryService.java:99)
+	at com.hotel.fasad.Hotel.getTotalPayment(Hotel.java:98)
+	at com.hotel.ui.actions.guest.GetTotalPaymentAction.execute(GetTotalPaymentAction.java:26)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.Run.main(Run.java:13)
+2017-11-27 20:57:15 INFO  MenuController:40 - mesege
+java.lang.NullPointerException
+	at com.hotel.service.HistoryService.getTotalPayment(HistoryService.java:99)
+	at com.hotel.fasad.Hotel.getTotalPayment(Hotel.java:98)
+	at com.hotel.ui.actions.guest.GetTotalPaymentAction.execute(GetTotalPaymentAction.java:26)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.Run.main(Run.java:13)
+2017-11-27 21:03:33 INFO  MenuController:40 - mesege
+java.lang.NullPointerException
+	at com.hotel.service.HistoryService.getTotalPayment(HistoryService.java:99)
+	at com.hotel.fasad.Hotel.getTotalPayment(Hotel.java:98)
+	at com.hotel.ui.actions.guest.GetTotalPaymentAction.execute(GetTotalPaymentAction.java:26)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.Run.main(Run.java:13)
+2017-11-27 21:04:56 INFO  MenuController:40 - mesege
+java.lang.NullPointerException
+	at com.hotel.service.HistoryService.getTotalPayment(HistoryService.java:99)
+	at com.hotel.fasad.Hotel.getTotalPayment(Hotel.java:98)
+	at com.hotel.ui.actions.guest.GetTotalPaymentAction.execute(GetTotalPaymentAction.java:26)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.Run.main(Run.java:13)
+2017-11-27 21:06:45 INFO  MenuController:40 - mesege
+java.lang.NullPointerException
+	at com.hotel.service.HistoryService.getTotalPayment(HistoryService.java:99)
+	at com.hotel.fasad.Hotel.getTotalPayment(Hotel.java:98)
+	at com.hotel.ui.actions.guest.GetTotalPaymentAction.execute(GetTotalPaymentAction.java:26)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.Run.main(Run.java:13)
+2017-11-27 21:09:05 INFO  MenuController:40 - mesege
+java.lang.NullPointerException
+	at com.hotel.service.HistoryService.getTotalPayment(HistoryService.java:99)
+	at com.hotel.fasad.Hotel.getTotalPayment(Hotel.java:98)
+	at com.hotel.ui.actions.guest.GetTotalPaymentAction.execute(GetTotalPaymentAction.java:26)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.Run.main(Run.java:13)
+2017-11-27 21:12:04 INFO  MenuController:40 - mesege
+java.lang.NullPointerException
+	at com.hotel.service.HistoryService.getTotalPayment(HistoryService.java:99)
+	at com.hotel.fasad.Hotel.getTotalPayment(Hotel.java:98)
+	at com.hotel.ui.actions.guest.GetTotalPaymentAction.execute(GetTotalPaymentAction.java:27)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.Run.main(Run.java:13)
+2017-11-27 21:12:50 ERROR GetTotalPaymentAction:30 - Exception in the class GetTotalPaymentnull
+2017-11-27 21:13:40 ERROR GetTotalPaymentAction:30 - Exception in the class GetTotalPaymentnull
+2017-11-27 21:24:28 INFO  MenuController:40 - mesege
+java.lang.NullPointerException
+	at com.hotel.service.HistoryService.evictGuestFromRoom(HistoryService.java:55)
+	at com.hotel.fasad.Hotel.evictGuestFromRoom(Hotel.java:181)
+	at com.hotel.ui.actions.history.EvictGuest.execute(EvictGuest.java:24)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.Run.main(Run.java:13)
+2017-11-27 21:27:46 ERROR EvictGuestAction:31 - Exception in the class EvictGuestAction: null
+2017-11-27 21:29:52 INFO  MenuController:40 - mesege
+java.lang.ArrayIndexOutOfBoundsException: 1
+	at com.hotel.ui.actions.history.PrintFreeRoomOnDate.execute(PrintFreeRoomOnDate.java:22)
+	at com.hotel.ui.action.MenuItem.doAction(MenuItem.java:20)
+	at com.hotel.ui.navigator.Navigator.navigate(Navigator.java:26)
+	at com.hotel.ui.menucontroller.MenuController.run(MenuController.java:35)
+	at com.hotel.ui.Run.main(Run.java:13)
+2017-11-27 21:34:35 ERROR PrintFreeRoomOnDate:31 - Incorrect date format: 1
+2017-11-27 21:57:25 ERROR AddRoom:34 - Exception in the class AddRoom: For input string: "ew"
+2017-11-27 22:49:17 INFO  RemoveGuestAction:28 - Exception in class RemoveGuestActionFor input string: "e"
+2017-11-27 22:50:13 INFO  RemoveGuestAction:28 - Exception in class RemoveGuestActionFor input string: "e"
+2017-11-27 22:55:31 ERROR ChangeRoomPrice:31 - Exception in the class ChangeRoomPrice: For input string: "ty"
+2017-11-27 22:56:15 ERROR ChangeRoomPrice:31 - Exception in the class ChangeRoomPrice: For input string: "yu"
