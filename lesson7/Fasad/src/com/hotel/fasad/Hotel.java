@@ -27,6 +27,9 @@ import com.hotel.comparator.SortedByName;
 import com.hotel.comparator.SortedByStars;
 import com.hotel.comparator.SortedRoomByPrice;
 import com.hotel.configurations.Configuration;
+import com.hotel.repository.GuestRepository;
+import com.hotel.repository.OptionRepository;
+import com.hotel.repository.RoomRepository;
 import com.hotel.serialization.SerealizationMasrter;
 import com.hotel.service.GuestService;
 import com.hotel.service.HistoryService;
@@ -35,20 +38,20 @@ import com.hotel.service.RoomService;
 import com.hotel.utils.CsvWorker;
 
 public class Hotel {
-	private IRoomService roomService;
-	private IOptionService optionService;
-	private IGuestService guestService;
-	private IHistoryService historyService;
+	private static IRoomService roomService;
+	private static IOptionService optionService;
+	private static IGuestService guestService;
+	private static IHistoryService historyService;
 
 	private final static Logger logger = Logger.getLogger(Hotel.class);
 	private static Hotel instance;
 
-	private Hotel() {
+	private Hotel(IRoomService service, IOptionService oService,IGuestService gService,IHistoryService hService) {
 
-		roomService = new RoomService();
-		optionService = new OptionService();
-		guestService = new GuestService(optionService.getOptions());
-		historyService = new HistoryService(guestService.getGuest(), roomService.getRooms());
+	    roomService=service;
+	    optionService = oService;
+	    guestService = gService;
+	    historyService = hService;
 		Configuration.loadConfiguration();
 		try {
 			SerealizationMasrter.demarshaling();
@@ -59,7 +62,8 @@ public class Hotel {
 
 	public static Hotel getInstance() {
 		if (instance == null) {
-			instance = new Hotel();
+			instance = new Hotel(new RoomService(),new OptionService(),new GuestService(OptionRepository.getInstance()),
+					                         new HistoryService(GuestRepository.getInstance(), RoomRepository.getInstance()));
 		}
 		return instance;
 	}
