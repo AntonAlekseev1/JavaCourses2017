@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.hotel.annatation.CsvEntity;
 import com.hotel.annatation.CsvProperty;
+import com.hotel.annatation.CsvProperty.PropertyType;
 import com.hotel.api.been.Entity;
 import com.hotel.api.been.IHistory;
 import com.hotel.api.been.IRoom;
@@ -18,15 +19,15 @@ public class Room extends Entity implements IRoom, Cloneable, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@CsvProperty(columnNumber = 2)
+	@CsvProperty(columnNumber = 2, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private Integer copacity;
-	@CsvProperty(columnNumber = 3)
+	@CsvProperty(columnNumber = 3, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private Integer numberOfStars;
-	@CsvProperty(columnNumber = 4)
+	@CsvProperty(columnNumber = 4, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private Double price;
-	@CsvProperty(columnNumber = 5)
+	@CsvProperty(columnNumber = 5, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private Boolean isFree = true;
-	@CsvProperty(columnNumber = 6)
+	@CsvProperty(columnNumber = 6, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private RoomStatus status;
 	private List<IHistory> history=new ArrayList<>();
 

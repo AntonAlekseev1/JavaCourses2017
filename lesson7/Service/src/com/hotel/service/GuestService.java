@@ -9,17 +9,15 @@ import com.hotel.api.been.IOption;
 import com.hotel.api.repository.IGuestRepository;
 import com.hotel.api.repository.IOptionRepository;
 import com.hotel.api.service.IGuestService;
-import com.hotel.repository.GuestRepository;
-import com.hotel.repository.OptionRepository;
+import com.hotel.di.DInjector;
 
 public class GuestService implements IGuestService {
 
 	private Integer numberOfGuests = 0;
-	private IGuestRepository guestRepository = GuestRepository.getInstance();
-	private IOptionRepository optionRepository = OptionRepository.getInstance();
+	private IGuestRepository guestRepository = (IGuestRepository) DInjector.inject(IGuestRepository.class);
+	private IOptionRepository optionRepository = (IOptionRepository) DInjector.inject(IOptionRepository.class);
 
 	public GuestService(IOptionRepository optionRepository) {
-		GuestRepository.getInstance();
 		this.optionRepository = optionRepository;
 
 	}

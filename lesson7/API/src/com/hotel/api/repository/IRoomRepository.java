@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hotel.api.been.IRoom;
 
-public interface IRoomRepository {
+public interface IRoomRepository extends IRepository {
 	
 	public List<IRoom> getRooms();
 	

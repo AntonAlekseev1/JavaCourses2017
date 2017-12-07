@@ -5,15 +5,14 @@ import java.util.List;
 import com.hotel.api.been.IOption;
 import com.hotel.api.repository.IOptionRepository;
 import com.hotel.api.service.IOptionService;
-import com.hotel.repository.OptionRepository;
+import com.hotel.di.DInjector;
 
 public class OptionService implements IOptionService {
 
-	private IOptionRepository optionRepository = OptionRepository.getInstance();
+	private IOptionRepository optionRepository = (IOptionRepository) DInjector.inject(IOptionRepository.class);
 
 	public OptionService() {
-
-		OptionRepository.getInstance();
+		
 	}
 
 	public IOptionRepository getOptions() {

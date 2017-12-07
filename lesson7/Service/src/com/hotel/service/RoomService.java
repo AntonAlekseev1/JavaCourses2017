@@ -10,16 +10,15 @@ import com.hotel.api.been.IRoom;
 import com.hotel.api.repository.IRoomRepository;
 import com.hotel.api.service.IRoomService;
 import com.hotel.been.Room;
-import com.hotel.repository.RoomRepository;
+import com.hotel.di.DInjector;
 
 public class RoomService implements IRoomService {
 	private Integer numberOfRooms = 0;
 	private Integer numberOfFreeRooms = 0;
-	private IRoomRepository roomRepository = RoomRepository.getInstance();
-
+	private IRoomRepository roomRepository = (IRoomRepository) DInjector.inject(IRoomRepository.class);
+	
 	public RoomService() {
-
-		RoomRepository.getInstance();
+		
 
 	}
 

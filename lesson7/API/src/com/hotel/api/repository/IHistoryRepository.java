@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hotel.api.been.IHistory;
 
-public interface IHistoryRepository {
+public interface IHistoryRepository extends IRepository {
 	
 	public List<IHistory> getHistory();
 	

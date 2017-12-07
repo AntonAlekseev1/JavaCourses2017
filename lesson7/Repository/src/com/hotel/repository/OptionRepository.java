@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hotel.api.been.IOption;
+import com.hotel.api.repository.ARepository;
 import com.hotel.api.repository.IOptionRepository;
 
-public class OptionRepository implements IOptionRepository {
+public class OptionRepository extends ARepository implements IOptionRepository {
 	private List<IOption> optionRepository;
 	private static OptionRepository instance;
 

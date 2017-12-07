@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hotel.api.been.IGuest;
 
-public interface IGuestRepository {
+public interface IGuestRepository extends IRepository {
 	
 	public List<IGuest> getGuests();
 	

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.hotel.annatation.CsvEntity;
 import com.hotel.annatation.CsvProperty;
+import com.hotel.annatation.CsvProperty.PropertyType;
 import com.hotel.api.been.Entity;
 import com.hotel.api.been.IGuest;
 import com.hotel.api.been.IHistory;
@@ -14,9 +15,9 @@ public class Guest extends Entity implements IGuest, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@CsvProperty(columnNumber = 2)
+	@CsvProperty(columnNumber = 2, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private String name;
-	@CsvProperty(columnNumber = 3)
+	@CsvProperty(columnNumber = 3, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private String lastName;
 	private IHistory history;
 

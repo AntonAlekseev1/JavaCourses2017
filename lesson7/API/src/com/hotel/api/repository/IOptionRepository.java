@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hotel.api.been.IOption;
 
-public interface IOptionRepository {
+public interface IOptionRepository extends IRepository {
 	
 	public List<IOption> getOption();
 	

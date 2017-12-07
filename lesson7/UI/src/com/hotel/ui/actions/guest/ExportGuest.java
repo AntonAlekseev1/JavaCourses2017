@@ -16,7 +16,7 @@ import com.hotel.utils.Printer;
 public class ExportGuest implements IAction{
 	
 	private final static Logger logger = Logger.getLogger(ExportGuest.class);
-	private static final String PATH_TO_GUESTS_CSV= String.valueOf(Configuration.getProperties("PATH_TO_GUESTS_CSV"));
+	private static final String PATH_TO_CSV= String.valueOf(Configuration.getProperties("PATH_TO_CSV"));
 	private String path;
 
 
@@ -31,7 +31,7 @@ public class ExportGuest implements IAction{
 			CsvEntity ann = c.getAnnotation(CsvEntity.class);
 			 fileName=ann.filename();
 		Printer.println("Enter file name ");
-			path=PATH_TO_GUESTS_CSV+reader.readLine();
+			path=PATH_TO_CSV+reader.readLine();
 		} catch (IOException|ClassNotFoundException e) {
 			logger.info("Exception in class ExportGuest "+e.getMessage());
 		}
@@ -41,7 +41,7 @@ public class ExportGuest implements IAction{
 			Printer.println("Export was successful");
 		}else {
 			Printer.println("File not found, export by default path");
-			Hotel.getInstance().exportGuests(PATH_TO_GUESTS_CSV+fileName);
+			Hotel.getInstance().exportGuests(PATH_TO_CSV+fileName);
 		}
 		
 		

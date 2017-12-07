@@ -11,21 +11,20 @@ import com.hotel.api.been.IHistory;
 import com.hotel.api.been.IOption;
 import com.hotel.api.been.IRoom;
 import com.hotel.api.repository.IGuestRepository;
+import com.hotel.api.repository.IHistoryRepository;
 import com.hotel.api.repository.IRoomRepository;
 import com.hotel.api.service.IHistoryService;
 import com.hotel.been.History;
-import com.hotel.repository.GuestRepository;
+import com.hotel.di.DInjector;
 import com.hotel.repository.HistoryRepository;
-import com.hotel.repository.RoomRepository;
 import com.hotel.utils.ArrayWorker;
 
 public class HistoryService implements IHistoryService {
-	private IRoomRepository roomRepository=RoomRepository.getInstance();
-	private IGuestRepository guestRepository = GuestRepository.getInstance();
-	private HistoryRepository historyRepository = HistoryRepository.getInstance();
+	private IRoomRepository roomRepository=(IRoomRepository) DInjector.inject(IRoomRepository.class);
+	private IGuestRepository guestRepository = (IGuestRepository) DInjector.inject(IGuestRepository.class);
+	private HistoryRepository historyRepository = (HistoryRepository) DInjector.inject(IHistoryRepository.class);
 
 	public HistoryService(IGuestRepository iGuestRepository, IRoomRepository iRoomRepository) {
-		HistoryRepository.getInstance();
 		this.guestRepository = iGuestRepository;
 		this.roomRepository = iRoomRepository;
 
