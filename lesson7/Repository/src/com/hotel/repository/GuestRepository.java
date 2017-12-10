@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hotel.api.been.IGuest;
-import com.hotel.api.repository.ARepository;
 import com.hotel.api.repository.IGuestRepository;
 
-public class GuestRepository extends ARepository implements IGuestRepository{
+public class GuestRepository implements IGuestRepository{
 	private List<IGuest> guestRepository;
 
 	private static GuestRepository instance;
 
 	private GuestRepository() {
-		guestRepository = new ArrayList<IGuest>();
+		guestRepository = new ArrayList<>();
 	}
 	
 	public static GuestRepository getInstance() {

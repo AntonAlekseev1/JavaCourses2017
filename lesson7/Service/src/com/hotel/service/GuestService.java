@@ -9,17 +9,25 @@ import com.hotel.api.been.IOption;
 import com.hotel.api.repository.IGuestRepository;
 import com.hotel.api.repository.IOptionRepository;
 import com.hotel.api.service.IGuestService;
-import com.hotel.di.DInjector;
+import com.hotel.di.DependecyInjector;
 
 public class GuestService implements IGuestService {
 
+	private static GuestService instance;
 	private Integer numberOfGuests = 0;
-	private IGuestRepository guestRepository = (IGuestRepository) DInjector.inject(IGuestRepository.class);
-	private IOptionRepository optionRepository = (IOptionRepository) DInjector.inject(IOptionRepository.class);
+	private IGuestRepository guestRepository = (IGuestRepository) DependecyInjector.getRepository(IGuestRepository.class);
+	private static IOptionRepository optionRepository = (IOptionRepository) DependecyInjector.getRepository(IOptionRepository.class);
 
-	public GuestService(IOptionRepository optionRepository) {
-		this.optionRepository = optionRepository;
+	private GuestService(IOptionRepository optionRepository) {
+		GuestService.optionRepository = optionRepository;
 
+	}
+	
+	public static GuestService getInstance() {
+		if(instance==null) {
+			instance = new GuestService(optionRepository);
+		}
+		return instance;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

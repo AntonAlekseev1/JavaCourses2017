@@ -22,7 +22,7 @@ public class Guest extends Entity implements IGuest, Serializable {
 	private IHistory history;
 
 	public Guest(String string) {
-		String[] arr = string.split(";");
+		String[] arr = string.split(" ");
 		setId(Integer.valueOf(arr[0]));
 		this.name = String.valueOf(arr[1]);
 		this.lastName = String.valueOf(arr[2]);
@@ -65,9 +65,9 @@ public class Guest extends Entity implements IGuest, Serializable {
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(getId());
-		s.append(";");
+		s.append(" ");
 		s.append(name);
-		s.append(";");
+		s.append(" ");
 		s.append(lastName);
 		return s.toString();
 	}

@@ -1,9 +1,6 @@
-id;copacity;stars;price;isFree;status
-4;3;1;16.0;true;OPEN
-6;3;2;18.0;true;OPEN
-2;3;2;41.0;false;OPEN
-5;2;3;21.0;true;OPEN
-1;2;3;36.3;false;CLOSE
-3;1;5;32.0;false;OPEN
-7;2;5;38.6;true;OPEN
-8;1;4;28.0;true;OPEN
+id;name;lastName
+1;Konstantin;Kinchev
+2;Vasia;Makarevich
+3;Valeriy;Kipelov
+4;Boris;Grebenshikov
+5;Karl;Benz

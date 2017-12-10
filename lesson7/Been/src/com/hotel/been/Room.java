@@ -33,7 +33,7 @@ public class Room extends Entity implements IRoom, Cloneable, Serializable {
 
 	public Room(String string) {
 
-		String[] arr = string.split(";");
+		String[] arr = string.split(" ");
 		setId(Integer.valueOf(arr[0]));
 		this.copacity = Integer.valueOf(arr[1]);
 		this.numberOfStars = Integer.valueOf(arr[2]);
@@ -111,15 +111,15 @@ public class Room extends Entity implements IRoom, Cloneable, Serializable {
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(getId());
-		s.append(";");
+		s.append(" ");
 		s.append(copacity);
-		s.append(";");
+		s.append(" ");
 		s.append(numberOfStars);
-		s.append(";");
+		s.append(" ");
 		s.append(price);
-		s.append(";");
+		s.append(" ");
 		s.append(isFree);
-		s.append(";");
+		s.append(" ");
 		s.append(status);
 		return s.toString();
 	}

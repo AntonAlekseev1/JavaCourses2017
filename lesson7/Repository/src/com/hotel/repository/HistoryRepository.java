@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hotel.api.been.IHistory;
-import com.hotel.api.repository.ARepository;
 import com.hotel.api.repository.IHistoryRepository;
 
-public class HistoryRepository extends ARepository implements IHistoryRepository {
+public class HistoryRepository implements IHistoryRepository {
 	private List<IHistory> historyRepository;
 	private static HistoryRepository instance;
 

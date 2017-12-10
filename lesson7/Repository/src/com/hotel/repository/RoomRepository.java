@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hotel.api.been.IRoom;
-import com.hotel.api.repository.ARepository;
 import com.hotel.api.repository.IRoomRepository;
 
-public class RoomRepository extends ARepository implements IRoomRepository {
+public class RoomRepository  implements IRoomRepository {
 	private List<IRoom> roomRepository;
 
 	private static RoomRepository instance;

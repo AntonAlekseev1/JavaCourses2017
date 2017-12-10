@@ -16,7 +16,7 @@ public class Configuration {
 
 	public static void loadConfiguration() {
 		try {
-			FileInputStream inputStream = new FileInputStream("../Fasad/data/configuratins.properties");
+			FileInputStream inputStream = new FileInputStream("../Fasad/data/configurations.properties");
 			properties.load(inputStream);
 			inputStream.close();	
 

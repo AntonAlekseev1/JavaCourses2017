@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 
+import com.hotel.Analyzer;
 import com.hotel.api.been.IGuest;
 import com.hotel.api.been.IHistory;
 import com.hotel.api.been.IOption;
@@ -42,14 +43,16 @@ public class Hotel {
 
 	private final static Logger logger = Logger.getLogger(Hotel.class);
 	private static Hotel instance;
+	private String PATH_TO_CSV;
 
 	private Hotel() {
 
-		roomService = new RoomService();
-		optionService = new OptionService();
-		guestService = new GuestService(optionService.getOptions());
-		historyService = new HistoryService(guestService.getGuest(), roomService.getRooms());
+		roomService = RoomService.getInstance();
+		optionService = OptionService.getInstance();
+		guestService = GuestService.getInstance();
+		historyService =  HistoryService.getInstance();
 		Configuration.loadConfiguration();
+		PATH_TO_CSV=String.valueOf(Configuration.getProperties("PATH_TO_CSV"));
 		try {
 			SerealizationMasrter.demarshaling();
 		} catch (ClassNotFoundException |IOException e) {
@@ -64,7 +67,9 @@ public class Hotel {
 		return instance;
 	}
 	
-	public void exportGuests(String path) {
+	public void exportGuests() {
+		
+		String path=PATH_TO_CSV+Analyzer.getNameOfBeen("Guest");
 		CsvWorker.Writer writer = new CsvWorker.Writer(path);
 		List<IGuest> guests = getGuests();
 		writer.comment("id;name;lastName");
@@ -73,7 +78,8 @@ public class Hotel {
 		}	
 	}
 	
-	public void importGuest(String path) {
+	public void importGuest() {
+		String path=PATH_TO_CSV+Analyzer.getNameOfBeen("Guest");
 		List<IGuest> guests =getGuests();
 		List<IGuest> guestsImport = new ArrayList<>();
 		CsvWorker.Reader reader = new CsvWorker.Reader(path);
@@ -134,7 +140,8 @@ public class Hotel {
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------
-	public void exportRooms(String path) {
+	public void exportRooms() {
+		String path=PATH_TO_CSV+Analyzer.getNameOfBeen("Room");
 		CsvWorker.Writer writer = new CsvWorker.Writer(path);
 		List<IRoom> rooms = getAllRooms();
 		writer.comment("id;copacity;stars;price;isFree;status");
@@ -143,7 +150,8 @@ public class Hotel {
 		}
 	}
 	
-	public void importRooms(String path) {
+	public void importRooms() {
+		String path=PATH_TO_CSV+Analyzer.getNameOfBeen("Room");
 		List<IRoom> rooms = getAllRooms();
 		List<IRoom> roomsImport = new ArrayList<>();
 		CsvWorker.Reader reader = new CsvWorker.Reader(path);
@@ -281,7 +289,8 @@ public class Hotel {
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------------------
-	public void exportOptions(String path) {
+	public void exportOptions() {
+		String path=PATH_TO_CSV+Analyzer.getNameOfBeen("Option");
 		CsvWorker.Writer writer = new CsvWorker.Writer(path);
 		List<IOption> options = getAllOptions();
 		writer.comment("id;name;price");
@@ -290,7 +299,8 @@ public class Hotel {
 		}
 	}
 	
-	public void importOptions(String path) {
+	public void importOptions() {
+		String path=PATH_TO_CSV+Analyzer.getNameOfBeen("Option");
 		List<IOption> options = getAllOptions();
 		List<IOption> optionsImport = new ArrayList<>();
 		CsvWorker.Reader reader = new CsvWorker.Reader(path);

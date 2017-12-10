@@ -15,19 +15,28 @@ import com.hotel.api.repository.IHistoryRepository;
 import com.hotel.api.repository.IRoomRepository;
 import com.hotel.api.service.IHistoryService;
 import com.hotel.been.History;
-import com.hotel.di.DInjector;
+import com.hotel.di.DependecyInjector;
 import com.hotel.repository.HistoryRepository;
 import com.hotel.utils.ArrayWorker;
 
 public class HistoryService implements IHistoryService {
-	private IRoomRepository roomRepository=(IRoomRepository) DInjector.inject(IRoomRepository.class);
-	private IGuestRepository guestRepository = (IGuestRepository) DInjector.inject(IGuestRepository.class);
-	private HistoryRepository historyRepository = (HistoryRepository) DInjector.inject(IHistoryRepository.class);
+	
+	private static HistoryService instance;
+	private static IRoomRepository roomRepository=(IRoomRepository) DependecyInjector.getRepository(IRoomRepository.class);
+	private static IGuestRepository guestRepository = (IGuestRepository) DependecyInjector.getRepository(IGuestRepository.class);
+	private HistoryRepository historyRepository = (HistoryRepository) DependecyInjector.getRepository(IHistoryRepository.class);
 
-	public HistoryService(IGuestRepository iGuestRepository, IRoomRepository iRoomRepository) {
-		this.guestRepository = iGuestRepository;
-		this.roomRepository = iRoomRepository;
+	private HistoryService(IGuestRepository iGuestRepository, IRoomRepository iRoomRepository) {
+		HistoryService.guestRepository = iGuestRepository;
+		HistoryService.roomRepository = iRoomRepository;
 
+	}
+	
+	public static HistoryService getInstance() {
+		if(instance==null) {
+			instance=new HistoryService(guestRepository, roomRepository);
+		}
+		return instance;
 	}
 
 	public List<IHistory> getHistory() {
