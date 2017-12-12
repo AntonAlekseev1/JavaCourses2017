@@ -22,9 +22,9 @@ import com.hotel.utils.ArrayWorker;
 public class HistoryService implements IHistoryService {
 	
 	private static HistoryService instance;
-	private static IRoomRepository roomRepository=(IRoomRepository) DependecyInjector.getRepository(IRoomRepository.class);
-	private static IGuestRepository guestRepository = (IGuestRepository) DependecyInjector.getRepository(IGuestRepository.class);
-	private HistoryRepository historyRepository = (HistoryRepository) DependecyInjector.getRepository(IHistoryRepository.class);
+	private static IRoomRepository roomRepository=(IRoomRepository) DependecyInjector.inject(IRoomRepository.class);
+	private static IGuestRepository guestRepository = (IGuestRepository) DependecyInjector.inject(IGuestRepository.class);
+	private HistoryRepository historyRepository = (HistoryRepository) DependecyInjector.inject(IHistoryRepository.class);
 
 	private HistoryService(IGuestRepository iGuestRepository, IRoomRepository iRoomRepository) {
 		HistoryService.guestRepository = iGuestRepository;

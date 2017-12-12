@@ -15,8 +15,8 @@ public class GuestService implements IGuestService {
 
 	private static GuestService instance;
 	private Integer numberOfGuests = 0;
-	private IGuestRepository guestRepository = (IGuestRepository) DependecyInjector.getRepository(IGuestRepository.class);
-	private static IOptionRepository optionRepository = (IOptionRepository) DependecyInjector.getRepository(IOptionRepository.class);
+	private IGuestRepository guestRepository = (IGuestRepository) DependecyInjector.inject(IGuestRepository.class);
+	private static IOptionRepository optionRepository = (IOptionRepository) DependecyInjector.inject(IOptionRepository.class);
 
 	private GuestService(IOptionRepository optionRepository) {
 		GuestService.optionRepository = optionRepository;

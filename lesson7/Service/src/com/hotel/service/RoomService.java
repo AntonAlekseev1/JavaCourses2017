@@ -17,8 +17,7 @@ public class RoomService implements IRoomService {
 	private static RoomService instance;
 	private Integer numberOfRooms = 0;
 	private Integer numberOfFreeRooms = 0;
-//	private IRoomRepository roomRepository = (IRoomRepository) DependecyInjector.getRepository(IRoomRepository.class);
-	private IRoomRepository roomRepository = (IRoomRepository) DependecyInjector.getRepository(IRoomRepository.class);
+	private IRoomRepository roomRepository = (IRoomRepository) DependecyInjector.inject(IRoomRepository.class);
 	
 	private RoomService() {
 		

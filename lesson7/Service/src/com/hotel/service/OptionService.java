@@ -10,7 +10,7 @@ import com.hotel.di.DependecyInjector;
 public class OptionService implements IOptionService {
 
 	private static OptionService instance;
-	private IOptionRepository optionRepository = (IOptionRepository) DependecyInjector.getRepository(IOptionRepository.class);
+	private IOptionRepository optionRepository = (IOptionRepository) DependecyInjector.inject(IOptionRepository.class);
 
 	private OptionService() {
 		

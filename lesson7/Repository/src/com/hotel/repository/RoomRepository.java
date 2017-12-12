@@ -7,12 +7,12 @@ import com.hotel.api.been.IRoom;
 import com.hotel.api.repository.IRoomRepository;
 
 public class RoomRepository  implements IRoomRepository {
-	private List<IRoom> roomRepository;
+	private List<IRoom> roomRepository = new ArrayList<>();
 
 	private static RoomRepository instance;
 
-	private RoomRepository() {
-		roomRepository = new ArrayList<>();
+	public RoomRepository() {
+//		roomRepository;
 	}
 
 	public static RoomRepository getInstance() {

@@ -28,11 +28,8 @@ import com.hotel.comparator.SortedByName;
 import com.hotel.comparator.SortedByStars;
 import com.hotel.comparator.SortedRoomByPrice;
 import com.hotel.configurations.Configuration;
+import com.hotel.di.DependecyInjector;
 import com.hotel.serialization.SerealizationMasrter;
-import com.hotel.service.GuestService;
-import com.hotel.service.HistoryService;
-import com.hotel.service.OptionService;
-import com.hotel.service.RoomService;
 import com.hotel.utils.CsvWorker;
 
 public class Hotel {
@@ -47,10 +44,10 @@ public class Hotel {
 
 	private Hotel() {
 
-		roomService = RoomService.getInstance();
-		optionService = OptionService.getInstance();
-		guestService = GuestService.getInstance();
-		historyService =  HistoryService.getInstance();
+		roomService = (IRoomService) DependecyInjector.inject(IRoomService.class);
+		optionService = (IOptionService) DependecyInjector.inject(IOptionService.class);
+		guestService = (IGuestService) DependecyInjector.inject(IGuestService.class);
+		historyService =  (IHistoryService) DependecyInjector.inject(IHistoryService.class);
 		Configuration.loadConfiguration();
 		PATH_TO_CSV=String.valueOf(Configuration.getProperties("PATH_TO_CSV"));
 		try {
