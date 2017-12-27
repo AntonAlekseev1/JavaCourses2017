@@ -1,4 +1,0 @@
-4 5 1 14.0 true OPEN
-2 3 2 20.2 true OPEN
-1 2 3 21.0 false CLOSE
-3 1 5 32.0 true OPEN
