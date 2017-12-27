@@ -29,7 +29,7 @@ public class HistoryRepository implements IHistoryRepository {
 		historyRepository=histories;	
 	}
 
-	public IHistory getHistoryById(Integer id) {
+	public synchronized IHistory getHistoryById(Integer id) {
 		IHistory entity = null;
 		for (int i = 0; i < historyRepository.size(); i++) {
 			if (historyRepository.get(i).getId().equals(id)) {
@@ -40,13 +40,13 @@ public class HistoryRepository implements IHistoryRepository {
 		return entity;
 	}
 
-	public void addHistory(IHistory history) {
+	public synchronized void addHistory(IHistory history) {
 		history.setId(generateId());
 		historyRepository.add(history);
 
 	}
 
-	public Integer generateId() {
+	public synchronized Integer generateId() {
 		Integer id = 0;
 		for (int i = 0; i < historyRepository.size(); i++) {
 			if (historyRepository.get(i).getId() > id) {

@@ -30,12 +30,12 @@ public class GuestRepository implements IGuestRepository{
 		guestRepository=guests;
 	}
 
-	public void addGuest(IGuest guest) {
+	public synchronized void addGuest(IGuest guest) {
 		guest.setId(generateId());
 		guestRepository.add(guest);
 	}
 
-	public IGuest getGuestById(Integer id) {
+	public synchronized IGuest getGuestById(Integer id) {
 		IGuest guest = null;
 		for (int i = 0; i < guestRepository.size(); i++) {
 				if ( guestRepository.get(i).getId().equals(id)) {
@@ -46,7 +46,7 @@ public class GuestRepository implements IGuestRepository{
 		return guest;
 	}
 
-	public void removeGuest(Integer id) {
+	public synchronized void removeGuest(Integer id) {
 		for (int i = 0; i < guestRepository.size(); i++) {
 			if (guestRepository.get(i).getId().equals(id)) {
 				guestRepository.remove(i);
@@ -55,7 +55,7 @@ public class GuestRepository implements IGuestRepository{
 		}
 	}
 	
-	public Integer generateId() {
+	public synchronized Integer generateId() {
 		Integer id=0;
 		for(int i=0;i< guestRepository.size(); i++) {
 			if(guestRepository.get(i).getId()>id) {

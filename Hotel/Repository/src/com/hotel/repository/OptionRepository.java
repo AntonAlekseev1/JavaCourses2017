@@ -29,12 +29,12 @@ public class OptionRepository implements IOptionRepository {
 		optionRepository=options;	
 	}
 
-	public void addOption(IOption option) {
+	public synchronized void addOption(IOption option) {
 		option.setId(generateId());
 		optionRepository.add(option);
 	}
 
-	public IOption getOptionById(Integer id) {
+	public synchronized IOption getOptionById(Integer id) {
 		IOption option = null;
 		for (int i = 0; i < optionRepository.size(); i++) {
 			if (optionRepository.get(i).getId().equals(id)) {
@@ -45,7 +45,7 @@ public class OptionRepository implements IOptionRepository {
 		return option;
 	}
 
-	public Integer generateId() {
+	public synchronized Integer generateId() {
 		Integer id = 0;
 		for (int i = 0; i < optionRepository.size(); i++) {
 			if (optionRepository.get(i).getId() > id) {
@@ -55,7 +55,7 @@ public class OptionRepository implements IOptionRepository {
 		return (id + 1);
 	}
 
-	public void removeOption(IOption option) {
+	public synchronized void removeOption(IOption option) {
 		for (int i = 0; i < optionRepository.size(); i++) {
 			if (optionRepository.get(i) == option) {
 				option = optionRepository.get(i);

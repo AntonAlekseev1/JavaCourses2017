@@ -16,7 +16,6 @@ import com.hotel.api.repository.IRoomRepository;
 import com.hotel.api.service.IHistoryService;
 import com.hotel.been.History;
 import com.hotel.di.DependecyInjector;
-import com.hotel.repository.HistoryRepository;
 import com.hotel.utils.ArrayWorker;
 
 public class HistoryService implements IHistoryService {
@@ -24,7 +23,7 @@ public class HistoryService implements IHistoryService {
 	private static HistoryService instance;
 	private static IRoomRepository roomRepository=(IRoomRepository) DependecyInjector.inject(IRoomRepository.class);
 	private static IGuestRepository guestRepository = (IGuestRepository) DependecyInjector.inject(IGuestRepository.class);
-	private HistoryRepository historyRepository = (HistoryRepository) DependecyInjector.inject(IHistoryRepository.class);
+	private IHistoryRepository historyRepository = (IHistoryRepository) DependecyInjector.inject(IHistoryRepository.class);
 
 	private HistoryService(IGuestRepository iGuestRepository, IRoomRepository iRoomRepository) {
 		HistoryService.guestRepository = iGuestRepository;

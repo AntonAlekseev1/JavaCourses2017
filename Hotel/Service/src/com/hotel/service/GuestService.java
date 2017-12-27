@@ -14,7 +14,6 @@ import com.hotel.di.DependecyInjector;
 public class GuestService implements IGuestService {
 
 	private static GuestService instance;
-	private Integer numberOfGuests = 0;
 	private IGuestRepository guestRepository = (IGuestRepository) DependecyInjector.inject(IGuestRepository.class);
 	private static IOptionRepository optionRepository = (IOptionRepository) DependecyInjector.inject(IOptionRepository.class);
 
@@ -49,10 +48,8 @@ public class GuestService implements IGuestService {
 	}
 
 	public Integer getNumberOfGuests() {
-			for (int i = 0; i < guestRepository.getGuests().size(); i++) {
-				numberOfGuests++;
-			}
-		return numberOfGuests;
+		
+		return guestRepository.getGuests().size();
 	}
 
 	public IGuestRepository getGuest() {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hotel.api.been.IRoom;
+import com.hotel.api.been.RoomStatus;
 import com.hotel.api.repository.IRoomRepository;
 
 public class RoomRepository  implements IRoomRepository {
@@ -12,7 +13,7 @@ public class RoomRepository  implements IRoomRepository {
 	private static RoomRepository instance;
 
 	public RoomRepository() {
-//		roomRepository;
+
 	}
 
 	public static RoomRepository getInstance() {
@@ -22,7 +23,7 @@ public class RoomRepository  implements IRoomRepository {
 		return instance;
 	}
 
-	public IRoom getRoomById(Integer id) {
+	public synchronized IRoom getRoomById(Integer id) {
 
 		IRoom roomEntity = null;
 		for (int i = 0; i < roomRepository.size(); i++) {
@@ -43,7 +44,7 @@ public class RoomRepository  implements IRoomRepository {
 		roomRepository = rooms;
 	}
 
-	public Integer generateId() {
+	public synchronized Integer generateId() {
 		Integer id = 0;
 		for (int i = 0; i < roomRepository.size(); i++) {
 			if (roomRepository.get(i).getId() > id) {
@@ -53,8 +54,9 @@ public class RoomRepository  implements IRoomRepository {
 		return (id + 1);
 	}
 
-	public void addRoom(IRoom room) {
+	public synchronized void addRoom(IRoom room) {
 		room.setId(generateId());
+		room.setStatus(RoomStatus.OPEN);
 		roomRepository.add(room);
 	}
 
