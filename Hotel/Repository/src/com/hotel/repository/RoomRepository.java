@@ -23,7 +23,7 @@ public class RoomRepository  implements IRoomRepository {
 		return instance;
 	}
 
-	public synchronized IRoom getRoomById(Integer id) {
+	public IRoom getRoomById(Integer id) {
 
 		IRoom roomEntity = null;
 		for (int i = 0; i < roomRepository.size(); i++) {
@@ -54,7 +54,7 @@ public class RoomRepository  implements IRoomRepository {
 		return (id + 1);
 	}
 
-	public synchronized void addRoom(IRoom room) {
+	public void addRoom(IRoom room) {
 		room.setId(generateId());
 		room.setStatus(RoomStatus.OPEN);
 		roomRepository.add(room);

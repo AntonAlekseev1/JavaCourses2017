@@ -29,12 +29,12 @@ public class OptionRepository implements IOptionRepository {
 		optionRepository=options;	
 	}
 
-	public synchronized void addOption(IOption option) {
+	public void addOption(IOption option) {
 		option.setId(generateId());
 		optionRepository.add(option);
 	}
 
-	public synchronized IOption getOptionById(Integer id) {
+	public IOption getOptionById(Integer id) {
 		IOption option = null;
 		for (int i = 0; i < optionRepository.size(); i++) {
 			if (optionRepository.get(i).getId().equals(id)) {

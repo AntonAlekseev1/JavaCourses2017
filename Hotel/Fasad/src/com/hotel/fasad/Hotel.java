@@ -3,8 +3,8 @@ package com.hotel.fasad;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -64,7 +64,7 @@ public class Hotel {
 		return instance;
 	}
 	
-	public void exportGuests() {
+	public String exportGuests() {
 		
 		String path=PATH_TO_CSV+Analyzer.getNameOfBeen("Guest");
 		CsvWorker.Writer writer = new CsvWorker.Writer(path);
@@ -72,10 +72,11 @@ public class Hotel {
 		writer.comment("id;name;lastName");
 		for(int i=0;i<guests.size();i++) {
 			writer.write(guests.get(i));
-		}	
+		}
+		return "data was exported along the way"+path;	
 	}
 	
-	public void importGuest() {
+	public String importGuest() {
 		String path=PATH_TO_CSV+Analyzer.getNameOfBeen("Guest");
 		List<IGuest> guests =getGuests();
 		List<IGuest> guestsImport = new ArrayList<>();
@@ -91,11 +92,13 @@ public class Hotel {
 		for (int i = guests.size(); i < reader.read().size(); i++) {
 			guests.add(guestsImport.get(i));
 		}
+		return "data was imported from"+path;
 		
 	}
 
-	public void addGuest(String name, String lastName) {
+	public synchronized String addGuest(String name, String lastName) {
 		guestService.addGuest(new Guest(name, lastName));
+		return "Guest was added";
 	}
 
 	public Integer getNumberOfGuests() {
@@ -106,20 +109,35 @@ public class Hotel {
 		return guestService.getGuests();
 	}
 
-	public IGuest getGuestById(Integer id) {
+	public IGuest getGuestById(String idStr) {
+		
+		Integer id = Integer.valueOf(idStr);
 		return guestService.getGuestById(id);
 	}
 
-	public List<IOption> getGuestOptions(Integer guestId) {
-		return guestService.getGuestOptions(guestId);
+	public String getGuestOptions(String guestIdStr) {//List<IOption>
+		IGuest guest = getGuestById(guestIdStr);
+		if(guest.getHistory()!=null) {
+			if(guest.getHistory().getOptions()!=null) {
+		Integer guestId = Integer.valueOf(guestIdStr);
+		return guestService.getGuestOptions(guestId).toString();
+			}
+			}else {
+				return "This guest does not have any options";
+			}
+		return null;
 	}
 
-	public void addOptionToGuest(Integer optionId, Integer guestId) {
+	public String addOptionToGuest(String optionIdStr, String guestIdStr) {
+		
+		Integer optionId = Integer.valueOf(optionIdStr);
+		Integer guestId = Integer.valueOf(guestIdStr);
 		try {
 			guestService.addOptionToGuest(optionId, guestId);
 		} catch (Exception e) {
 			logger.error("Exception in the method addOptionToGuest", e);
 		}
+		return "Option was added to guest";
 	}
 
 	public List<IGuest> sortedGuestByName() {
@@ -128,16 +146,23 @@ public class Hotel {
 
 	}
 	
-	public void remuveGuest(Integer id) {
+	public synchronized String remuveGuest(String idStr) {
+		Integer id = Integer.valueOf(idStr);
 		guestService.removeGuest(id);
+		return "Guest was removed";
 	}
 
-	public Double getTotalPayment(Integer guestId) {
-		return historyService.getTotalPayment(guestId);
+	public String getTotalPayment(String idStr) {
+		if(getGuestById(idStr).getHistory()!=null) {
+		Integer id = Integer.valueOf(idStr);
+		return historyService.getTotalPayment(id).toString();
+		}else {
+			return "This guest is not settled in any of the rooms";
+		}
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------
-	public void exportRooms() {
+	public String exportRooms() {
 		String path=PATH_TO_CSV+Analyzer.getNameOfBeen("Room");
 		CsvWorker.Writer writer = new CsvWorker.Writer(path);
 		List<IRoom> rooms = getAllRooms();
@@ -145,9 +170,10 @@ public class Hotel {
 		for (int i = 0; i < rooms.size(); i++) {
 			writer.write(rooms.get(i));
 		}
+		return "data was exported along the way"+path;
 	}
 	
-	public void importRooms() {
+	public String importRooms() {
 		String path=PATH_TO_CSV+Analyzer.getNameOfBeen("Room");
 		List<IRoom> rooms = getAllRooms();
 		List<IRoom> roomsImport = new ArrayList<>();
@@ -163,17 +189,23 @@ public class Hotel {
 		for (int i = rooms.size(); i < reader.read().size(); i++) {
 			rooms.add(roomsImport.get(i));
 		}
+		return "data was imported from "+path;
 	}
 	
-	public void addRoom(Integer copacity, Integer numberOfStars, Double price) {
+	public synchronized String addRoom(String copacityStr, String numberOfStarsStr, String priceStr) {
+		Integer copacity = Integer.valueOf(copacityStr);
+		Integer numberOfStars = Integer.valueOf(numberOfStarsStr);
+		Double price = Double.valueOf(priceStr);
 		roomService.addRoom(new Room(copacity, numberOfStars, price));
+		return "Room was added";
 	}
 
 	public List<IRoom> getAllRooms() {
 		return roomService.getAllRoom();
 	}
 
-	public IRoom getRoonById(Integer id) {
+	public IRoom getRoomById(String idStr) {
+		Integer id = Integer.valueOf(idStr);
 		return roomService.getRooms().getRoomById(id);
 	}
 
@@ -204,30 +236,39 @@ public class Hotel {
 		return roomService.getAllRoom();
 	}
 
-	public void chengePriceOfRoom(Integer id, Double price) {
-		roomService.chengePriseOfRoom(id, price);
+	public synchronized String chengePriceOfRoom(String idStr, String priceStr) {
+		Integer id = Integer.valueOf(idStr);
+		Double price = Double.valueOf(priceStr);
+		 roomService.chengePriseOfRoom(id, price);
+		 return "Price was changed";
 	}
 	
-	public void changeRoomStatus(Integer id, Integer n) {
+	public synchronized String changeRoomStatus(String id, String n) {
 		Boolean changeStatus = Boolean.valueOf(Configuration.getProperties("CHANGE_STATUS"));
-		IRoom room=getRoonById(id);
+		IRoom room=getRoomById(id);
+		String status = null;
 		if(changeStatus) {
 			switch(n) {
-			case(1):
+			case("1"):
 				room.setStatus(RoomStatus.OPEN);
+			status = "Open";
 			       break;
-			case(2):
+			case("2"):
 				room.setStatus(RoomStatus.CLOSE);
+			status = "Close";
 			        break;
-			case(3):
+			case("3"):
 				room.setStatus(RoomStatus.SERVICED);
+			status = "Serviced";
 			        break;
-			case(4):
+			case("4"):
 				room.setStatus(RoomStatus.REPAIRABLE);
+			status = "Repairable";
 			        break;
 			}
 			
 		}
+		return "New status of the room "+status;
 	}
 
 	public List<IGuest> getLastGuests(Integer id) {
@@ -240,7 +281,11 @@ public class Hotel {
 		return null;
 	}
 	
-	public IRoom clone(Integer id, String answer, Integer copacity, Integer stars, Double price) throws CloneNotSupportedException {
+	public synchronized IRoom clone(String idStr, String answer, String copacityStr, String starsStr, String priceStr) throws CloneNotSupportedException {
+		Integer id=Integer.valueOf(idStr);
+		Integer copacity=Integer.valueOf(copacityStr);
+		Integer stars=Integer.valueOf(starsStr);
+		Double price=Double.valueOf(priceStr);
 		IRoom clon = roomService.clone(id);
 		if(answer.equals("Y")|answer.equals("y")) {
 				clon.setCopacity(copacity);
@@ -253,32 +298,50 @@ public class Hotel {
 	}
 
 	// ---------------------------------------------------------------------------------------------------
-	public void settleGuestInRoom(Integer guestId, Integer roomId, Calendar dateOfArival, Calendar evictDate) {
-		historyService.settleGuestInRoom(guestId, roomId, dateOfArival, evictDate);
+	public synchronized String settleGuestInRoom(String guestIdStr, String roomIdStr, String arivalDayStr, String arivalMonthStr, String arivalYearStr,
+			String evictDayStr, String evictMonthStr, String evictYearStr ) {
+		Integer guestId = Integer.valueOf(guestIdStr);
+		Integer roomId=Integer.valueOf(roomIdStr);
+		Integer arivalDay=Integer.valueOf(arivalDayStr);
+		Integer arivalMonth=Integer.valueOf(arivalMonthStr);
+		Integer arivalYear=Integer.valueOf(arivalYearStr);
+		Integer evictDay=Integer.valueOf(evictDayStr);
+		Integer evictMonth=Integer.valueOf(evictMonthStr);
+		Integer evictYear=Integer.valueOf(evictYearStr);
+		historyService.settleGuestInRoom(guestId, roomId, new GregorianCalendar(arivalYear, arivalMonth, arivalDay),
+                new GregorianCalendar(evictYear, evictMonth, evictDay));
+		return "the guest was settled in the room";
 	}
 
-	public List<IRoom> getFreeRoomsOnDate(Calendar date) {
+	public  String getFreeRoomsOnDate(String dayStr, String manthStr, String yearStr) {
+		Integer day=Integer.valueOf(dayStr);
+		Integer manth=Integer.valueOf(manthStr);
+		Integer year=Integer.valueOf(yearStr);
 
 		try {
 
-			ArrayList<IRoom> rooms = (ArrayList<IRoom>) historyService.getFreeRoomOnDate(date.getTime());
-			return rooms;
+			ArrayList<IRoom> rooms = (ArrayList<IRoom>) historyService.getFreeRoomOnDate(
+					                                                  new GregorianCalendar(year,manth,day).getTime());
+			return rooms.toString();
 		} catch ( NoSuchElementException e) {
 			logger.error("Exception in the method getFreeRoomsOnDate: ", e);
 		}
-		return null;
+		return "No free rooms on this date";
 	}
 
 	public List<IHistory> getGuestsRooms() {
 		return historyService.getHistory();
 	}
 
-	public void addHistory(IHistory history) {
+	public synchronized void addHistory(IHistory history) {
 		historyService.addHistory(history);
 	}
 
-	public void evictGuestFromRoom(Integer guestId, Integer roomId) {
+	public synchronized String evictGuestFromRoom(String guestIdStr, String roomIdStr) {
+		Integer guestId = Integer.valueOf(guestIdStr);
+		Integer roomId = Integer.valueOf(roomIdStr);
 		historyService.evictGuestFromRoom(guestId, roomId);
+		return "the guest was evicted from the room";
 	}
 
 	public List<IHistory> getHistory() {
@@ -286,7 +349,7 @@ public class Hotel {
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------------------
-	public void exportOptions() {
+	public String exportOptions() {
 		String path=PATH_TO_CSV+Analyzer.getNameOfBeen("Option");
 		CsvWorker.Writer writer = new CsvWorker.Writer(path);
 		List<IOption> options = getAllOptions();
@@ -294,9 +357,10 @@ public class Hotel {
 		for(int i=0;i<options.size();i++) {
 			writer.write(options.get(i));
 		}
+		return "data was exported along the way"+path;
 	}
 	
-	public void importOptions() {
+	public String importOptions() {
 		String path=PATH_TO_CSV+Analyzer.getNameOfBeen("Option");
 		List<IOption> options = getAllOptions();
 		List<IOption> optionsImport = new ArrayList<>();
@@ -312,22 +376,26 @@ public class Hotel {
 		for (int i = options.size(); i < reader.read().size(); i++) {
 			options.add(optionsImport.get(i));
 		}
+		return "data was imported from"+path;
 	}
 	
-	public IOption getOptionById(Integer id) {
+	public IOption getOptionById(String idStr) {
+		Integer id = Integer.valueOf(idStr);
 		return optionService.getOptions().getOptionById(id);
 	}
 
-	public void addOption(String name, Double price) {
+	public synchronized String addOption(String name, Double price) {
 		optionService.addOption(new Option(name, price));
+		return "the option thas added";
 	}
 
 	public List<IOption> getAllOptions() {
 		return optionService.getOption();
 	}
 
-	public void exit() throws FileNotFoundException, IOException {
+	public synchronized String save() throws FileNotFoundException, IOException {
 		SerealizationMasrter.marshaling(getGuests(), getAllRooms(), getAllOptions(), getHistory());
+		return "data saved";
 	}
 
 	public void demarshalingFrom() throws ClassNotFoundException, IOException {

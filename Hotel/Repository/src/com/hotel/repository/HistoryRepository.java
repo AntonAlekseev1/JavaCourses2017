@@ -29,7 +29,7 @@ public class HistoryRepository implements IHistoryRepository {
 		historyRepository=histories;	
 	}
 
-	public synchronized IHistory getHistoryById(Integer id) {
+	public IHistory getHistoryById(Integer id) {
 		IHistory entity = null;
 		for (int i = 0; i < historyRepository.size(); i++) {
 			if (historyRepository.get(i).getId().equals(id)) {
