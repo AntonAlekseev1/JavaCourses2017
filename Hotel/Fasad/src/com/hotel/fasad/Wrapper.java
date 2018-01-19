@@ -43,16 +43,13 @@ public class Wrapper {
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 					logger.error("invoke method exception "+e.getMessage());
 					response = "Wrapper: invoke method exception "+e.getMessage();
-					e.printStackTrace();
 				}
 			} catch (NoSuchMethodException e) {
 				logger.error("No such method "+e.getMessage());
 				response = "Wrapper: No such method "+e.getMessage();
-				e.printStackTrace();
 			} catch (SecurityException e) {
 				logger.error("Security Exception "+e.getMessage());
 				response = "Wrapper: Security Exception "+e.getMessage();
-				e.printStackTrace();
 			}
 	
 		return response;
