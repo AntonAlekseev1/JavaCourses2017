@@ -1,7 +1,7 @@
 package com.hotel.ui.action;
 
-import com.hotel.ui.Connection;
 import com.hotel.ui.api.IConnection;
+import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
 public class SaveData implements IAction{

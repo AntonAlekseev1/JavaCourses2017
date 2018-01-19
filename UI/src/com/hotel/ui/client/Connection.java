@@ -1,4 +1,4 @@
-package com.hotel.ui;
+package com.hotel.ui.client;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

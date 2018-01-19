@@ -1,7 +1,7 @@
 package com.hotel.ui.action;
 
-import com.hotel.ui.Connection;
 import com.hotel.ui.api.IConnection;
+import com.hotel.ui.client.Connection;
 
 public class Exit implements IAction {
 
