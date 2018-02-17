@@ -1,0 +1,216 @@
+
+2018-02-11 00:02:39 INFO  RoomDatabaseDAO:120 - (create)connection closed
+2018-02-11 00:03:04 INFO  RoomDatabaseDAO:55 - (getAll)connection closed
+2018-02-11 00:08:00 INFO  RoomDatabaseDAO:151 - (update)connection closed
+2018-02-11 00:08:19 INFO  RoomDatabaseDAO:55 - (getAll)connection closed
+2018-02-11 00:10:36 INFO  RoomDatabaseDAO:175 - (delete)connection closed
+2018-02-11 00:11:04 INFO  RoomDatabaseDAO:55 - (getAll)connection closed
+2018-02-11 00:23:34 INFO  OptionDatabaseDAO:50 - (getAll)connection closed
+2018-02-11 00:27:08 INFO  OptionDatabaseDAO:80 - (getById)connection closed
+2018-02-11 00:30:37 INFO  OptionDatabaseDAO:106 - (create)connection closed
+2018-02-11 00:30:54 INFO  OptionDatabaseDAO:50 - (getAll)connection closed
+2018-02-11 00:36:14 INFO  OptionDatabaseDAO:157 - (delete)connection closed
+2018-02-11 00:36:34 INFO  OptionDatabaseDAO:50 - (getAll)connection closed
+2018-02-11 14:34:15 INFO  HistoryDatabaseDAO:52 - (getAll)connection closed
+2018-02-11 14:34:38 INFO  HistoryDatabaseDAO:52 - (getAll)connection closed
+2018-02-11 14:35:18 INFO  HistoryDatabaseDAO:84 - (getById)connection closed
+2018-02-11 14:45:57 INFO  HistoryDatabaseDAO:112 - (create)connection closed
+2018-02-11 14:58:42 INFO  HistoryDatabaseDAO:112 - (create)connection closed
+2018-02-11 15:00:54 INFO  HistoryDatabaseDAO:112 - (create)connection closed
+2018-02-11 15:05:33 INFO  HistoryDatabaseDAO:112 - (create)connection closed
+2018-02-11 15:13:03 INFO  HistoryDatabaseDAO:112 - (create)connection closed
+2018-02-11 15:13:26 INFO  HistoryDatabaseDAO:52 - (getAll)connection closed
+2018-02-11 15:25:11 INFO  HistoryDatabaseDAO:114 - (create)connection closed
+2018-02-11 15:26:25 INFO  HistoryDatabaseDAO:54 - (getAll)connection closed
+2018-02-11 15:26:54 INFO  HistoryDatabaseDAO:167 - (delete)connection closed
+2018-02-11 15:27:03 INFO  HistoryDatabaseDAO:54 - (getAll)connection closed
+2018-02-11 15:32:02 INFO  HistoryDatabaseDAO:86 - (getById)connection closed
+2018-02-11 15:32:02 INFO  HistoryDatabaseDAO:114 - (create)connection closed
+2018-02-11 15:32:21 INFO  HistoryDatabaseDAO:54 - (getAll)connection closed
+2018-02-13 00:59:41 INFO  HistoryDatabaseDAO:98 - (getById)connection closed
+2018-02-13 01:00:53 INFO  HistoryDatabaseDAO:98 - (getById)connection closed
+2018-02-13 01:00:53 INFO  HistoryDatabaseDAO:98 - (getById)connection closed
+2018-02-13 01:48:58 ERROR HistoryDatabaseDAO:214 - Can't delete history: 
+java.sql.SQLException: Before start of result set
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:965)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:898)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:887)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:861)
+	at com.mysql.jdbc.ResultSetImpl.checkRowPos(ResultSetImpl.java:790)
+	at com.mysql.jdbc.ResultSetImpl.getStringInternal(ResultSetImpl.java:5215)
+	at com.mysql.jdbc.ResultSetImpl.getString(ResultSetImpl.java:5138)
+	at com.mysql.jdbc.ResultSetImpl.getDoubleInternal(ResultSetImpl.java:2275)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2243)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2255)
+	at com.hotel.dao.HistoryDatabaseDAO.getTotalPayment(HistoryDatabaseDAO.java:207)
+	at com.hotel.dao.Test.main(Test.java:6)
+2018-02-13 01:48:58 INFO  HistoryDatabaseDAO:219 - (delete)connection closed
+2018-02-13 01:49:34 ERROR HistoryDatabaseDAO:214 - Can't delete history: 
+java.sql.SQLException: Before start of result set
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:965)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:898)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:887)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:861)
+	at com.mysql.jdbc.ResultSetImpl.checkRowPos(ResultSetImpl.java:790)
+	at com.mysql.jdbc.ResultSetImpl.getStringInternal(ResultSetImpl.java:5215)
+	at com.mysql.jdbc.ResultSetImpl.getString(ResultSetImpl.java:5138)
+	at com.mysql.jdbc.ResultSetImpl.getDoubleInternal(ResultSetImpl.java:2275)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2243)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2255)
+	at com.hotel.dao.HistoryDatabaseDAO.getTotalPayment(HistoryDatabaseDAO.java:207)
+	at com.hotel.dao.Test.main(Test.java:6)
+2018-02-13 01:49:34 INFO  HistoryDatabaseDAO:219 - (delete)connection closed
+2018-02-13 01:49:40 ERROR HistoryDatabaseDAO:214 - Can't delete history: 
+java.sql.SQLException: Before start of result set
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:965)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:898)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:887)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:861)
+	at com.mysql.jdbc.ResultSetImpl.checkRowPos(ResultSetImpl.java:790)
+	at com.mysql.jdbc.ResultSetImpl.getStringInternal(ResultSetImpl.java:5215)
+	at com.mysql.jdbc.ResultSetImpl.getString(ResultSetImpl.java:5138)
+	at com.mysql.jdbc.ResultSetImpl.getDoubleInternal(ResultSetImpl.java:2275)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2243)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2255)
+	at com.hotel.dao.HistoryDatabaseDAO.getTotalPayment(HistoryDatabaseDAO.java:207)
+	at com.hotel.dao.Test.main(Test.java:6)
+2018-02-13 01:49:40 INFO  HistoryDatabaseDAO:219 - (delete)connection closed
+2018-02-13 01:49:48 ERROR HistoryDatabaseDAO:214 - Can't delete history: 
+java.sql.SQLException: Before start of result set
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:965)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:898)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:887)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:861)
+	at com.mysql.jdbc.ResultSetImpl.checkRowPos(ResultSetImpl.java:790)
+	at com.mysql.jdbc.ResultSetImpl.getStringInternal(ResultSetImpl.java:5215)
+	at com.mysql.jdbc.ResultSetImpl.getString(ResultSetImpl.java:5138)
+	at com.mysql.jdbc.ResultSetImpl.getDoubleInternal(ResultSetImpl.java:2275)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2243)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2255)
+	at com.hotel.dao.HistoryDatabaseDAO.getTotalPayment(HistoryDatabaseDAO.java:207)
+	at com.hotel.dao.Test.main(Test.java:6)
+2018-02-13 01:49:48 INFO  HistoryDatabaseDAO:219 - (delete)connection closed
+2018-02-13 01:50:23 ERROR HistoryDatabaseDAO:215 - Can't delete history: 
+java.sql.SQLException: Before start of result set
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:965)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:898)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:887)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:861)
+	at com.mysql.jdbc.ResultSetImpl.checkRowPos(ResultSetImpl.java:790)
+	at com.mysql.jdbc.ResultSetImpl.getStringInternal(ResultSetImpl.java:5215)
+	at com.mysql.jdbc.ResultSetImpl.getString(ResultSetImpl.java:5138)
+	at com.mysql.jdbc.ResultSetImpl.getDoubleInternal(ResultSetImpl.java:2275)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2243)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2255)
+	at com.hotel.dao.HistoryDatabaseDAO.getTotalPayment(HistoryDatabaseDAO.java:207)
+	at com.hotel.dao.Test.main(Test.java:6)
+2018-02-13 01:50:23 INFO  HistoryDatabaseDAO:220 - (delete)connection closed
+2018-02-13 01:50:48 ERROR HistoryDatabaseDAO:215 - Can't delete history: 
+java.sql.SQLException: Before start of result set
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:965)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:898)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:887)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:861)
+	at com.mysql.jdbc.ResultSetImpl.checkRowPos(ResultSetImpl.java:790)
+	at com.mysql.jdbc.ResultSetImpl.getStringInternal(ResultSetImpl.java:5215)
+	at com.mysql.jdbc.ResultSetImpl.getString(ResultSetImpl.java:5138)
+	at com.mysql.jdbc.ResultSetImpl.getDoubleInternal(ResultSetImpl.java:2275)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2243)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2255)
+	at com.hotel.dao.HistoryDatabaseDAO.getTotalPayment(HistoryDatabaseDAO.java:207)
+	at com.hotel.dao.Test.main(Test.java:7)
+2018-02-13 01:50:48 INFO  HistoryDatabaseDAO:220 - (delete)connection closed
+2018-02-13 01:50:53 ERROR HistoryDatabaseDAO:215 - Can't delete history: 
+java.sql.SQLException: Before start of result set
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:965)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:898)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:887)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:861)
+	at com.mysql.jdbc.ResultSetImpl.checkRowPos(ResultSetImpl.java:790)
+	at com.mysql.jdbc.ResultSetImpl.getStringInternal(ResultSetImpl.java:5215)
+	at com.mysql.jdbc.ResultSetImpl.getString(ResultSetImpl.java:5138)
+	at com.mysql.jdbc.ResultSetImpl.getDoubleInternal(ResultSetImpl.java:2275)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2243)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2255)
+	at com.hotel.dao.HistoryDatabaseDAO.getTotalPayment(HistoryDatabaseDAO.java:207)
+	at com.hotel.dao.Test.main(Test.java:7)
+2018-02-13 01:50:53 INFO  HistoryDatabaseDAO:220 - (delete)connection closed
+2018-02-13 01:51:17 ERROR HistoryDatabaseDAO:215 - Can't delete history: 
+java.sql.SQLException: Before start of result set
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:965)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:898)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:887)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:861)
+	at com.mysql.jdbc.ResultSetImpl.checkRowPos(ResultSetImpl.java:790)
+	at com.mysql.jdbc.ResultSetImpl.getStringInternal(ResultSetImpl.java:5215)
+	at com.mysql.jdbc.ResultSetImpl.getString(ResultSetImpl.java:5138)
+	at com.mysql.jdbc.ResultSetImpl.getDoubleInternal(ResultSetImpl.java:2275)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2243)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2255)
+	at com.hotel.dao.HistoryDatabaseDAO.getTotalPayment(HistoryDatabaseDAO.java:207)
+	at com.hotel.dao.Test.main(Test.java:7)
+2018-02-13 01:51:17 INFO  HistoryDatabaseDAO:220 - (delete)connection closed
+2018-02-13 01:51:49 ERROR HistoryDatabaseDAO:215 - Can't delete history: 
+java.sql.SQLException: Before start of result set
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:965)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:898)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:887)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:861)
+	at com.mysql.jdbc.ResultSetImpl.checkRowPos(ResultSetImpl.java:790)
+	at com.mysql.jdbc.ResultSetImpl.getStringInternal(ResultSetImpl.java:5215)
+	at com.mysql.jdbc.ResultSetImpl.getString(ResultSetImpl.java:5138)
+	at com.mysql.jdbc.ResultSetImpl.getDoubleInternal(ResultSetImpl.java:2275)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2243)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2255)
+	at com.hotel.dao.HistoryDatabaseDAO.getTotalPayment(HistoryDatabaseDAO.java:207)
+	at com.hotel.dao.Test.main(Test.java:7)
+2018-02-13 01:51:49 INFO  HistoryDatabaseDAO:220 - (delete)connection closed
+2018-02-13 01:52:26 ERROR HistoryDatabaseDAO:215 - Can't delete history: 
+java.sql.SQLException: Before start of result set
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:965)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:898)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:887)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:861)
+	at com.mysql.jdbc.ResultSetImpl.checkRowPos(ResultSetImpl.java:790)
+	at com.mysql.jdbc.ResultSetImpl.getStringInternal(ResultSetImpl.java:5215)
+	at com.mysql.jdbc.ResultSetImpl.getString(ResultSetImpl.java:5138)
+	at com.mysql.jdbc.ResultSetImpl.getDoubleInternal(ResultSetImpl.java:2275)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2243)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2255)
+	at com.hotel.dao.HistoryDatabaseDAO.getTotalPayment(HistoryDatabaseDAO.java:207)
+	at com.hotel.dao.Test.main(Test.java:7)
+2018-02-13 01:52:26 INFO  HistoryDatabaseDAO:220 - (delete)connection closed
+2018-02-13 01:56:28 ERROR HistoryDatabaseDAO:216 - Can't delete history: 
+java.sql.SQLException: Before start of result set
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:965)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:898)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:887)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:861)
+	at com.mysql.jdbc.ResultSetImpl.checkRowPos(ResultSetImpl.java:790)
+	at com.mysql.jdbc.ResultSetImpl.getStringInternal(ResultSetImpl.java:5215)
+	at com.mysql.jdbc.ResultSetImpl.getString(ResultSetImpl.java:5138)
+	at com.mysql.jdbc.ResultSetImpl.getDoubleInternal(ResultSetImpl.java:2275)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2243)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2255)
+	at com.hotel.dao.HistoryDatabaseDAO.getTotalPayment(HistoryDatabaseDAO.java:207)
+	at com.hotel.dao.Test.main(Test.java:7)
+2018-02-13 01:56:28 INFO  HistoryDatabaseDAO:221 - (delete)connection closed
+2018-02-13 01:58:12 ERROR HistoryDatabaseDAO:216 - Can't delete history: 
+java.sql.SQLException: Before start of result set
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:965)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:898)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:887)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:861)
+	at com.mysql.jdbc.ResultSetImpl.checkRowPos(ResultSetImpl.java:790)
+	at com.mysql.jdbc.ResultSetImpl.getStringInternal(ResultSetImpl.java:5215)
+	at com.mysql.jdbc.ResultSetImpl.getString(ResultSetImpl.java:5138)
+	at com.mysql.jdbc.ResultSetImpl.getDoubleInternal(ResultSetImpl.java:2275)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2243)
+	at com.mysql.jdbc.ResultSetImpl.getDouble(ResultSetImpl.java:2255)
+	at com.hotel.dao.HistoryDatabaseDAO.getTotalPayment(HistoryDatabaseDAO.java:207)
+	at com.hotel.dao.Test.main(Test.java:7)
+2018-02-13 01:58:12 INFO  HistoryDatabaseDAO:221 - (delete)connection closed
+2018-02-13 02:02:00 INFO  HistoryDatabaseDAO:222 - (delete)connection closed
+2018-02-13 02:02:24 INFO  HistoryDatabaseDAO:222 - (delete)connection closed
+2018-02-13 02:03:41 INFO  HistoryDatabaseDAO:98 - (getById)connection closed
+2018-02-13 02:03:41 INFO  HistoryDatabaseDAO:222 - (delete)connection closed

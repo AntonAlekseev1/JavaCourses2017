@@ -6,7 +6,7 @@ import com.hotel.api.been.RoomStatus;
 
 public interface IRoom extends IEntity {
 	
-	public Object clone() throws CloneNotSupportedException;
+	public IRoom clone() throws CloneNotSupportedException;
 	
 	public Integer getId();
 	
@@ -35,4 +35,10 @@ public interface IRoom extends IEntity {
 	public List<IHistory> getHistory();
 	
 	public String toString();
+
+	void setHistory(List<IHistory> history);
+
+	void setNumber(Integer number);
+
+	Integer getNumber();
 }

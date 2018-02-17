@@ -1,75 +1,74 @@
 package com.hotel.service;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import com.hotel.api.been.IGuest;
 import com.hotel.api.been.IOption;
-import com.hotel.api.repository.IGuestRepository;
-import com.hotel.api.repository.IOptionRepository;
+import com.hotel.api.dao.IGuestDAO;
+import com.hotel.api.dao.IHistoryDAO;
+import com.hotel.api.dao.IOptionDAO;
 import com.hotel.api.service.IGuestService;
-import com.hotel.repository.GuestRepository;
-import com.hotel.repository.OptionRepository;
+import com.hotel.di.DependecyInjector;
+import com.hotel.utils.Connector;
 
 public class GuestService implements IGuestService {
 
-	private Integer numberOfGuests = 0;
-	private IGuestRepository guestRepository = GuestRepository.getInstance();
-	private IOptionRepository optionRepository = OptionRepository.getInstance();
+	private static GuestService instance;
+	private IGuestDAO guestDao = (IGuestDAO) DependecyInjector.inject(IGuestDAO.class);
+	private static IOptionDAO optionDao = (IOptionDAO) DependecyInjector.inject(IOptionDAO.class);
+	private IHistoryDAO historyDao = (IHistoryDAO) DependecyInjector.inject(IHistoryDAO.class);
+	private Connector connect = Connector.getinstance();
 
-	public GuestService(IOptionRepository optionRepository) {
-		GuestRepository.getInstance();
-		this.optionRepository = optionRepository;
+	private GuestService(IOptionDAO optionDao) {
+		GuestService.optionDao = optionDao;
 
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void sortGuests(Comparator comparator) {
-		Collections.sort(guestRepository.getGuests(), comparator);
-	}
-
-	public IGuest getGuestById(Integer id) {
-		return guestRepository.getGuestById(id);
-	}
-
-	public void addGuest(IGuest guest) {
-		guestRepository.addGuest(guest);
-
-	}
-
-	public List<IGuest> getGuests() {
-		return guestRepository.getGuests();
-	}
-
-	public Integer getNumberOfGuests() {
-			for (int i = 0; i < guestRepository.getGuests().size(); i++) {
-				numberOfGuests++;
-			}
-		return numberOfGuests;
-	}
-
-	public IGuestRepository getGuest() {
-		return guestRepository;
-	}
-
-	public void addOptionToGuest(Integer optionId, Integer guestId) {
-		IGuest guest = guestRepository.getGuestById(guestId);
-		IOption option = optionRepository.getOptionById(optionId);
-			if (guest.getHistory() != null) {
-				guest.getHistory().getOptions().add(option);
-
-			}
-		} 
-
-	public List<IOption> getGuestOptions(Integer id) {
-		IGuest guest = guestRepository.getGuestById(id);
-
-		return guest.getHistory().getOptions();
 	}
 	
-	public void removeGuest(Integer id) {
-		guestRepository.removeGuest(id);
+	public static GuestService getInstance() {
+		if(instance==null) {
+			instance = new GuestService(optionDao);
+		}
+		return instance;
+	}
+
+	
+	public List<IGuest> sortGuests(String name) throws Exception {
+		return guestDao.sort(connect.getConection(), name);
+	}
+
+	public IGuest getGuestById(Integer id) throws Exception {
+		return guestDao.getById(connect.getConection(),id);
+	}
+
+	public void addGuest(IGuest guest) throws Exception {
+		guestDao.create(connect.getConection(),guest);
+
+	}
+
+	public List<IGuest> getGuests() throws Exception {
+		return guestDao.getAll(connect.getConection());
+	}
+
+	public Integer getNumberOfGuests() throws Exception {
+		
+		return guestDao.getAll(connect.getConection()).size();
+	}
+
+	public IGuestDAO getGuest() {
+		return guestDao;
+	}
+
+	public void addOptionToGuest(Integer optionId, Integer guestId) throws Exception {
+		historyDao.addOptionToGoest(connect.getConection(), guestId, optionId);
+		} 
+
+	public List<IOption> getGuestOptions(Integer id) throws Exception {
+		
+		return guestDao.getGuestOptions(connect.getConection(), id);
+	}
+	
+	public void removeGuest(Integer id) throws Exception {
+		guestDao.delete(connect.getConection(),id);
 	}
 
 }

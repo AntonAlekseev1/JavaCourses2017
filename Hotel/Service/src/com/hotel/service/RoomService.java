@@ -1,37 +1,48 @@
 package com.hotel.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import com.hotel.api.been.IGuest;
 import com.hotel.api.been.IRoom;
-import com.hotel.api.repository.IRoomRepository;
+import com.hotel.api.been.RoomStatus;
+import com.hotel.api.dao.IRoomDAO;
 import com.hotel.api.service.IRoomService;
-import com.hotel.been.Room;
-import com.hotel.repository.RoomRepository;
+import com.hotel.di.DependecyInjector;
+import com.hotel.utils.Connector;
 
 public class RoomService implements IRoomService {
-	private Integer numberOfRooms = 0;
-	private Integer numberOfFreeRooms = 0;
-	private IRoomRepository roomRepository = RoomRepository.getInstance();
-
-	public RoomService() {
-
-		RoomRepository.getInstance();
-
+	
+	private static RoomService instance;
+	private IRoomDAO roomDao = (IRoomDAO) DependecyInjector.inject(IRoomDAO.class);
+	private Connector connect = Connector.getinstance();
+	
+	private RoomService() {
+		
+	}
+	
+	public static RoomService getInstance() {
+		if(instance==null) {
+			instance=new RoomService();
+		}
+		return instance;
 	}
 
-	public void addRoom(IRoom room) {
-		roomRepository.addRoom(room);
+	public void addRoom(IRoom room) throws Exception {
+		room.setIsFree(true);
+		room.setStatus(RoomStatus.OPEN);
+		roomDao.create(connect.getConection(), room);
+	}
+	
+	public void remove(Integer id) throws Exception {
+		roomDao.delete(connect.getConection(), id);
 	}
 
-	public List<IRoom> getAllRoom() {
-		return roomRepository.getRooms();
+	public List<IRoom> getAllRoom() throws Exception {
+		return roomDao.getAll(connect.getConection());
 	}
 
-	public List<IRoom> getFreeRooms() {
+	public List<IRoom> getFreeRooms() throws Exception {
 		List<IRoom> allRooms = getAllRoom();
 		List<IRoom> freeRooms = new ArrayList<>();
 		for (int i = 0; i < allRooms.size(); i++) {
@@ -42,59 +53,50 @@ public class RoomService implements IRoomService {
 		return freeRooms;
 	}
 
-	public IRoomRepository getRooms() {
-		return roomRepository;
+	public IRoomDAO getRooms() {
+		return roomDao;
 	}
 
-	public String chengePriseOfRoom(Integer roomId, Double price) {
-		IRoom room = getRooms().getRoomById(roomId);
+	public String chengePriseOfRoom(Integer roomId, Double price) throws Exception {
+		IRoom room = getRooms().getById(connect.getConection(),roomId);
 		if (room != null) {
 			room.setPrice(price);
+			roomDao.updute(connect.getConection(), room);
 		}
 		return "Price of room " + room.getId() + " is " + room.getPrice();
 	}
 
-	public Integer getNumberOfRooms() {
-		for (int i = 0; i < roomRepository.getRooms().size(); i++) {
-			numberOfRooms++;
-		}
-		return numberOfRooms;
+	public Integer getNumberOfRooms() throws Exception {
+
+		return roomDao.getAll(connect.getConection()).size();
 	}
 
-	public Integer getNumberOfFreeRooms() {
-		for (int i = 0; i < roomRepository.getRooms().size(); i++) {
-			if (roomRepository.getRooms().get(i).getIsFree() == true) {
+	public Integer getNumberOfFreeRooms() throws Exception {
+		List<IRoom> list = roomDao.getAll(connect.getConection());
+		Integer numberOfFreeRooms = 0;
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getIsFree() == true) {
 				numberOfFreeRooms++;
 			}
 		}
 		return numberOfFreeRooms;
 	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void sortRooms(Comparator comparator) {
-		Collections.sort(roomRepository.getRooms(), comparator);
+    @Override
+	public List<IRoom> sortRooms(String name) throws Exception {
+		return roomDao.sort(connect.getConection(), name);
 	}
 
-	public List<IGuest> getLastGuests(Integer id, Integer num) {
-		List<IGuest> guests = new ArrayList<>();
-		IRoom room = roomRepository.getRoomById(id);
-		try {
-			for (int i = 0; i < num; i++) {
-				if (room.getHistory().get(i) != null && room.getHistory().get(i).getGuest() != null) {
-
-					guests.add(room.getHistory().get(i).getGuest());
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public List<IGuest> getLastGuests(Integer id, Integer num) throws Exception {
+		List<IGuest> guests = roomDao.getLastGuests(connect.getConection(), id, num);
+		
 		return guests;
 	}
 	
-	public IRoom clone(Integer id) throws CloneNotSupportedException {
-		IRoom clon = (Room) roomRepository.getRoomById(id).clone();
-		clon.setId(roomRepository.generateId());
-		clon.setIsFree(true);
+	public IRoom clone(IRoom room) throws Exception {
+		IRoom clon =  room.clone();
+		
+			roomDao.create(connect.getConection(), clon);
+		
 		return clon;
 	}
 
