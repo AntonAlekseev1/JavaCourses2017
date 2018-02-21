@@ -5,17 +5,17 @@ import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
 public class SortGuestsByNameAction implements IAction {
-	
+
 	private final String actionName = "sortedGuests";
 	private String request;
 	private String response;
 
 	@Override
 	public void execute() {
-		request = actionName+" NAME";
+		request = actionName + " NAME";
 		response = Connection.getInstance().getResponseFromServer(request);
 		Printer.println(response);
-		
+
 	}
 
 }

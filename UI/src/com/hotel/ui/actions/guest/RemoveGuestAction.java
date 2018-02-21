@@ -11,7 +11,7 @@ import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
 public class RemoveGuestAction implements IAction {
-	
+
 	private static final Logger logger = Logger.getLogger(RemoveGuestAction.class);
 	private final String actionName = "remuveGuest";
 	private String request;
@@ -19,19 +19,19 @@ public class RemoveGuestAction implements IAction {
 
 	@Override
 	public void execute() {
-BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
-		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
 		try {
 			Printer.print("Enter the guest id ");
 			String idStr = reader.readLine();
-			request = actionName+" "+idStr;
+			request = actionName + " " + idStr;
 			response = Connection.getInstance().getResponseFromServer(request);
 			Printer.println(response);
-		}catch(IOException e) {
-			logger.info("Exception in class RemoveGuestAction"+e.getMessage());
-	
+		} catch (IOException e) {
+			logger.info("Exception in class RemoveGuestAction" + e.getMessage());
+
 		}
-		
+
 	}
 
 }

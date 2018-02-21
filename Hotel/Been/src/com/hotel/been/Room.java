@@ -11,8 +11,8 @@ import com.hotel.api.been.IHistory;
 import com.hotel.api.been.IRoom;
 import com.hotel.api.been.RoomStatus;
 
-@CsvEntity(filename="Rooms.csv", entityId=3)
-public class Room extends Entity implements IRoom, Cloneable{
+@CsvEntity(filename = "Rooms.csv", entityId = 3)
+public class Room extends Entity implements IRoom, Cloneable {
 
 	@CsvProperty(columnNumber = 2, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private Integer number;
@@ -26,12 +26,12 @@ public class Room extends Entity implements IRoom, Cloneable{
 	private Boolean isFree = true;
 	@CsvProperty(columnNumber = 7, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private RoomStatus status;
-	private List<IHistory> history=new ArrayList<>();
+	private List<IHistory> history = new ArrayList<>();
 
 	public Room() {
-		
+
 	}
-	
+
 	public Room(String string) {
 
 		String[] arr = string.split(" ");
@@ -50,74 +50,89 @@ public class Room extends Entity implements IRoom, Cloneable{
 		this.copacity = copacity;
 		this.numberOfStars = numberOfStars;
 		this.price = price;
-		history=new ArrayList<>();
+		history = new ArrayList<>();
 
 	}
-    @Override
+
+	@Override
 	public Boolean getIsFree() {
 
 		return isFree;
 	}
-    @Override
+
+	@Override
 	public void setIsFree(Boolean isFree) {
 		this.isFree = isFree;
 	}
-    @Override
+
+	@Override
 	public Integer getNumber() {
 		return number;
 	}
-    @Override
+
+	@Override
 	public void setNumber(Integer number) {
 		this.number = number;
 	}
-    @Override
+
+	@Override
 	public Integer getCopacity() {
 		return copacity;
 	}
-    @Override
+
+	@Override
 	public void setCopacity(Integer copacity) {
 		this.copacity = copacity;
 	}
-    @Override
+
+	@Override
 	public Integer getNumberOfStars() {
 		return numberOfStars;
 	}
-    @Override
+
+	@Override
 	public void setNumberOfStars(Integer numberOfStars) {
 		this.numberOfStars = numberOfStars;
 	}
-    @Override
+
+	@Override
 	public Double getPrice() {
 		return price;
 	}
-    @Override
+
+	@Override
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-    @Override
+
+	@Override
 	public RoomStatus getStatus() {
 		return status;
 	}
-    @Override
+
+	@Override
 	public void setStatus(RoomStatus status) {
 		this.status = status;
 	}
-    @Override
+
+	@Override
 	public List<IHistory> getHistory() {
 		return history;
 	}
-    @Override
+
+	@Override
 	public void setHistory(List<IHistory> history) {
 		this.history = history;
 	}
-	
+
 	@Override
-    public IRoom clone() throws CloneNotSupportedException {
+	public IRoom clone() throws CloneNotSupportedException {
 		IRoom clon = (IRoom) super.clone();
 		clon.setId(null);
 		clon.setIsFree(true);
-        return clon;
-    }
+		return clon;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();

@@ -4,43 +4,42 @@ import org.apache.log4j.Logger;
 
 import com.hotel.annatation.CsvEntity;
 
-
 public class Analyzer {
-	
+
 	private static final Logger logger = Logger.getLogger(Analyzer.class);
-	
+
 	public static String getNameOfBeen(String className) {
-		String fullClassName=null;
+		String fullClassName = null;
 		try {
-			Class<?> c = Class.forName("com.hotel.been."+className);
+			Class<?> c = Class.forName("com.hotel.been." + className);
 			CsvEntity ann = c.getAnnotation(CsvEntity.class);
-			fullClassName=ann.filename();
+			fullClassName = ann.filename();
 		} catch (ClassNotFoundException e) {
-			logger.info("Exception in method getNameOfBeen"+e.getMessage());
+			logger.info("Exception in method getNameOfBeen" + e.getMessage());
 		}
-		return fullClassName;	
+		return fullClassName;
 	}
-	
+
 	public static String getValueSeparator(String className) {
-		String valueSeparator=null;
+		String valueSeparator = null;
 		try {
-			Class<?> c = Class.forName("com.hotel.been."+className);
+			Class<?> c = Class.forName("com.hotel.been." + className);
 			CsvEntity ann = c.getAnnotation(CsvEntity.class);
-			valueSeparator=ann.valueSeparator();
+			valueSeparator = ann.valueSeparator();
 		} catch (ClassNotFoundException e) {
-			logger.info("Exception in method getValueSeparator"+e.getMessage());
+			logger.info("Exception in method getValueSeparator" + e.getMessage());
 		}
-		return valueSeparator;	
+		return valueSeparator;
 	}
-	
+
 	public static Integer getEntityId(String className) {
-		Integer entityId=null;
+		Integer entityId = null;
 		try {
-			Class<?> c = Class.forName("com.hotel.been."+className);
+			Class<?> c = Class.forName("com.hotel.been." + className);
 			CsvEntity ann = c.getAnnotation(CsvEntity.class);
-			entityId=ann.entityId();
+			entityId = ann.entityId();
 		} catch (ClassNotFoundException e) {
-			logger.info("Exception in method getEntityId"+e.getMessage());
+			logger.info("Exception in method getEntityId" + e.getMessage());
 		}
 		return entityId;
 	}

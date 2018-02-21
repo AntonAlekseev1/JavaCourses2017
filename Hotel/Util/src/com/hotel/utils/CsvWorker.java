@@ -35,7 +35,7 @@ public class CsvWorker {
 				fileWriter.write(comment + "\n");
 				fileWriter.flush();
 			} catch (IOException e) {
-				
+
 			}
 		}
 	}
@@ -54,11 +54,11 @@ public class CsvWorker {
 					new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8))) {
 				String line;
 				while ((line = reader.readLine()) != null) {
-					entity.add(line.replaceAll(separator ," "));
+					entity.add(line.replaceAll(separator, " "));
 				}
 				entity.remove(0);
 			} catch (IOException e) {
-				
+
 			}
 			return entity;
 		}

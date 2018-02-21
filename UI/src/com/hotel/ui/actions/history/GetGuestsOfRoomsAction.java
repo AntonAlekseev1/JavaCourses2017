@@ -5,8 +5,8 @@ import com.hotel.ui.api.IConnection;
 import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
-public class GetGuestsOfRoomsAction implements IAction{
-	
+public class GetGuestsOfRoomsAction implements IAction {
+
 	private final String actionName = "getHistory";
 	private final IConnection connect = Connection.getInstance();
 	private String request;
@@ -17,7 +17,7 @@ public class GetGuestsOfRoomsAction implements IAction{
 		request = actionName;
 		response = connect.getResponseFromServer(request);
 		Printer.println(response);
-		
+
 	}
 
 }

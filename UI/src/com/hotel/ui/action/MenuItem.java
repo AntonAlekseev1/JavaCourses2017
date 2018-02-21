@@ -16,7 +16,7 @@ public class MenuItem {
 	}
 
 	public void doAction() {
-	 action.execute();
+		action.execute();
 	}
 
 	public Menu getNextMenu() {

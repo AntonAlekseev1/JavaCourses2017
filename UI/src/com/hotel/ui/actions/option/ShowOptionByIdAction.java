@@ -12,7 +12,7 @@ import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
 public class ShowOptionByIdAction implements IAction {
-	
+
 	private final static Logger logger = Logger.getLogger(ShowAllOptionsAction.class);
 	private final String actionName = "getOptionById";
 	private final IConnection connect = Connection.getInstance();
@@ -21,20 +21,19 @@ public class ShowOptionByIdAction implements IAction {
 
 	@Override
 	public void execute() {
-		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		try {
 			Printer.print("Enter the option id ");
-			String idStr=reader.readLine();
-			request = actionName+" "+idStr;
+			String idStr = reader.readLine();
+			request = actionName + " " + idStr;
 			response = connect.getResponseFromServer(request);
 			Printer.println(response);
-			
-		}catch (IOException e) {
+
+		} catch (IOException e) {
 			Printer.println("Incorrect input data: " + e.getMessage());
 			logger.error("Exception in the class ShowAllOptionsAction: " + e.getMessage());
 		}
-		
-	}
 
+	}
 
 }

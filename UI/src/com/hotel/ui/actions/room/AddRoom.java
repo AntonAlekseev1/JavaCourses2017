@@ -12,7 +12,7 @@ import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
 public class AddRoom implements IAction {
-	
+
 	private final static Logger logger = Logger.getLogger(AddRoom.class);
 	private final String actionName = "addRoom";
 	private final IConnection connect = Connection.getInstance();
@@ -21,25 +21,25 @@ public class AddRoom implements IAction {
 
 	@Override
 	public void execute() {
-		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		try {
 			Printer.print("Enter the number ");
-			String num=reader.readLine();
+			String num = reader.readLine();
 			Printer.print("Enter the copaciti ");
-			String cop=reader.readLine();
+			String cop = reader.readLine();
 			Printer.print("Enter the number of stars ");
-			String stars=reader.readLine();
+			String stars = reader.readLine();
 			Printer.print("Enter the price ");
-			String priceString=reader.readLine();
-			request = actionName+" "+num+" "+cop+" "+stars+" "+priceString;
+			String priceString = reader.readLine();
+			request = actionName + " " + num + " " + cop + " " + stars + " " + priceString;
 			response = connect.getResponseFromServer(request);
 			Printer.println(response);
 
-		} catch (NumberFormatException|IOException e) {
+		} catch (NumberFormatException | IOException e) {
 			Printer.println("Incorrect input data: " + e.getMessage());
 			logger.error("Exception in the class AddRoom: " + e.getMessage());
 		}
-		
+
 	}
 
 }

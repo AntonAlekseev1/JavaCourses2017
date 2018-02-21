@@ -13,11 +13,11 @@ public class SortRoomsByCopacity implements IAction {
 
 	@Override
 	public void execute() {
-		
-		request = actionName+" COPACITY";
+
+		request = actionName + " COPACITY";
 		response = connect.getResponseFromServer(request);
 		Printer.println(response);
-		
+
 	}
 
 }

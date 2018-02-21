@@ -6,7 +6,7 @@ import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
 public class SortRoomsByPrice implements IAction {
-	
+
 	private final String actionName = "sortRooms";
 	private final IConnection connect = Connection.getInstance();
 	private String request;
@@ -14,10 +14,10 @@ public class SortRoomsByPrice implements IAction {
 
 	@Override
 	public void execute() {
-		request = actionName+" PRICE";
+		request = actionName + " PRICE";
 		response = connect.getResponseFromServer(request);
 		Printer.println(response);
-		
+
 	}
 
 }

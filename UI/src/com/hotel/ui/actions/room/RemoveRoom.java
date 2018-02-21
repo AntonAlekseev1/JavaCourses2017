@@ -17,18 +17,18 @@ public class RemoveRoom implements IAction {
 
 	@Override
 	public void execute() {
-		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		try {
 			Printer.print("Enter the room id ");
-			String idStr=reader.readLine();
-			request = actionName+" "+idStr;
+			String idStr = reader.readLine();
+			request = actionName + " " + idStr;
 			response = connect.getResponseFromServer(request);
 			Printer.println(response);
-			
-		}catch (IOException e) {
-			Printer.println("Exception in the class RoomById: "+e.getMessage());
+
+		} catch (IOException e) {
+			Printer.println("Exception in the class RoomById: " + e.getMessage());
 		}
-		
+
 	}
 
 }

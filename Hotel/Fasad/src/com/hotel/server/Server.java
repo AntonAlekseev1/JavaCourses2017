@@ -11,22 +11,22 @@ import com.hotel.fasad.Wrapper;
 import com.hotel.utils.Printer;
 
 public class Server {
-	
-	private final static  Logger logger = Logger.getLogger(Server.class);
+
+	private final static Logger logger = Logger.getLogger(Server.class);
 	private final ArrayList<ConnectionListner> connections = new ArrayList<>();
-	
+
 	public Server() {
-		try(ServerSocket serverSocket = new ServerSocket(8030)){
-			while(true) {
+		try (ServerSocket serverSocket = new ServerSocket(8030)) {
+			while (true) {
 				Socket socket = serverSocket.accept();
 				Wrapper wrapper = new Wrapper();
 				ConnectionListner listner = new ConnectionListner(socket, wrapper);
 				connections.add(listner);
 				listner.start();
 			}
-		}catch(IOException e) {
+		} catch (IOException e) {
 			logger.error(e.getMessage());
-			Printer.println("Server error "+e.getMessage());
+			Printer.println("Server error " + e.getMessage());
 		}
 	}
 

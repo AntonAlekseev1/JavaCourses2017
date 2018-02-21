@@ -7,40 +7,41 @@ import com.hotel.api.been.IGuest;
 import com.hotel.api.been.IHistory;
 import com.hotel.api.been.IOption;
 import com.hotel.api.been.IRoom;
+import com.hotel.api.dao.IConnectorDao;
 import com.hotel.api.dao.IGuestDAO;
 import com.hotel.api.dao.IHistoryDAO;
 import com.hotel.api.dao.IRoomDAO;
 import com.hotel.api.service.IHistoryService;
 import com.hotel.been.History;
 import com.hotel.di.DependecyInjector;
-import com.hotel.utils.Connector;
 
 public class HistoryService implements IHistoryService {
-	
+
 	private static HistoryService instance;
-	private static IRoomDAO roomDao=(IRoomDAO) DependecyInjector.inject(IRoomDAO.class);
+	private static IRoomDAO roomDao = (IRoomDAO) DependecyInjector.inject(IRoomDAO.class);
 	private static IGuestDAO guestDao = (IGuestDAO) DependecyInjector.inject(IGuestDAO.class);
 	private IHistoryDAO historyDao = (IHistoryDAO) DependecyInjector.inject(IHistoryDAO.class);
-	private Connector connect = Connector.getinstance();
+	private IConnectorDao connect = (IConnectorDao) DependecyInjector.inject(IConnectorDao.class);
 
 	private HistoryService(IGuestDAO IGuestDAO, IRoomDAO IRoomDAO) {
 		HistoryService.guestDao = IGuestDAO;
 		HistoryService.roomDao = IRoomDAO;
 
 	}
-	
+
 	public static HistoryService getInstance() {
-		if(instance==null) {
-			instance=new HistoryService(guestDao, roomDao);
+		if (instance == null) {
+			instance = new HistoryService(guestDao, roomDao);
 		}
 		return instance;
 	}
 
 	public List<IHistory> getHistory() throws Exception {
-		return historyDao.getAll(connect.getConection());
+		return historyDao.getAll(connect.getConection(), "id");
 	}
 
-	public void settleGuestInRoom(Integer guestId, Integer roomId, Calendar dateOfArival, Calendar evictDate) throws Exception {
+	public void settleGuestInRoom(Integer guestId, Integer roomId, Calendar dateOfArival, Calendar evictDate)
+			throws Exception {
 
 		IGuest guest = guestDao.getById(connect.getConection(), guestId);
 		IRoom room = roomDao.getById(connect.getConection(), roomId);
@@ -64,9 +65,9 @@ public class HistoryService implements IHistoryService {
 				room.getHistory().remove(i);
 			}
 		}
-		List<IHistory> list = historyDao.getAll(connect.getConection()); 
-		for (int i = 0; i <list.size(); i++) {
-			if(list.get(i).getRoomId()==room.getId()) {
+		List<IHistory> list = historyDao.getAll(connect.getConection(), "id");
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getRoomId() == room.getId()) {
 				historyDao.delete(connect.getConection(), list.get(i).getId());
 			}
 		}
@@ -84,11 +85,11 @@ public class HistoryService implements IHistoryService {
 	}
 
 	public Double getTotalPayment(Integer id) throws Exception {
-		
-		Double summ =historyDao.getTotalPayment(connect.getConection(), id);
+
+		Double summ = historyDao.getTotalPayment(connect.getConection(), id);
 		List<IOption> options = guestDao.getGuestOptions(connect.getConection(), id);
-		for(IOption option : options) {
-			summ +=option.getPrice();
+		for (IOption option : options) {
+			summ += option.getPrice();
 		}
 
 		return summ;

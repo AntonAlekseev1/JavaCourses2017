@@ -5,7 +5,7 @@ import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
 public class ImportGuests implements IAction {
-	
+
 	private final String actionName = "importGuest";
 	private String request;
 	private String response;

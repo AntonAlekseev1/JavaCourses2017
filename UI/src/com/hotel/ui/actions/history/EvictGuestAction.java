@@ -11,8 +11,8 @@ import com.hotel.ui.api.IConnection;
 import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
-public class EvictGuestAction implements IAction{
-	
+public class EvictGuestAction implements IAction {
+
 	private final static Logger logger = Logger.getLogger(EvictGuestAction.class);
 	private final String actionName = "evictGuestFromRoom";
 	private final IConnection connect = Connection.getInstance();
@@ -21,21 +21,20 @@ public class EvictGuestAction implements IAction{
 
 	@Override
 	public void execute() {
-		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		try {
 			Printer.print("Enter the guest id ");
-			String guestIdStr=reader.readLine();
+			String guestIdStr = reader.readLine();
 			Printer.print("Enter the room id ");
-			String roomIdStr=reader.readLine();
-			request = actionName+" "+guestIdStr+" "+roomIdStr;
+			String roomIdStr = reader.readLine();
+			request = actionName + " " + guestIdStr + " " + roomIdStr;
 			response = connect.getResponseFromServer(request);
 			Printer.println(response);
 		} catch (IOException e) {
 			Printer.println("Exception in the class EvictGuestAction: " + e.getMessage());
 			logger.error("Exception in the class EvictGuestAction: " + e.getMessage());
 		}
-		
-		
+
 	}
 
 }

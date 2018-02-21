@@ -7,17 +7,17 @@ import com.hotel.api.been.Entity;
 import com.hotel.api.been.IGuest;
 import com.hotel.api.been.IHistory;
 
-@CsvEntity(filename="Guests.csv",entityId = 1)
+@CsvEntity(filename = "Guests.csv", entityId = 1)
 public class Guest extends Entity implements IGuest {
-	
+
 	@CsvProperty(columnNumber = 2, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private String name;
 	@CsvProperty(columnNumber = 3, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private String lastName;
 	private IHistory history;
-	
+
 	public Guest() {
-		
+
 	}
 
 	public Guest(String string) {
@@ -33,19 +33,23 @@ public class Guest extends Entity implements IGuest {
 		this.lastName = lastName;
 
 	}
-    @Override
+
+	@Override
 	public String getName() {
 		return name;
 	}
-    @Override
+
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
-    @Override
+
+	@Override
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-    @Override
+
+	@Override
 	public String getLastName() {
 		return lastName;
 	}
@@ -54,12 +58,12 @@ public class Guest extends Entity implements IGuest {
 	public IHistory getHistory() {
 		return history;
 	}
-	
+
 	@Override
 	public void setHistory(IHistory history) {
-		this.history=history;
+		this.history = history;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
@@ -70,7 +74,5 @@ public class Guest extends Entity implements IGuest {
 		s.append(lastName);
 		return s.toString();
 	}
-
-	
 
 }

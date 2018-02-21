@@ -12,30 +12,30 @@ import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
 public class LastGuests implements IAction {
-	
+
 	private final String actionName = "getLastGuests";
 	private final IConnection connect = Connection.getInstance();
 	private String request;
 	private String response;
-	
+
 	Logger logger = Logger.getLogger(LastGuests.class);
 
 	@Override
 	public void execute() {
-		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		try {
 			Printer.print("Enter the room id ");
-			String id=reader.readLine();
-			request = actionName+" "+id;
+			String id = reader.readLine();
+			request = actionName + " " + id;
 			response = connect.getResponseFromServer(request);
 			Printer.println(response);
-			
-		}catch (NumberFormatException|IOException e) {
-		
-			Printer.println("Incorrect input data: "+ e.getMessage());
-			logger.info("Exception in class LastGuests"+e.getMessage());
+
+		} catch (NumberFormatException | IOException e) {
+
+			Printer.println("Incorrect input data: " + e.getMessage());
+			logger.info("Exception in class LastGuests" + e.getMessage());
 		}
-		
+
 	}
 
 }

@@ -26,4 +26,8 @@ public interface IGuestService {
 	
 	public void removeGuest(Integer id) throws Exception;
 
+	String exportGuests(String path) throws Exception;
+
+	String importGuest(String path) throws Exception;
+
 }

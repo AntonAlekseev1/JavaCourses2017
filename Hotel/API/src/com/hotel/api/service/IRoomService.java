@@ -12,7 +12,7 @@ public interface IRoomService {
 	
 	public void addRoom(IRoom room) throws Exception;
 	
-	public List<IRoom> getAllRoom() throws Exception;
+	public List<IRoom> getAllRooms() throws Exception;
 	
 	public IRoomDAO getRooms();
 	
@@ -29,5 +29,9 @@ public interface IRoomService {
 	public List<IRoom> sortRooms(String name) throws Exception;
 	
 	public void remove(Integer id) throws Exception;
+
+	String importRooms(String path) throws Exception;
+
+	String exportRooms(String path) throws Exception;
 
 }

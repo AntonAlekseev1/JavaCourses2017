@@ -12,24 +12,23 @@ import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
 public class AddGuestAction implements IAction {
-	
+
 	private final static Logger logger = Logger.getLogger(AddGuestAction.class);
 	private final String actionName = "addGuest";
 	private final IConnection connect = Connection.getInstance();
 	private String request;
 	private String response;
-	
 
 	@Override
 	public void execute() {
-		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
-		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
 		try {
 			Printer.print("Enter the name ");
 			String name = reader.readLine();
 			Printer.print("Enter the last name ");
-			String lastName=reader.readLine();
-			request = actionName+" "+name+" "+lastName;
+			String lastName = reader.readLine();
+			request = actionName + " " + name + " " + lastName;
 			response = connect.getResponseFromServer(request);
 			Printer.println(response);
 		} catch (IOException e) {

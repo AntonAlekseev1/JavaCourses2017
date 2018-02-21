@@ -6,18 +6,18 @@ import com.hotel.annatation.CsvProperty.PropertyType;
 import com.hotel.api.been.Entity;
 import com.hotel.api.been.IOption;
 
-@CsvEntity(filename="Options.csv",entityId=2)
+@CsvEntity(filename = "Options.csv", entityId = 2)
 public class Option extends Entity implements IOption {
-	
+
 	@CsvProperty(columnNumber = 2, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private String name;
 	@CsvProperty(columnNumber = 3, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private Double price;
 
 	public Option() {
-		
+
 	}
-	
+
 	public Option(String name, Double price) {
 
 		this.name = name;
@@ -30,23 +30,28 @@ public class Option extends Entity implements IOption {
 		this.name = String.valueOf(arr[1]);
 		this.price = Double.valueOf(arr[2]);
 	}
-    @Override
+
+	@Override
 	public String getName() {
 		return name;
 	}
-    @Override
+
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
-    @Override
+
+	@Override
 	public Double getPrice() {
 		return price;
 	}
-    @Override
+
+	@Override
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-    @Override
+
+	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(getId());

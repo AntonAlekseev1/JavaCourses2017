@@ -8,9 +8,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CsvEntity {
-	
+
 	public String filename() default "";
+
 	public String valueSeparator() default ";";
+
 	public int entityId();
 
 }

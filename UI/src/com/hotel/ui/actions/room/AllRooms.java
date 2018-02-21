@@ -16,7 +16,7 @@ public class AllRooms implements IAction {
 		request = actionName;
 		response = connect.getResponseFromServer(request);
 		Printer.println(response);
-		
+
 	}
 
 }

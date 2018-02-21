@@ -5,8 +5,8 @@ import com.hotel.ui.api.IConnection;
 import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
-public class FreeRooms implements IAction{
-	
+public class FreeRooms implements IAction {
+
 	private final String actionName = "getFreeRooms";
 	private final IConnection connect = Connection.getInstance();
 	private String request;
@@ -14,11 +14,11 @@ public class FreeRooms implements IAction{
 
 	@Override
 	public void execute() {
-		
+
 		request = actionName;
 		response = connect.getResponseFromServer(request);
 		Printer.println(response);
-		
+
 	}
 
 }

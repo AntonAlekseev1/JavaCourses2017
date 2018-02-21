@@ -9,7 +9,7 @@ import com.hotel.api.been.IHistory;
 import com.hotel.api.been.IOption;
 
 public class History extends Entity implements IHistory {
-	
+
 	private Integer roomId;
 	private Integer guestId;
 	private Date dateOfArrival;
@@ -38,48 +38,58 @@ public class History extends Entity implements IHistory {
 		this.options = option;
 		options = new ArrayList<>();
 	}
-    @Override
+
+	@Override
 	public Date getDateOfArrival() {
 		return dateOfArrival;
 	}
-    @Override
-    public void setDateOfArival(Date dateOfArival) {
-    	this.dateOfArrival=dateOfArival;
-    }
-    @Override
+
+	@Override
+	public void setDateOfArival(Date dateOfArival) {
+		this.dateOfArrival = dateOfArival;
+	}
+
+	@Override
 	public Integer getGuestId() {
 		return guestId;
 	}
-    @Override
+
+	@Override
 	public void setGuest(Integer guestId) {
 		this.guestId = guestId;
 	}
-    @Override
+
+	@Override
 	public Integer getRoomId() {
 		return roomId;
 	}
-    @Override
+
+	@Override
 	public void setRoom(Integer roomId) {
 		this.roomId = roomId;
 	}
-    @Override
+
+	@Override
 	public Date getEvictDate() {
 		return evictDate;
 	}
-    @Override
-    public void setEvictDate(Date evictDate) {
-    	this.evictDate = evictDate;
-    }
-    @Override
+
+	@Override
+	public void setEvictDate(Date evictDate) {
+		this.evictDate = evictDate;
+	}
+
+	@Override
 	public List<IOption> getOptions() {
 		return options;
 	}
-    @Override
-    public void setOptions(List<IOption> options) {
-    	this.options = options;
-    }
 
-    @Override
+	@Override
+	public void setOptions(List<IOption> options) {
+		this.options = options;
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(this.getId());

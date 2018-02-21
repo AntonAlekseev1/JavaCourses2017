@@ -8,13 +8,15 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CsvProperty {
-	
+
 	public int columnNumber();
-	
+
 	public boolean escape() default true;
-	
-	public enum PropertyType{SIMPLE_PROPERTY,COMPOSITE_PROPERTY}
-	
+
+	public enum PropertyType {
+		SIMPLE_PROPERTY, COMPOSITE_PROPERTY
+	}
+
 	PropertyType propertyType();
 
 }

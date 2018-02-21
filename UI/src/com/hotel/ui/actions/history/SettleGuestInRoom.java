@@ -11,8 +11,8 @@ import com.hotel.ui.api.IConnection;
 import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
-public class SettleGuestInRoom implements IAction{
-	
+public class SettleGuestInRoom implements IAction {
+
 	private final static Logger logger = Logger.getLogger(SettleGuestInRoom.class);
 	private final String actionName = "settleGuestInRoom";
 	private final IConnection connect = Connection.getInstance();
@@ -21,18 +21,18 @@ public class SettleGuestInRoom implements IAction{
 
 	@Override
 	public void execute() {
-		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		try {
 			Printer.print("Enter the guest id ");
-			String guestIdStr=reader.readLine();
+			String guestIdStr = reader.readLine();
 			Printer.print("Enter the room id ");
-			String roomIdStr=reader.readLine();
+			String roomIdStr = reader.readLine();
 			Printer.print("Enter the date of arival ");
-			String dateOfArival=reader.readLine();
+			String dateOfArival = reader.readLine();
 			Printer.print("Enter the date of evict ");
-			String dateOfEvict=reader.readLine();
-			
-			request = actionName+" "+guestIdStr+" "+roomIdStr+" "+dateOfArival+" "+dateOfEvict;
+			String dateOfEvict = reader.readLine();
+
+			request = actionName + " " + guestIdStr + " " + roomIdStr + " " + dateOfArival + " " + dateOfEvict;
 			response = connect.getResponseFromServer(request);
 			Printer.println(response);
 
@@ -40,7 +40,7 @@ public class SettleGuestInRoom implements IAction{
 			Printer.println("Incorrect input data: " + e.getMessage());
 			logger.error("Exception in the class SettleGuestInRoom: " + e.getMessage());
 		}
-		
+
 	}
 
 }

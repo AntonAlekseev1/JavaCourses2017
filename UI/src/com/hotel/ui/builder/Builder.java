@@ -103,23 +103,23 @@ public class Builder {
 		option.addItem(new MenuItem("Import from csv file", rootMenu, new ImportOptions()));
 	}
 
-	private void historyMenu( Menu history) {
+	private void historyMenu(Menu history) {
 		history.addItem(new MenuItem("Exit", rootMenu, new Exit()));
-		history.addItem(new MenuItem("Setle guest in room", rootMenu, new SettleGuestInRoom()));
+		history.addItem(new MenuItem("Settle guest in room", rootMenu, new SettleGuestInRoom()));
 		history.addItem(new MenuItem("Evict guest from room", rootMenu, new EvictGuestAction()));
 		history.addItem(new MenuItem("Print free rooms on date", rootMenu, new PrintFreeRoomOnDate()));
 		history.addItem(new MenuItem("Show guests and their rooms", rootMenu, new GetGuestsOfRoomsAction()));
 	}
 
-	private void rootMenuInit(final Menu room, final Menu guest, final Menu option,final  Menu history) {
+	private void rootMenuInit(final Menu room, final Menu guest, final Menu option, final Menu history) {
 
-	   rootMenu.addItem(new MenuItem("Exit", null, new Exit()));
-	   rootMenu.addItem(new MenuItem("Guest", guest, new NullAction()));
+		rootMenu.addItem(new MenuItem("Exit", null, new Exit()));
+		rootMenu.addItem(new MenuItem("Guest", guest, new NullAction()));
 		rootMenu.addItem(new MenuItem("Room", room, new NullAction()));
-        rootMenu.addItem(new MenuItem("Option", option, new NullAction()));
-        rootMenu.addItem(new MenuItem("History", history, new NullAction()));
-       
-    }
+		rootMenu.addItem(new MenuItem("Option", option, new NullAction()));
+		rootMenu.addItem(new MenuItem("History", history, new NullAction()));
+
+	}
 
 	public Menu getRootMenu() {
 		return rootMenu;

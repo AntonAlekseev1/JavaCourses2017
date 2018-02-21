@@ -5,7 +5,7 @@ import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
 public class ExportGuest implements IAction {
-	
+
 	private final String actionName = "exportGuests";
 	private String reqest;
 	private String response;
