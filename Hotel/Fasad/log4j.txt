@@ -1,0 +1,6 @@
+﻿2018-02-24 13:26:43 ERROR ConnectionListner:45 - Connection reset
+2018-02-24 13:28:07 ERROR ConnectionListner:45 - Connection reset
+2018-02-24 13:29:16 ERROR ConnectionListner:45 - Connection reset
+2018-02-24 13:30:51 ERROR ConnectionListner:45 - Connection reset
+2018-02-24 13:33:19 ERROR ConnectionListner:45 - Connection reset
+2018-02-24 15:57:08 ERROR ConnectionListner:45 - Connection reset
