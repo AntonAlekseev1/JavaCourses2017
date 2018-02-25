@@ -10,11 +10,8 @@ public interface IGuest extends IEntity {
 	
 	public String getLastName();
 	
-	public IHistory getHistory();
 	
 	public String toString();
-
-	public void setHistory(IHistory history);
 
 	void setName(String name);
 

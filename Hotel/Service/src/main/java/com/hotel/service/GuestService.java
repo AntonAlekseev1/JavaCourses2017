@@ -1,30 +1,31 @@
 package com.hotel.service;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.hotel.Analyzer;
 import com.hotel.api.been.IGuest;
 import com.hotel.api.been.IOption;
-import com.hotel.api.dao.IConnectorDao;
 import com.hotel.api.dao.IGuestDAO;
-import com.hotel.api.dao.IHistoryDAO;
-import com.hotel.api.dao.IOptionDAO;
 import com.hotel.api.service.IGuestService;
 import com.hotel.been.Guest;
-import com.hotel.di.DependecyInjector;
+import com.hotel.dao.GuestDao;
+import com.hotel.dao.HistoryDAO;
+import com.hotel.dao.OptionDAO;
+import com.hotel.dao.connection.HibernateUtil;
 import com.hotel.utils.CsvWorker;
 
 public class GuestService implements IGuestService {
 
 	private static GuestService instance;
-	private IGuestDAO guestDao = (IGuestDAO) DependecyInjector.inject(IGuestDAO.class);
-	private static IOptionDAO optionDao = (IOptionDAO) DependecyInjector.inject(IOptionDAO.class);
-	private IHistoryDAO historyDao = (IHistoryDAO) DependecyInjector.inject(IHistoryDAO.class);
-	private IConnectorDao connect = (IConnectorDao) DependecyInjector.inject(IConnectorDao.class);
+	private static OptionDAO optionDao =  OptionDAO.getInstance();
+	private HistoryDAO historyDao = HistoryDAO.getInstance();
+	private GuestDao guestDao = new GuestDao();
 
-	private GuestService(IOptionDAO optionDao) {
+	private GuestService(OptionDAO optionDao) {
 		GuestService.optionDao = optionDao;
 
 	}
@@ -51,9 +52,9 @@ public class GuestService implements IGuestService {
 	@Override
 	public String importGuest(String pathToCsv) throws Exception {
 
-		Connection connection = connect.getConection();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
 		try {
-			connection.setAutoCommit(false);
 			String path = pathToCsv + Analyzer.getNameOfBeen("Guest");
 			List<IGuest> guests = getGuests();
 			List<IGuest> guestsImport = new ArrayList<>();
@@ -65,42 +66,48 @@ public class GuestService implements IGuestService {
 			}
 
 			for (int i = 0; i < guests.size(); i++) {
-				guestDao.updute(connection, guestsImport.get(i));
-				;
+				guestDao.updute(session, guestsImport.get(i));
 			}
 			for (int i = guests.size(); i < reader.read().size(); i++) {
-				guestDao.create(connection, guestsImport.get(i));
+				guestDao.create(session, guestsImport.get(i));
 			}
-			connection.commit();
+			transaction.commit();
 			return "data was imported from" + path;
 		} catch (Exception e) {
-			connection.rollback();
+			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			connection.setAutoCommit(true);
-		}
+	}
 	}
 
 	public List<IGuest> sortGuests(String name) throws Exception {
-		return guestDao.getAll(connect.getConection(), name);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<IGuest> list = guestDao.getAll(session, name,IGuest.class);
+		return list;
 	}
 
 	public IGuest getGuestById(Integer id) throws Exception {
-		return guestDao.getById(connect.getConection(), id);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		IGuest guest = guestDao.getById(session, id, IGuest.class);
+		return guest;
 	}
 
 	public void addGuest(IGuest guest) throws Exception {
-		guestDao.create(connect.getConection(), guest);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		guestDao.create(session, guest);
+		transaction.commit();
 
 	}
 
 	public List<IGuest> getGuests() throws Exception {
-		return guestDao.getAll(connect.getConection(), "id");
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<IGuest> list = guestDao.getAll(session, "id", IGuest.class);
+		return list;
 	}
 
 	public Integer getNumberOfGuests() throws Exception {
 
-		return guestDao.getAll(connect.getConection(), "id").size();
+		return getGuests().size();
 	}
 
 	public IGuestDAO getGuest() {
@@ -108,16 +115,25 @@ public class GuestService implements IGuestService {
 	}
 
 	public void addOptionToGuest(Integer optionId, Integer guestId) throws Exception {
-		historyDao.addOptionToGoest(connect.getConection(), guestId, optionId);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		historyDao.addOptionToGoest(session, guestId, optionId);
+		transaction.commit();
 	}
 
 	public List<IOption> getGuestOptions(Integer id) throws Exception {
-
-		return guestDao.getGuestOptions(connect.getConection(), id);
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		return guestDao.getGuestOptions(session, id);
 	}
 
 	public void removeGuest(Integer id) throws Exception {
-		guestDao.delete(connect.getConection(), id);
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		IGuest guest = getGuestById(id);
+		guestDao.delete(session, guest);
+		transaction.commit();
 	}
 
 }

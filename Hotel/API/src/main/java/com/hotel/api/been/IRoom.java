@@ -1,9 +1,5 @@
 package com.hotel.api.been;
 
-import java.util.List;
-
-import com.hotel.api.been.RoomStatus;
-
 public interface IRoom extends IEntity {
 	
 	public IRoom clone() throws CloneNotSupportedException;
@@ -32,12 +28,6 @@ public interface IRoom extends IEntity {
 	
 	public void setStatus(RoomStatus status);
 	
-	public List<IHistory> getHistory();
-	
-	public String toString();
-
-	void setHistory(List<IHistory> history);
-
 	void setNumber(Integer number);
 
 	Integer getNumber();

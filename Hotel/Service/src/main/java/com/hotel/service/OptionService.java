@@ -1,23 +1,24 @@
 package com.hotel.service;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import com.hotel.Analyzer;
 import com.hotel.api.been.IOption;
-import com.hotel.api.dao.IConnectorDao;
 import com.hotel.api.dao.IOptionDAO;
 import com.hotel.api.service.IOptionService;
 import com.hotel.been.Option;
-import com.hotel.di.DependecyInjector;
+import com.hotel.dao.OptionDAO;
+import com.hotel.dao.connection.HibernateUtil;
 import com.hotel.utils.CsvWorker;
 
 public class OptionService implements IOptionService {
 
 	private static OptionService instance;
-	private IOptionDAO optionDao = (IOptionDAO) DependecyInjector.inject(IOptionDAO.class);
-	private IConnectorDao connect = (IConnectorDao) DependecyInjector.inject(IConnectorDao.class);
+	private OptionDAO optionDao = OptionDAO.getInstance();
 
 	private OptionService() {
 
@@ -45,9 +46,9 @@ public class OptionService implements IOptionService {
 
 	@Override
 	public String importOptions(String pathToCsv) throws Exception {
-		Connection connection = connect.getConection();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
 		try {
-			connection.setAutoCommit(false);
 			String path = pathToCsv + Analyzer.getNameOfBeen("Option");
 			List<IOption> options = getOption();
 			List<IOption> optionsImport = new ArrayList<>();
@@ -59,18 +60,16 @@ public class OptionService implements IOptionService {
 			}
 
 			for (int i = 0; i < options.size(); i++) {
-				optionDao.updute(connect.getConection(), optionsImport.get(i));
+				optionDao.updute(session, optionsImport.get(i));
 			}
 			for (int i = options.size(); i < reader.read().size(); i++) {
-				optionDao.create(connect.getConection(), optionsImport.get(i));
+				optionDao.create(session, optionsImport.get(i));
 			}
-			connection.commit();
+			transaction.commit();;
 			return "data was imported from" + path;
 		} catch (Exception e) {
-			connection.rollback();
+			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			connection.setAutoCommit(true);
 		}
 	}
 
@@ -79,11 +78,22 @@ public class OptionService implements IOptionService {
 	}
 
 	public List<IOption> getOption() throws Exception {
-		return optionDao.getAll(connect.getConection(), "id");
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		return optionDao.getAll(session, "id", IOption.class);
 	}
 
 	public void addOption(IOption option) throws Exception {
-		optionDao.create(connect.getConection(), option);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		optionDao.create(session, option);
+		transaction.commit();
+	}
+	
+	public Option getById(Integer id) throws Exception {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Option option = (Option) optionDao.getById(session, id, IOption.class);
+		return option;
+		
 	}
 
 }

@@ -11,7 +11,7 @@ public class SortGuestsByNameAction implements IAction {
 	private String response;
 
 	public void execute() {
-		request = actionName + " NAME";
+		request = actionName + " name";
 		response = Connection.getInstance().getResponseFromServer(request);
 		Printer.println(response);
 

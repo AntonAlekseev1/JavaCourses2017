@@ -1,45 +1,45 @@
 package com.hotel.api.dao;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
-import com.hotel.api.been.Entity;
 import com.hotel.api.been.IEntity;
 
-public abstract class AbstractDao<T extends Entity> implements IGenericDao<T> {
-	
+public abstract class AbstractDao<T extends IEntity> implements IGenericDao<T> {
+
 	private static final Logger logger = Logger.getLogger(AbstractDao.class);
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> getAll(Session session, String name) throws Exception {
+	public List<T> getAll(Session session, String name, Class<T> clazz) throws Exception {
 		List<T> entityList = new ArrayList<>();
-		try{
-			Criteria criteria = session.createCriteria(Entity.class);
-			entityList = (List<T>) criteria.addOrder(Order.asc(name));
-		}catch (Exception e) {
+		try {
+			Criteria criteria = session.createCriteria(clazz).addOrder(Order.asc(name));
+			entityList = criteria.list();
+		} catch (Exception e) {
 			logger.error("Exception in the method getAll: ", e);
-			throw new Exception("Exception in the method getAll "+e);
+			throw new Exception("Exception in the method getAll " + e);
 		}
 		return entityList;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public T getById(Session session, Integer id) throws Exception {
+	public T getById(Session session, Integer id, Class<T> clazz) throws Exception {
 		T entity = null;
 		try {
-			Criteria criteria = session.createCriteria(Entity.class);
-			entity = (T) criteria.list().get(id);
-		}catch (Exception e) {
+			Criteria criteria = session.createCriteria(clazz).add(Restrictions.like("id", id));
+			entity = (T) criteria.uniqueResult();
+
+		} catch (Exception e) {
 			logger.error("Exception in the method getById: ", e);
-			throw new Exception("Exception in the method getById "+e);
+			throw new Exception("Exception in the method getById " + e);
 		}
 		return entity;
 	}
@@ -48,24 +48,29 @@ public abstract class AbstractDao<T extends Entity> implements IGenericDao<T> {
 	public void create(Session session, T entity) throws Exception {
 		try {
 			session.save(entity);
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			logger.error("Exception in the method create: ", e);
-			throw new Exception("Exception in the method create "+e);
+			throw new Exception("Exception in the method create " + e);
 		}
-		
+
 	}
 
 	@Override
 	public void updute(Session session, T entity) throws Exception {
-		// TODO Auto-generated method stub
-		
+
+		session.update(entity);
 	}
 
 	@Override
-	public void delete(Session session, Integer id) throws Exception {
-		
-		
+	public void delete(Session session, T entity) throws Exception {
+		try {
+			session.delete(entity);
+
+		} catch (Exception e) {
+			logger.error("Exception in the method create: ", e);
+			throw new Exception("Exception in the method create " + e);
+		}
 	}
 
 }

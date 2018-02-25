@@ -9,7 +9,6 @@ import com.hotel.annatation.CsvProperty;
 import com.hotel.annatation.CsvProperty.PropertyType;
 import com.hotel.api.been.Entity;
 import com.hotel.api.been.IGuest;
-import com.hotel.api.been.IHistory;
 
 @javax.persistence.Entity
 @Table(name = "Guests")
@@ -23,7 +22,7 @@ public class Guest extends Entity implements IGuest {
 	@CsvProperty(columnNumber = 3, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private String lastName;
 	@Transient
-	private IHistory history;
+	private History history;
 
 	public Guest() {
 
@@ -63,13 +62,12 @@ public class Guest extends Entity implements IGuest {
 		return lastName;
 	}
 
-	@Override
-	public IHistory getHistory() {
+
+	public History getHistory() {
 		return history;
 	}
 
-	@Override
-	public void setHistory(IHistory history) {
+	public void setHistory(History history) {
 		this.history = history;
 	}
 

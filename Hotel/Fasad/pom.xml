@@ -51,11 +51,6 @@
     </dependency>
     <dependency>
     	<groupId>com.hotel</groupId>
-    	<artifactId>DInjector</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-    	<groupId>com.hotel</groupId>
     	<artifactId>Util</artifactId>
     	<version>0.0.1-SNAPSHOT</version>
     </dependency>

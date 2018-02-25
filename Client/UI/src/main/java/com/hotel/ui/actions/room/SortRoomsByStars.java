@@ -13,7 +13,7 @@ public class SortRoomsByStars implements IAction {
 	private String response;
 
 	public void execute() {
-		request = actionName + " STARS";
+		request = actionName + " numberOfStars";
 		response = connect.getResponseFromServer(request);
 		Printer.println(response);
 

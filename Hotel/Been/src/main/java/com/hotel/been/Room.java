@@ -6,14 +6,13 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.hotel.annatation.CsvEntity;
 import com.hotel.annatation.CsvProperty;
 import com.hotel.annatation.CsvProperty.PropertyType;
 import com.hotel.api.been.Entity;
-import com.hotel.api.been.IHistory;
 import com.hotel.api.been.IRoom;
 import com.hotel.api.been.RoomStatus;
 
@@ -41,8 +40,8 @@ public class Room extends Entity implements IRoom, Cloneable {
 	@Enumerated(EnumType.STRING)
 	@CsvProperty(columnNumber = 7, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private RoomStatus status;
-	@Transient
-	private List<IHistory> history = new ArrayList<>();
+	@OneToMany(mappedBy="room")
+	private List<History> history = new ArrayList<>();
 
 	public Room() {
 
@@ -131,13 +130,12 @@ public class Room extends Entity implements IRoom, Cloneable {
 		this.status = status;
 	}
 
-	@Override
-	public List<IHistory> getHistory() {
+
+	public List<History> getHistory() {
 		return history;
 	}
 
-	@Override
-	public void setHistory(List<IHistory> history) {
+	public void setHistory(List<History> history) {
 		this.history = history;
 	}
 

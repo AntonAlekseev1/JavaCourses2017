@@ -13,7 +13,7 @@ public class SortRoomsByPrice implements IAction {
 	private String response;
 
 	public void execute() {
-		request = actionName + " PRICE";
+		request = actionName + " price";
 		response = connect.getResponseFromServer(request);
 		Printer.println(response);
 

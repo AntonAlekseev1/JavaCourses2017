@@ -42,7 +42,7 @@ public class Wrapper {
 					response = var.toString();
 				}
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				logger.error("invoke method exception " + e.getMessage());
+				logger.error("invoke method exception " + e.getCause());
 				response = "Wrapper: invoke method exception " + e.getMessage();
 			}
 		} catch (NoSuchMethodException e) {

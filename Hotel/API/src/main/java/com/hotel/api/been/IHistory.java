@@ -7,13 +7,13 @@ public interface IHistory extends IEntity {
 
 	Date getDateOfArrival();
 
-	Integer getGuestId();
+	IGuest getGuest();
 
-	void setGuest(Integer guestId);
+	void setGuest(IGuest guest);
 
-	Integer getRoomId();
+	IRoom getRoom();
 
-	void setRoom(Integer roomId);
+	void setRoom(IRoom room);
 
 	Date getEvictDate();
 

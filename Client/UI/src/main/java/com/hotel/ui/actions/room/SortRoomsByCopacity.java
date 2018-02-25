@@ -13,7 +13,7 @@ public class SortRoomsByCopacity implements IAction {
 
 	public void execute() {
 
-		request = actionName + " COPACITY";
+		request = actionName + " copacity";
 		response = connect.getResponseFromServer(request);
 		Printer.println(response);
 

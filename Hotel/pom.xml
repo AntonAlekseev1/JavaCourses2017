@@ -45,7 +45,7 @@
   	<module>Been</module>
   	<module>DAO</module>
   	<module>Configuration</module>
-  	<module>DInjector</module>
+  	
   	<module>Fasad</module>
   	<module>Service</module>
   	<module>Util</module>

@@ -9,24 +9,20 @@ import com.hotel.api.been.IGuest;
 import com.hotel.api.been.IHistory;
 import com.hotel.api.been.IOption;
 import com.hotel.api.been.IRoom;
-import com.hotel.api.been.RoomStatus;
-import com.hotel.api.dao.IConnectorDao;
-import com.hotel.api.service.IGuestService;
-import com.hotel.api.service.IHistoryService;
-import com.hotel.api.service.IOptionService;
-import com.hotel.api.service.IRoomService;
 import com.hotel.been.Guest;
 import com.hotel.been.Option;
 import com.hotel.been.Room;
 import com.hotel.configurations.Configuration;
-import com.hotel.di.DependecyInjector;
+import com.hotel.service.GuestService;
+import com.hotel.service.HistoryService;
+import com.hotel.service.OptionService;
+import com.hotel.service.RoomService;
 
 public class Hotel {
-	private IRoomService roomService;
-	private IOptionService optionService;
-	private IGuestService guestService;
-	private IHistoryService historyService;
-	private IConnectorDao connect;
+	private RoomService roomService;
+	private OptionService optionService;
+	private GuestService guestService;
+	private HistoryService historyService;
 
 	private final static Logger logger = Logger.getLogger(Hotel.class);
 	private static Hotel instance;
@@ -35,11 +31,10 @@ public class Hotel {
 
 	private Hotel() {
 
-		roomService = (IRoomService) DependecyInjector.inject(IRoomService.class);
-		optionService = (IOptionService) DependecyInjector.inject(IOptionService.class);
-		guestService = (IGuestService) DependecyInjector.inject(IGuestService.class);
-		historyService = (IHistoryService) DependecyInjector.inject(IHistoryService.class);
-		connect = (IConnectorDao) DependecyInjector.inject(IConnectorDao.class);
+		roomService = RoomService.getInstance();
+		optionService = OptionService.getInstance();
+		guestService = GuestService.getInstance();
+		historyService = HistoryService.getInstance();
 		Configuration.loadConfiguration(propertiPath);
 		PATH_TO_CSV = String.valueOf(Configuration.getProperties("PATH_TO_CSV"));
 
@@ -206,7 +201,7 @@ public class Hotel {
 	public IRoom getRoomById(String idStr) {
 		try {
 			Integer id = Integer.valueOf(idStr);
-			return roomService.getRooms().getById(connect.getConection(), id);
+			return roomService.getById(id);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			return null;
@@ -274,32 +269,12 @@ public class Hotel {
 		}
 	}
 
-	public synchronized String changeRoomStatus(String id, String n) {
-		Boolean changeStatus = Boolean.valueOf(Configuration.getProperties("CHANGE_STATUS"));
-		IRoom room = getRoomById(id);
+	public synchronized String changeRoomStatus(String idStr, String n) {
+
+		Integer id = Integer.valueOf(idStr);
 		String status = null;
 		try {
-			if (changeStatus) {
-				switch (n) {
-				case ("1"):
-					room.setStatus(RoomStatus.OPEN);
-					status = "Open";
-					break;
-				case ("2"):
-					room.setStatus(RoomStatus.CLOSE);
-					status = "Close";
-					break;
-				case ("3"):
-					room.setStatus(RoomStatus.SERVICED);
-					status = "Serviced";
-					break;
-				case ("4"):
-					room.setStatus(RoomStatus.REPAIRABLE);
-					status = "Repairable";
-					break;
-				}
-				roomService.getRooms().updute(connect.getConection(), room);
-			}
+			roomService.changeRoomStatus(id, n);
 			return "New status of the room " + status;
 		} catch (Exception e) {
 			logger.error("Can't chenge status: ", e);
@@ -415,7 +390,7 @@ public class Hotel {
 	public String getOptionById(String idStr) {
 		try {
 			Integer id = Integer.valueOf(idStr);
-			return optionService.getOptions().getById(connect.getConection(), id).toString();
+			return optionService.getById(id).toString();
 		} catch (Exception e) {
 			logger.error(e);
 			return e.getMessage();

@@ -1,25 +1,27 @@
 package com.hotel.service;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.hotel.Analyzer;
 import com.hotel.api.been.IGuest;
 import com.hotel.api.been.IRoom;
 import com.hotel.api.been.RoomStatus;
-import com.hotel.api.dao.IConnectorDao;
 import com.hotel.api.dao.IRoomDAO;
 import com.hotel.api.service.IRoomService;
 import com.hotel.been.Room;
-import com.hotel.di.DependecyInjector;
+import com.hotel.configurations.Configuration;
+import com.hotel.dao.RoomDAO;
+import com.hotel.dao.connection.HibernateUtil;
 import com.hotel.utils.CsvWorker;
 
 public class RoomService implements IRoomService {
 
 	private static RoomService instance;
-	private IRoomDAO roomDao = (IRoomDAO) DependecyInjector.inject(IRoomDAO.class);
-	private IConnectorDao connect = (IConnectorDao) DependecyInjector.inject(IConnectorDao.class);
+	private RoomDAO roomDao = RoomDAO.getInstance();
 
 	private RoomService() {
 
@@ -46,9 +48,9 @@ public class RoomService implements IRoomService {
 
 	@Override
 	public String importRooms(String pathToCsv) throws Exception {
-		Connection connection = connect.getConection();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
 		try {
-			connection.setAutoCommit(false);
 			String path = pathToCsv + Analyzer.getNameOfBeen("Room");
 			List<IRoom> rooms = getAllRooms();
 			List<IRoom> roomsImport = new ArrayList<>();
@@ -60,33 +62,46 @@ public class RoomService implements IRoomService {
 			}
 
 			for (int i = 0; i < rooms.size(); i++) {
-				roomDao.updute(connect.getConection(), roomsImport.get(i));
+				roomDao.updute(session, roomsImport.get(i));
 			}
 			for (int i = rooms.size(); i < reader.read().size(); i++) {
-				roomDao.create(connect.getConection(), roomsImport.get(i));
+				roomDao.create(session, roomsImport.get(i));
 			}
-			connection.commit();
+			transaction.commit();
 			return "data was imported from " + path;
 		} catch (Exception e) {
-			connection.rollback();
+			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			connection.setAutoCommit(true);
-		}
+		} 
 	}
 
 	public void addRoom(IRoom room) throws Exception {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
 		room.setIsFree(true);
 		room.setStatus(RoomStatus.OPEN);
-		roomDao.create(connect.getConection(), room);
+		roomDao.create(session, room);
+		transaction.commit();
+	}
+	
+	public IRoom getById(Integer id) throws Exception {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		IRoom room = roomDao.getById(session, id, IRoom.class);
+		return room;
 	}
 
 	public void remove(Integer id) throws Exception {
-		roomDao.delete(connect.getConection(), id);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		IRoom room = getById(id);
+		roomDao.delete(session, room);
+		transaction.commit();
 	}
 
 	public List<IRoom> getAllRooms() throws Exception {
-		return roomDao.getAll(connect.getConection(), "id");
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<IRoom> list = roomDao.getAll(session, "id",IRoom.class);
+		return list;
 	}
 
 	public List<IRoom> getFreeRooms() throws Exception {
@@ -105,21 +120,26 @@ public class RoomService implements IRoomService {
 	}
 
 	public String chengePriseOfRoom(Integer roomId, Double price) throws Exception {
-		IRoom room = getRooms().getById(connect.getConection(), roomId);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		IRoom room = getById(roomId);
 		if (room != null) {
 			room.setPrice(price);
-			roomDao.updute(connect.getConection(), room);
+			roomDao.updute(session, room);
 		}
+		transaction.commit();
 		return "Price of room " + room.getId() + " is " + room.getPrice();
 	}
 
 	public Integer getNumberOfRooms() throws Exception {
 
-		return roomDao.getAll(connect.getConection(), "id").size();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		return roomDao.getAll(session, "id", IRoom.class).size();
 	}
 
 	public Integer getNumberOfFreeRooms() throws Exception {
-		List<IRoom> list = roomDao.getAll(connect.getConection(), "id");
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<IRoom> list = roomDao.getAll(session, "id",IRoom.class);
 		Integer numberOfFreeRooms = 0;
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getIsFree() == true) {
@@ -131,21 +151,61 @@ public class RoomService implements IRoomService {
 
 	@Override
 	public List<IRoom> sortRooms(String name) throws Exception {
-		return roomDao.getAll(connect.getConection(), name);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		return roomDao.getAll(session, name, IRoom.class);
 	}
 
 	public List<IGuest> getLastGuests(Integer id, Integer num) throws Exception {
-		List<IGuest> guests = roomDao.getLastGuests(connect.getConection(), id, num);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<IGuest> guests = roomDao.getLastGuests(session, id, num);
 
 		return guests;
 	}
 
 	public IRoom clone(IRoom room) throws Exception {
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
 		IRoom clon = room.clone();
-
-		roomDao.create(connect.getConection(), clon);
+		roomDao.create(session, clon);
+		transaction.commit();
 
 		return clon;
+	}
+	
+	public String changeRoomStatus(Integer id, String n) throws Exception {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		Boolean changeStatus = Boolean.valueOf(Configuration.getProperties("CHANGE_STATUS"));
+		IRoom room = getById(id);
+		String status = null;
+		try {
+			if (changeStatus) {
+				switch (n) {
+				case ("1"):
+					room.setStatus(RoomStatus.OPEN);
+					status = "Open";
+					break;
+				case ("2"):
+					room.setStatus(RoomStatus.CLOSE);
+					status = "Close";
+					break;
+				case ("3"):
+					room.setStatus(RoomStatus.SERVICED);
+					status = "Serviced";
+					break;
+				case ("4"):
+					room.setStatus(RoomStatus.REPAIRABLE);
+					status = "Repairable";
+					break;
+				}
+				roomDao.updute(session, room);
+				transaction.commit();
+			}
+			return "New status of the room " + status;
+		} catch (Exception e) {
+			throw new Exception(e);
+		}
 	}
 
 }
