@@ -1,5 +1,0 @@
-id;number;copacity;stars;price;isFree;status
-1;101;3;2;126.0;false;SERVICED
-2;102;4;2;10.0;false;SERVICED
-3;220;2;4;48.0;true;OPEN
-4;120;2;4;55.1;true;OPEN
