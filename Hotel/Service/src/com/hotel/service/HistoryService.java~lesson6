@@ -14,6 +14,7 @@ import com.hotel.api.repository.IGuestRepository;
 import com.hotel.api.repository.IRoomRepository;
 import com.hotel.api.service.IHistoryService;
 import com.hotel.been.History;
+<<<<<<< HEAD:Hotel/Service/src/com/hotel/service/HistoryService.java~lesson6
 import com.hotel.repository.GuestRepository;
 import com.hotel.repository.HistoryRepository;
 import com.hotel.repository.RoomRepository;
@@ -23,6 +24,17 @@ public class HistoryService implements IHistoryService {
 	private IRoomRepository roomRepository=RoomRepository.getInstance();
 	private IGuestRepository guestRepository = GuestRepository.getInstance();
 	private HistoryRepository historyRepository = HistoryRepository.getInstance();
+=======
+import com.hotel.di.DependecyInjector;
+import com.hotel.utils.ArrayWorker;
+
+public class HistoryService implements IHistoryService {
+	
+	private static HistoryService instance;
+	private static IRoomRepository roomRepository=(IRoomRepository) DependecyInjector.inject(IRoomRepository.class);
+	private static IGuestRepository guestRepository = (IGuestRepository) DependecyInjector.inject(IGuestRepository.class);
+	private IHistoryRepository historyRepository = (IHistoryRepository) DependecyInjector.inject(IHistoryRepository.class);
+>>>>>>> origin/lesson8:Hotel/Service/src/com/hotel/service/HistoryService.java
 
 	public HistoryService(IGuestRepository iGuestRepository, IRoomRepository iRoomRepository) {
 		HistoryRepository.getInstance();
