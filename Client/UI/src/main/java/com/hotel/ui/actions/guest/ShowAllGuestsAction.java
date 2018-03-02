@@ -1,8 +1,8 @@
 package com.hotel.ui.actions.guest;
 
 import com.hotel.ui.client.Connection;
+import com.hotel.utils.Printer;
 import com.ui.api.IAction;
-import com.ui.util.Printer;
 
 public class ShowAllGuestsAction implements IAction {
 

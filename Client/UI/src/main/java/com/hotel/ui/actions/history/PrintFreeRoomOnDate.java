@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 import org.apache.log4j.Logger;
 
 import com.hotel.ui.client.Connection;
+import com.hotel.utils.Printer;
 import com.ui.api.IAction;
 import com.ui.api.IConnection;
-import com.ui.util.Printer;
 
 public class PrintFreeRoomOnDate implements IAction {
 
@@ -22,7 +22,7 @@ public class PrintFreeRoomOnDate implements IAction {
 	public void execute() {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		try {
-			Printer.print("Enter the date yyy.mm.dd ");
+			Printer.print("Enter the date dd mm yyyy");
 			String dateStr = reader.readLine();
 			request = actionName + " " + dateStr;
 			response = connect.getResponseFromServer(request);

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hotel.Analyzer;
-import com.hotel.api.been.IEntity;
+import com.hotel.been.Entity;
 
 public class CsvWorker {
 	public static class Writer {
@@ -20,7 +20,7 @@ public class CsvWorker {
 			this.path = path;
 		}
 
-		public void write(IEntity entity) {
+		public void write(Entity entity) {
 			String separator = Analyzer.getValueSeparator("Guest");
 			try (FileWriter fileWriter = new FileWriter(path, true)) {
 				fileWriter.write(entity.toString().replaceAll(" ", separator) + "\n");

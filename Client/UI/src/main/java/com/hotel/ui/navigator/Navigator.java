@@ -2,7 +2,7 @@ package com.hotel.ui.navigator;
 
 import com.hotel.ui.action.MenuItem;
 import com.hotel.ui.menu.Menu;
-import com.ui.util.Printer;
+import com.hotel.utils.Printer;
 
 public class Navigator {
 

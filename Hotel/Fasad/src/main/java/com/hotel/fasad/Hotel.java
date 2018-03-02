@@ -1,15 +1,13 @@
 package com.hotel.fasad;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.hotel.api.been.IGuest;
-import com.hotel.api.been.IHistory;
-import com.hotel.api.been.IOption;
-import com.hotel.api.been.IRoom;
 import com.hotel.been.Guest;
+import com.hotel.been.History;
 import com.hotel.been.Option;
 import com.hotel.been.Room;
 import com.hotel.configurations.Configuration;
@@ -85,7 +83,7 @@ public class Hotel {
 		}
 	}
 
-	public List<IGuest> getGuests() {
+	public List<Guest> getGuests() {
 		try {
 			return guestService.getGuests();
 		} catch (Exception e) {
@@ -94,7 +92,7 @@ public class Hotel {
 		}
 	}
 
-	public IGuest getGuestById(String idStr) {
+	public Guest getGuestById(String idStr) {
 		try {
 			Integer id = Integer.valueOf(idStr);
 			return guestService.getGuestById(id);
@@ -188,7 +186,7 @@ public class Hotel {
 		}
 	}
 
-	public List<IRoom> getAllRooms() {
+	public List<Room> getAllRooms() {
 		try {
 			return roomService.getAllRooms();
 		} catch (Exception e) {
@@ -198,7 +196,7 @@ public class Hotel {
 
 	}
 
-	public IRoom getRoomById(String idStr) {
+	public Room getRoomById(String idStr) {
 		try {
 			Integer id = Integer.valueOf(idStr);
 			return roomService.getById(id);
@@ -219,7 +217,7 @@ public class Hotel {
 		}
 	}
 
-	public List<IRoom> getFreeRooms() {
+	public List<Room> getFreeRooms() {
 		try {
 			return roomService.getFreeRooms();
 		} catch (Exception e) {
@@ -247,7 +245,7 @@ public class Hotel {
 		}
 	}
 
-	public List<IRoom> sortRooms(String name) {
+	public List<Room> sortRooms(String name) {
 
 		try {
 			return roomService.sortRooms(name);
@@ -272,10 +270,8 @@ public class Hotel {
 	public synchronized String changeRoomStatus(String idStr, String n) {
 
 		Integer id = Integer.valueOf(idStr);
-		String status = null;
 		try {
-			roomService.changeRoomStatus(id, n);
-			return "New status of the room " + status;
+			return roomService.changeRoomStatus(id, n);
 		} catch (Exception e) {
 			logger.error("Can't chenge status: ", e);
 			return e.getMessage();
@@ -296,9 +292,8 @@ public class Hotel {
 	public synchronized String clone(String idStr, String num) {
 		try {
 			Integer number = Integer.valueOf(num);
-			IRoom room = getRoomById(idStr);
-			room.setNumber(number);
-			roomService.clone(room);
+			Integer id = Integer.valueOf(idStr);
+			roomService.clone(id, number);
 			return "sucsess";
 		} catch (Exception e) {
 			logger.error(e);
@@ -328,18 +323,23 @@ public class Hotel {
 		}
 	}
 
-	public List<IRoom> getFreeRoomsOnDate(String date) {
+	public String getFreeRoomsOnDate(String dayStr, String manthStr, String yearStr) {
+		Integer day = Integer.valueOf(dayStr);
+		Integer manth = Integer.valueOf(manthStr);
+		Integer year = Integer.valueOf(yearStr);
+
 		try {
 
-			List<IRoom> rooms = historyService.getFreeRoomOnDate(date);
-			return rooms;
+			ArrayList<Room> rooms = (ArrayList<Room>) historyService
+					.getFreeRoomOnDate(new GregorianCalendar(year, manth, day).getTime());
+			return rooms.toString();
 		} catch (Exception e) {
 			logger.error("Exception in the method getFreeRoomsOnDate: ", e);
-			return null;
 		}
+		return "No free rooms on this date";
 	}
 
-	public synchronized void addHistory(IHistory history) {
+	public synchronized void addHistory(History history) {
 		try {
 			historyService.addHistory(history);
 		} catch (Exception e) {
@@ -408,7 +408,7 @@ public class Hotel {
 		}
 	}
 
-	public List<IOption> getAllOptions() {
+	public List<Option> getAllOptions() {
 		try {
 			return optionService.getOption();
 		} catch (Exception e) {

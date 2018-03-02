@@ -4,13 +4,11 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import com.hotel.api.been.IGuest;
-import com.hotel.api.been.IOption;
+import com.hotel.been.Guest;
+import com.hotel.been.Option;
 
-public interface IGuestDAO extends IGenericDao<IGuest> {
+public interface IGuestDAO extends IGenericDao<Guest> {
 
-	public List<IOption> getGuestOptions(Session session, Integer id) throws Exception;
-	
-	
+	public List<Option> getGuestOptions(Session session, Integer id) throws Exception;
 
 }

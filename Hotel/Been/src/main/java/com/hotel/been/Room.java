@@ -3,23 +3,22 @@ package com.hotel.been;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.hotel.annatation.CsvEntity;
 import com.hotel.annatation.CsvProperty;
 import com.hotel.annatation.CsvProperty.PropertyType;
-import com.hotel.api.been.Entity;
-import com.hotel.api.been.IRoom;
-import com.hotel.api.been.RoomStatus;
 
 @javax.persistence.Entity
 @Table(name = "Rooms")
 @CsvEntity(filename = "Rooms.csv", entityId = 3)
-public class Room extends Entity implements IRoom, Cloneable {
+public class Room extends Entity implements Cloneable {
 
 	@Column(name = "number")
 	@CsvProperty(columnNumber = 2, propertyType = PropertyType.SIMPLE_PROPERTY)
@@ -40,7 +39,7 @@ public class Room extends Entity implements IRoom, Cloneable {
 	@Enumerated(EnumType.STRING)
 	@CsvProperty(columnNumber = 7, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private RoomStatus status;
-	@OneToMany(mappedBy="room")
+	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<History> history = new ArrayList<>();
 
 	public Room() {
@@ -69,67 +68,54 @@ public class Room extends Entity implements IRoom, Cloneable {
 
 	}
 
-	@Override
 	public Boolean getIsFree() {
 
 		return isFree;
 	}
 
-	@Override
 	public void setIsFree(Boolean isFree) {
 		this.isFree = isFree;
 	}
 
-	@Override
 	public Integer getNumber() {
 		return number;
 	}
 
-	@Override
 	public void setNumber(Integer number) {
 		this.number = number;
 	}
 
-	@Override
 	public Integer getCopacity() {
 		return copacity;
 	}
 
-	@Override
 	public void setCopacity(Integer copacity) {
 		this.copacity = copacity;
 	}
 
-	@Override
 	public Integer getNumberOfStars() {
 		return numberOfStars;
 	}
 
-	@Override
 	public void setNumberOfStars(Integer numberOfStars) {
 		this.numberOfStars = numberOfStars;
 	}
 
-	@Override
 	public Double getPrice() {
 		return price;
 	}
 
-	@Override
 	public void setPrice(Double price) {
 		this.price = price;
 	}
 
-	@Override
 	public RoomStatus getStatus() {
 		return status;
 	}
 
-	@Override
 	public void setStatus(RoomStatus status) {
 		this.status = status;
 	}
-
 
 	public List<History> getHistory() {
 		return history;
@@ -139,9 +125,9 @@ public class Room extends Entity implements IRoom, Cloneable {
 		this.history = history;
 	}
 
-	@Override
-	public IRoom clone() throws CloneNotSupportedException {
-		IRoom clon = (IRoom) super.clone();
+	public Room clone() throws CloneNotSupportedException {
+		Room clon = (Room) super.clone();
+		clon.setHistory(null);
 		clon.setId(null);
 		clon.setIsFree(true);
 		return clon;

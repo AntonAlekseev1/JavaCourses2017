@@ -6,9 +6,9 @@ import java.io.InputStreamReader;
 import org.apache.log4j.Logger;
 
 import com.hotel.ui.client.Connection;
+import com.hotel.utils.Printer;
 import com.ui.api.IAction;
 import com.ui.api.IConnection;
-import com.ui.util.Printer;
 
 public class AddRoom implements IAction {
 

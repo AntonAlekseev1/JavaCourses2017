@@ -1,8 +1,7 @@
 package com.hotel.api.dao;
 
-import com.hotel.api.been.IOption;
+import com.hotel.been.Option;
 
-public interface IOptionDAO extends IGenericDao<IOption> {
-	
+public interface IOptionDAO extends IGenericDao<Option> {
 
 }

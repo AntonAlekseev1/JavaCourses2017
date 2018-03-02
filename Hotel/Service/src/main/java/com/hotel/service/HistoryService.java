@@ -1,23 +1,21 @@
 package com.hotel.service;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.hotel.api.been.IGuest;
-import com.hotel.api.been.IHistory;
-import com.hotel.api.been.IOption;
-import com.hotel.api.been.IRoom;
 import com.hotel.api.service.IHistoryService;
 import com.hotel.been.Guest;
 import com.hotel.been.History;
+import com.hotel.been.Option;
 import com.hotel.been.Room;
 import com.hotel.dao.GuestDao;
 import com.hotel.dao.HistoryDAO;
 import com.hotel.dao.RoomDAO;
-import com.hotel.dao.connection.HibernateUtil;
+import com.hotel.dao.hibernateutil.HibernateUtil;
 
 public class HistoryService implements IHistoryService {
 
@@ -39,9 +37,21 @@ public class HistoryService implements IHistoryService {
 		return instance;
 	}
 
-	public List<IHistory> getHistory() throws Exception {
+	public List<History> getHistory() throws Exception {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		return historyDao.getAll(session, "id",IHistory.class);
+		Transaction transaction = session.beginTransaction();
+		try {
+			List<History> list = historyDao.getAll(session, "id", History.class);
+			transaction.commit();
+			return list;
+		} catch (Exception e) {
+			transaction.rollback();
+			throw new Exception(e);
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
 	}
 
 	public void settleGuestInRoom(Integer guestId, Integer roomId, Calendar dateOfArival, Calendar evictDate)
@@ -49,66 +59,146 @@ public class HistoryService implements IHistoryService {
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		IGuest guest = guestDao.getById(session, guestId, IGuest.class);
-		IRoom room = roomDao.getById(session, roomId, IRoom.class);
-		History history = new History((Guest) guest,(Room) room,dateOfArival.getTime(), evictDate.getTime());
-		if (guest != null && room != null) {
-			((IHistoryService) room).getHistory().add((IHistory) history);
-			((Guest) guest).setHistory(history);
-			historyDao.create(session, (IHistory) history);
-			room.setIsFree(false);
-			roomDao.updute(session, room);
+		try {
+			Guest guest = guestDao.getById(session, guestId, Guest.class);
+			Room room = roomDao.getById(session, roomId, Room.class);
+			History history = new History(guest, room, dateOfArival.getTime(), evictDate.getTime());
+			if (guest != null && room != null) {
+				room.getHistory().add(history);
+				guest.getHistory().add(history);
+				historyDao.create(session, history);
+				room.setIsFree(false);
+				roomDao.updute(session, room);
 
+			}
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+			throw new Exception(e);
+		} finally {
+			if (session != null) {
+				session.close();
+			}
 		}
-		transaction.commit();
 	}
 
 	public void evictGuestFromRoom(Integer guestId, Integer roomId) throws Exception {
-		
+
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		Guest guest = (Guest) guestDao.getById(session, guestId, IGuest.class);
-		Room room = (Room) roomDao.getById(session, roomId, IRoom.class);
-		for (int i = 0; i < room.getHistory().size(); i++) {
-			if (room.getHistory().get(i) != null && room.getHistory().get(i).getGuest().getId() == guestId) {
-				guest.setHistory(null);
-				room.getHistory().remove(i);
+		try {
+			Guest guest = guestDao.getById(session, guestId, Guest.class);
+			Room room = roomDao.getById(session, roomId, Room.class);
+			for (int i = 0; i < room.getHistory().size(); i++) {
+				if (room.getHistory().get(i) != null && room.getHistory().get(i).getGuest().getId() == guestId) {
+					guest.getHistory().remove(i);
+					room.getHistory().remove(i);
+				}
+			}
+			List<History> list = historyDao.getAll(session, "id", History.class);
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).getRoom().getId() == room.getId()) {
+					historyDao.delete(session, list.get(i));
+				}
+			}
+			room.setIsFree(true);
+			roomDao.updute(session, room);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+			throw new Exception(e);
+		} finally {
+			if (session != null) {
+				session.close();
 			}
 		}
-		List<IHistory> list = getHistory();
-		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).getRoom().getId() == room.getId()) {
-				historyDao.delete(session, list.get(i));
-			}
-		}
-		room.setIsFree(true);
-		roomDao.updute(session, room);
-		transaction.commit();
 	}
 
-	public List<IRoom> getFreeRoomOnDate(String date) throws Exception {
-
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		return historyDao.getFreeRoomsOnDate(session, date);
-	}
-
-	public void addHistory(IHistory history) throws Exception {
+	public void addHistory(History history) throws Exception {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		historyDao.create(session, history);
-		transaction.commit();
+		try {
+			historyDao.create(session, history);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+			throw new Exception(e);
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+	}
+
+	public Long daysOfArrival(Integer id) throws Exception {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		try {
+			Long days = (guestDao.getById(session, id, Guest.class).getHistory().get(0).getEvictDate().getTime()
+					- guestDao.getById(session, id, Guest.class).getHistory().get(0).getDateOfArrival().getTime())
+					/ 86400000;
+			return days;
+		} catch (Exception e) {
+			transaction.rollback();
+			throw new Exception(e);
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
 	}
 
 	public Double getTotalPayment(Integer id) throws Exception {
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		Double summ = historyDao.getTotalPayment(session, id);
-		List<IOption> options = guestDao.getGuestOptions(session, id);
-		for (IOption option : options) {
-			summ += option.getPrice();
+		Transaction transaction = session.beginTransaction();
+		History history = guestDao.getById(session, id, Guest.class).getHistory().get(0);
+		Double summ = null;
+		try {
+			if (history != null) {
+				summ = history.getRoom().getPrice() * daysOfArrival(id);
+				List<Option> options = guestDao.getGuestOptions(session, id);
+				for (Option option : options) {
+					summ += option.getPrice();
+				}
+			}
+			transaction.commit();
+			return summ;
+		} catch (Exception e) {
+			transaction.rollback();
+			throw new Exception(e);
+		} finally {
+			if (session != null) {
+				session.close();
+			}
 		}
+	}
 
-		return summ;
+	public List<Room> getFreeRoomOnDate(Date date) throws Exception {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		try {
+			List<Room> rooms = roomDao.getAll(session, "id", Room.class);
+			for (int i = 0; i < rooms.size(); i++) {
+
+				int historySize = rooms.get(i).getHistory().size();
+				for (int j = 0; j < historySize; j++) {
+					if (rooms.get(i).getHistory().get(j).getDateOfArrival().before(date)
+							&& rooms.get(i).getHistory().get(j).getEvictDate().after(date)) {
+						rooms.remove(rooms.get(i));
+					}
+				}
+			}
+			transaction.commit();
+			return rooms;
+		} catch (Exception e) {
+			transaction.rollback();
+			throw new Exception(e);
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
 	}
 
 }

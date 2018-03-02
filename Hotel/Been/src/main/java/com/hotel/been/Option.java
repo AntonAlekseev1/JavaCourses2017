@@ -6,13 +6,11 @@ import javax.persistence.Table;
 import com.hotel.annatation.CsvEntity;
 import com.hotel.annatation.CsvProperty;
 import com.hotel.annatation.CsvProperty.PropertyType;
-import com.hotel.api.been.Entity;
-import com.hotel.api.been.IOption;
 
 @javax.persistence.Entity
 @Table(name = "Options")
 @CsvEntity(filename = "Options.csv", entityId = 2)
-public class Option extends Entity implements IOption {
+public class Option extends Entity {
 
 	@Column(name = "name")
 	@CsvProperty(columnNumber = 2, propertyType = PropertyType.SIMPLE_PROPERTY)
@@ -38,22 +36,18 @@ public class Option extends Entity implements IOption {
 		this.price = Double.valueOf(arr[2]);
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
 
-	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	@Override
 	public Double getPrice() {
 		return price;
 	}
 
-	@Override
 	public void setPrice(Double price) {
 		this.price = price;
 	}

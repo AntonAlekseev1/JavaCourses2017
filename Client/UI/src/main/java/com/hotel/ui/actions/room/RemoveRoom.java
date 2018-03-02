@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.hotel.ui.client.Connection;
+import com.hotel.utils.Printer;
 import com.ui.api.IAction;
 import com.ui.api.IConnection;
-import com.ui.util.Printer;
 
 public class RemoveRoom implements IAction {
 	private final String actionName = "removeRoom";

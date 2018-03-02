@@ -48,8 +48,8 @@ public class ConnectionListner extends Thread {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("to exit enter the exitCode");
 			int ex = sc.nextInt();
-			if (ex==1) {
-				
+			if (ex == 1) {
+
 				System.exit(0);
 				sc.close();
 			}

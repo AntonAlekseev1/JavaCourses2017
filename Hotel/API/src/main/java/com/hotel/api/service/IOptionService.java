@@ -2,16 +2,13 @@ package com.hotel.api.service;
 
 import java.util.List;
 
-import com.hotel.api.been.IOption;
-import com.hotel.api.dao.IOptionDAO;
+import com.hotel.been.Option;
 
 public interface IOptionService {
 
-	public IOptionDAO getOptions();
+	public List<Option> getOption() throws Exception;
 
-	public List<IOption> getOption() throws Exception;
-
-	public void addOption(IOption option) throws Exception;
+	public void addOption(Option option) throws Exception;
 
 	String importOptions(String path) throws Exception;
 

@@ -9,9 +9,9 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import com.hotel.api.been.IEntity;
+import com.hotel.been.Entity;
 
-public abstract class AbstractDao<T extends IEntity> implements IGenericDao<T> {
+public abstract class AbstractDao<T extends Entity> implements IGenericDao<T> {
 
 	private static final Logger logger = Logger.getLogger(AbstractDao.class);
 
@@ -60,6 +60,13 @@ public abstract class AbstractDao<T extends IEntity> implements IGenericDao<T> {
 	public void updute(Session session, T entity) throws Exception {
 
 		session.update(entity);
+	}
+
+	@Override
+	public void saveOrUpdate(Session session, T entity) throws Exception {
+
+		session.saveOrUpdate(entity);
+
 	}
 
 	@Override

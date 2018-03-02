@@ -11,8 +11,8 @@ import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
 
+import com.hotel.utils.Printer;
 import com.ui.api.IConnection;
-import com.ui.util.Printer;
 
 public class Connection implements IConnection {
 	

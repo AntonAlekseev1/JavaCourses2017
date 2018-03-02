@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 
 import com.hotel.ui.builder.Builder;
 import com.hotel.ui.navigator.Navigator;
-import com.ui.util.Printer;
+import com.hotel.utils.Printer;
 
 public class MenuController {
 

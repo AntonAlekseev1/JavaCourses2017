@@ -26,7 +26,7 @@ public class Server {
 			}
 		} catch (IOException e) {
 			logger.error(e.getMessage());
-		
+
 		}
 	}
 

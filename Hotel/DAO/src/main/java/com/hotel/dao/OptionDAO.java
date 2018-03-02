@@ -1,10 +1,10 @@
 package com.hotel.dao;
 
-import com.hotel.api.been.IOption;
 import com.hotel.api.dao.AbstractDao;
 import com.hotel.api.dao.IOptionDAO;
+import com.hotel.been.Option;
 
-public class OptionDAO extends AbstractDao<IOption> implements IOptionDAO {
+public class OptionDAO extends AbstractDao<Option> implements IOptionDAO {
 
 	private static OptionDAO instance;
 
@@ -19,6 +19,5 @@ public class OptionDAO extends AbstractDao<IOption> implements IOptionDAO {
 		}
 		return instance;
 	}
-
 
 }
