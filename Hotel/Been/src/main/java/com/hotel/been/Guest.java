@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,7 +23,7 @@ public class Guest extends Entity {
 	@Column(name = "last_name")
 	@CsvProperty(columnNumber = 3, propertyType = PropertyType.SIMPLE_PROPERTY)
 	private String lastName;
-	@OneToMany(mappedBy = "guest", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "guest",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<History> history;
 
 	public Guest() {

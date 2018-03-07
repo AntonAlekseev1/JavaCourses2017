@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -15,17 +16,17 @@ import javax.persistence.Table;
 @Table(name = "History")
 public class History extends Entity {
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_room")
 	private Room room;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_guest")
 	private Guest guest;
 	@Column(name = "date_of_arival")
 	private Date dateOfArrival;
 	@Column(name = "evict_date")
 	private Date evictDate;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "options_history", joinColumns = {
 			@JoinColumn(name = "id_history") }, inverseJoinColumns = @JoinColumn(name = "id_option"))
 	private List<Option> options;

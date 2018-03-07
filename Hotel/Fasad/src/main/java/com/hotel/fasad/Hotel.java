@@ -1,6 +1,5 @@
 package com.hotel.fasad;
 
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -25,15 +24,14 @@ public class Hotel {
 	private final static Logger logger = Logger.getLogger(Hotel.class);
 	private static Hotel instance;
 	private String PATH_TO_CSV;
-	private String propertiPath = "../Fasad/src/main/resources/configurations.properties";
+	private final String PROPERTIES_PATH = "../Fasad/src/main/resources/configurations.properties";
 
 	private Hotel() {
-
 		roomService = RoomService.getInstance();
 		optionService = OptionService.getInstance();
 		guestService = GuestService.getInstance();
 		historyService = HistoryService.getInstance();
-		Configuration.loadConfiguration(propertiPath);
+		Configuration.loadConfiguration(PROPERTIES_PATH);
 		PATH_TO_CSV = String.valueOf(Configuration.getProperties("PATH_TO_CSV"));
 
 	}
@@ -83,22 +81,22 @@ public class Hotel {
 		}
 	}
 
-	public List<Guest> getGuests() {
+	public String getGuests() {
 		try {
-			return guestService.getGuests();
+			return guestService.getGuests().toString();
 		} catch (Exception e) {
 			logger.error(e);
-			return null;
+			return e.getMessage();
 		}
 	}
 
-	public Guest getGuestById(String idStr) {
+	public String getGuestById(String idStr) {
 		try {
 			Integer id = Integer.valueOf(idStr);
-			return guestService.getGuestById(id);
+			return guestService.getGuestById(id).toString();
 		} catch (Exception e) {
 			logger.error(e);
-			return null;
+			return e.getMessage();
 		}
 	}
 
@@ -186,23 +184,23 @@ public class Hotel {
 		}
 	}
 
-	public List<Room> getAllRooms() {
+	public String getAllRooms() {
 		try {
-			return roomService.getAllRooms();
+			return roomService.getAllRooms().toString();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			return e.getMessage();
 		}
 
 	}
 
-	public Room getRoomById(String idStr) {
+	public String getRoomById(String idStr) {
 		try {
 			Integer id = Integer.valueOf(idStr);
-			return roomService.getById(id);
+			return roomService.getById(id).toString();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			return e.getMessage();
 		}
 	}
 
@@ -217,41 +215,41 @@ public class Hotel {
 		}
 	}
 
-	public List<Room> getFreeRooms() {
+	public String getFreeRooms() {
 		try {
-			return roomService.getFreeRooms();
+			return roomService.getFreeRooms().toString();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			return e.getMessage();
 		}
 
 	}
 
-	public Integer getNumberOfRooms() {
+	public String getNumberOfRooms() {
 		try {
-			return roomService.getNumberOfRooms();
+			return roomService.getNumberOfRooms().toString();
 		} catch (Exception e) {
 			logger.error(e);
-			return null;
+			return e.getMessage();
 		}
 	}
 
-	public Integer getNumberOfFreeRooms() {
+	public String getNumberOfFreeRooms() {
 		try {
-			return roomService.getNumberOfFreeRooms();
+			return roomService.getNumberOfFreeRooms().toString();
 		} catch (Exception e) {
-			logger.error(e.getMessage());
-			return null;
+			logger.error(e);
+			return e.getMessage();
 		}
 	}
 
-	public List<Room> sortRooms(String name) {
+	public String sortRooms(String name) {
 
 		try {
-			return roomService.sortRooms(name);
+			return roomService.sortRooms(name).toString();
 		} catch (Exception e) {
-			logger.error(e.getMessage());
-			return null;
+			logger.error(e);
+			return e.getMessage();
 		}
 	}
 
@@ -262,7 +260,7 @@ public class Hotel {
 			roomService.chengePriseOfRoom(id, price);
 			return "Price was changed";
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e);
 			return e.getMessage();
 		}
 	}
@@ -285,7 +283,7 @@ public class Hotel {
 			return roomService.getLastGuests(id, num).toString();
 		} catch (Exception e) {
 			logger.error("Exception in the method getLastGuests", e);
-			return "bad";
+			return e.getMessage();
 		}
 	}
 
@@ -297,7 +295,7 @@ public class Hotel {
 			return "sucsess";
 		} catch (Exception e) {
 			logger.error(e);
-			return "something bad";
+			return e.getMessage();
 		}
 	}
 
@@ -330,13 +328,14 @@ public class Hotel {
 
 		try {
 
-			ArrayList<Room> rooms = (ArrayList<Room>) historyService
+			List<Room> rooms = (List<Room>) historyService
 					.getFreeRoomOnDate(new GregorianCalendar(year, manth, day).getTime());
 			return rooms.toString();
 		} catch (Exception e) {
 			logger.error("Exception in the method getFreeRoomsOnDate: ", e);
+			return "No free rooms on this date "+e.getMessage();
 		}
-		return "No free rooms on this date";
+		
 	}
 
 	public synchronized void addHistory(History history) {
@@ -408,12 +407,12 @@ public class Hotel {
 		}
 	}
 
-	public List<Option> getAllOptions() {
+	public String getAllOptions() {
 		try {
-			return optionService.getOption();
+			return optionService.getOption().toString();
 		} catch (Exception e) {
 			logger.error(e);
-			return null;
+			return e.getMessage();
 		}
 	}
 

@@ -47,42 +47,32 @@ public class RoomService implements IRoomService {
 	}
 
 	@Override
-	public String importRooms(String pathToCsv) throws Exception { // use SaveOrUpdate method
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+	public String importRooms(String pathToCsv) throws Exception { 
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			String path = pathToCsv + Analyzer.getNameOfBeen("Room");
-			List<Room> rooms = getAllRooms();
-			List<Room> roomsImport = new ArrayList<>();
-			IRoomDAO roomDao = getRooms();
 			CsvWorker.Reader reader = new CsvWorker.Reader(path);
 			reader.read();
 			for (int i = 0; i < reader.read().size(); i++) {
-				roomsImport.add(new Room(reader.read().get(i)));
+				Room room = new Room(reader.read().get(i));
+				roomDao.saveOrUpdate(session, room);
 			}
 
-			for (int i = 0; i < rooms.size(); i++) {
-				roomDao.updute(session, roomsImport.get(i));
-			}
-			for (int i = rooms.size(); i < reader.read().size(); i++) {
-				roomDao.create(session, roomsImport.get(i));
-			}
 			transaction.commit();
 			return "data was imported from " + path;
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 	}
 
 	public void addRoom(Room room) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			room.setIsFree(true);
 			room.setStatus(RoomStatus.OPEN);
 			roomDao.create(session, room);
@@ -90,68 +80,56 @@ public class RoomService implements IRoomService {
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 	public Room getById(Integer id) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			Room room = roomDao.getById(session, id, Room.class);
 			transaction.commit();
 			return room;
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 	}
 
 	public void remove(Integer id) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			Room room = roomDao.getById(session, id, Room.class);
 			roomDao.delete(session, room);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 	}
 
 	public List<Room> getAllRooms() throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			List<Room> list = roomDao.getAll(session, "id", Room.class);
 			transaction.commit();
 			return list;
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 	}
 
 	public List<Room> getFreeRooms() throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			List<Room> allRooms = roomDao.getAll(session, "id", Room.class);
 			List<Room> freeRooms = new ArrayList<>();
 			for (int i = 0; i < allRooms.size(); i++) {
@@ -164,11 +142,7 @@ public class RoomService implements IRoomService {
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 	public IRoomDAO getRooms() {
@@ -176,9 +150,10 @@ public class RoomService implements IRoomService {
 	}
 
 	public String chengePriseOfRoom(Integer roomId, Double price) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			Room room = roomDao.getById(session, roomId, Room.class);
 			if (room != null) {
 				room.setPrice(price);
@@ -189,34 +164,28 @@ public class RoomService implements IRoomService {
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 	}
 
 	public Integer getNumberOfRooms() throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			Integer num = roomDao.getAll(session, "id", Room.class).size();
 			transaction.commit();
 			return num;
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 	}
 
 	public Integer getNumberOfFreeRooms() throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			List<Room> list = roomDao.getAll(session, "id", Room.class);
 			Integer numberOfFreeRooms = 0;
 			for (int i = 0; i < list.size(); i++) {
@@ -229,38 +198,33 @@ public class RoomService implements IRoomService {
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 	@Override
 	public List<Room> sortRooms(String name) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			List<Room> list = roomDao.getAll(session, name, Room.class);
 			transaction.commit();
 			return list;
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 	public List<Guest> getLastGuests(Integer id, Integer num) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		List<Guest> guests = new ArrayList<>();
-		Room room = roomDao.getById(session, id, Room.class);
-		List<History> history = room.getHistory();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		List<Guest> guests = null;
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
+			Room room = roomDao.getById(session, id, Room.class);
+			guests = new ArrayList<>();
+			List<History> history = room.getHistory();
 			int n = 0;
 			while (history.size() > n && n <= num) {
 				guests.add(history.get(n).getGuest());
@@ -271,18 +235,15 @@ public class RoomService implements IRoomService {
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 	public Room clone(Integer id, Integer number) throws Exception {
 
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			Room clon = roomDao.getById(session, id, Room.class).clone();
 			clon.setNumber(number);
 			roomDao.create(session, clon);
@@ -291,17 +252,14 @@ public class RoomService implements IRoomService {
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 	public String changeRoomStatus(Integer id, String n) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			Boolean changeStatus = Boolean.valueOf(Configuration.getProperties("CHANGE_STATUS"));
 			Room room = roomDao.getById(session, id, Room.class);
 			String status = null;
@@ -331,10 +289,6 @@ public class RoomService implements IRoomService {
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 	}
 

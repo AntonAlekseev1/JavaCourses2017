@@ -19,7 +19,7 @@ public class GuestService implements IGuestService {
 
 	private static GuestService instance;
 	private static OptionDAO optionDao = OptionDAO.getInstance();
-	private GuestDao guestDao = new GuestDao();
+	private GuestDao guestDao = GuestDao.getInstance();
 
 	private GuestService(OptionDAO optionDao) {
 		GuestService.optionDao = optionDao;
@@ -46,11 +46,12 @@ public class GuestService implements IGuestService {
 	}
 
 	@Override
-	public String importGuest(String pathToCsv) throws Exception {// use SaveOrUpdate method
+	public String importGuest(String pathToCsv) throws Exception {
 
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			String path = pathToCsv + Analyzer.getNameOfBeen("Guest");
 			CsvWorker.Reader reader = new CsvWorker.Reader(path);
 			reader.read();
@@ -63,103 +64,83 @@ public class GuestService implements IGuestService {
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 	}
 
 	public List<Guest> sortGuests(String name) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			List<Guest> list = guestDao.getAll(session, name, Guest.class);
 			transaction.commit();
 			return list;
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 	public Guest getGuestById(Integer id) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			Guest guest = guestDao.getById(session, id, Guest.class);
 			transaction.commit();
 			return guest;
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 	}
 
 	public void addGuest(Guest guest) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			guestDao.create(session, guest);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
-
+		} 
 	}
 
 	public List<Guest> getGuests() throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			List<Guest> list = guestDao.getAll(session, "id", Guest.class);
 			transaction.commit();
 			return list;
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 	public Integer getNumberOfGuests() throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			Integer num = guestDao.getAll(session, "id", Guest.class).size();
 			transaction.commit();
 			return num;
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
-
 	}
 
 	public void addOptionToGuest(Integer optionId, Integer guestId) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			Guest guest = guestDao.getById(session, guestId, Guest.class);
 			Option option = optionDao.getById(session, optionId, Option.class);
 			if (guest.getHistory() != null) {
@@ -175,47 +156,37 @@ public class GuestService implements IGuestService {
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 	public List<Option> getGuestOptions(Integer id) throws Exception {
 
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			List<Option> list = guestDao.getGuestOptions(session, id);
 			transaction.commit();
 			return list;
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 	public void removeGuest(Integer id) throws Exception {
 
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			Guest guest = guestDao.getById(session, id, Guest.class);
 			guestDao.delete(session, guest);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 }

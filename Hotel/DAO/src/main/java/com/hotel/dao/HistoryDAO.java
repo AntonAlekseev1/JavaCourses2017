@@ -1,6 +1,5 @@
 package com.hotel.dao;
 
-import com.hotel.api.dao.AbstractDao;
 import com.hotel.api.dao.IHistoryDAO;
 import com.hotel.been.History;
 

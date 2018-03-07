@@ -21,7 +21,7 @@ public class HistoryService implements IHistoryService {
 
 	private static HistoryService instance;
 	private static RoomDAO roomDao = RoomDAO.getInstance();
-	private static GuestDao guestDao = new GuestDao();
+	private static GuestDao guestDao = GuestDao.getInstance();
 	private HistoryDAO historyDao = HistoryDAO.getInstance();
 
 	private HistoryService(GuestDao guestDAO, RoomDAO roomDAO) {
@@ -38,28 +38,26 @@ public class HistoryService implements IHistoryService {
 	}
 
 	public List<History> getHistory() throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			List<History> list = historyDao.getAll(session, "id", History.class);
 			transaction.commit();
 			return list;
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 	public void settleGuestInRoom(Integer guestId, Integer roomId, Calendar dateOfArival, Calendar evictDate)
 			throws Exception {
 
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			Guest guest = guestDao.getById(session, guestId, Guest.class);
 			Room room = roomDao.getById(session, roomId, Room.class);
 			History history = new History(guest, room, dateOfArival.getTime(), evictDate.getTime());
@@ -75,18 +73,15 @@ public class HistoryService implements IHistoryService {
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 	}
 
 	public void evictGuestFromRoom(Integer guestId, Integer roomId) throws Exception {
 
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			Guest guest = guestDao.getById(session, guestId, Guest.class);
 			Room room = roomDao.getById(session, roomId, Room.class);
 			for (int i = 0; i < room.getHistory().size(); i++) {
@@ -107,56 +102,36 @@ public class HistoryService implements IHistoryService {
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 	}
 
 	public void addHistory(History history) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			historyDao.create(session, history);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 	}
 
-	public Long daysOfArrival(Integer id) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		try {
-			Long days = (guestDao.getById(session, id, Guest.class).getHistory().get(0).getEvictDate().getTime()
-					- guestDao.getById(session, id, Guest.class).getHistory().get(0).getDateOfArrival().getTime())
-					/ 86400000;
-			return days;
-		} catch (Exception e) {
-			transaction.rollback();
-			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
-	}
-
+	
 	public Double getTotalPayment(Integer id) throws Exception {
 
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		History history = guestDao.getById(session, id, Guest.class).getHistory().get(0);
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Double summ = null;
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
+			History history = guestDao.getById(session, id, Guest.class).getHistory().get(0);
 			if (history != null) {
-				summ = history.getRoom().getPrice() * daysOfArrival(id);
+				Long days = (guestDao.getById(session, id, Guest.class).getHistory().get(0).getEvictDate().getTime()
+						- guestDao.getById(session, id, Guest.class).getHistory().get(0).getDateOfArrival().getTime())
+						/ 86400000;
+				summ = history.getRoom().getPrice() * days;
 				List<Option> options = guestDao.getGuestOptions(session, id);
 				for (Option option : options) {
 					summ += option.getPrice();
@@ -167,17 +142,14 @@ public class HistoryService implements IHistoryService {
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 	public List<Room> getFreeRoomOnDate(Date date) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
 		try {
+			transaction = session.beginTransaction();
 			List<Room> rooms = roomDao.getAll(session, "id", Room.class);
 			for (int i = 0; i < rooms.size(); i++) {
 
@@ -194,11 +166,7 @@ public class HistoryService implements IHistoryService {
 		} catch (Exception e) {
 			transaction.rollback();
 			throw new Exception(e);
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 }
