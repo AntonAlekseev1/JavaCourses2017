@@ -8,7 +8,7 @@ public class OptionDAO extends AbstractDao<Option> implements IOptionDAO {
 	private static OptionDAO instance;
 
 	private OptionDAO() {
-
+		super(Option.class);
 	}
 
 	public static OptionDAO getInstance() {

@@ -2,7 +2,6 @@ package com.hotel.api.service;
 
 import java.util.List;
 
-import com.hotel.api.dao.IRoomDAO;
 import com.hotel.been.Guest;
 import com.hotel.been.Room;
 
@@ -13,8 +12,6 @@ public interface IRoomService {
 	public void addRoom(Room room) throws Exception;
 	
 	public List<Room> getAllRooms() throws Exception;
-	
-	public IRoomDAO getRooms();
 	
 	public String chengePriseOfRoom(Integer roomId, Double price) throws Exception;
 	

@@ -8,15 +8,22 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 public class HibernateUtil {
 
-	private static SessionFactory sessyonFactory = null;
-	private static ServiceRegistry serviceRegistry;
 	private static HibernateUtil instance;
+	private SessionFactory sessyonFactory = null;
+	private ServiceRegistry serviceRegistry;
 
 	private HibernateUtil() {
 		bildSessionFactory();
 	}
+	
+	public static HibernateUtil getInstance() {
+		if(instance == null) {
+			instance = new HibernateUtil();
+		}
+		return instance;
+	}
 
-	private static SessionFactory bildSessionFactory() {
+	private  SessionFactory bildSessionFactory() {
 		try {
 			Configuration cfg = new Configuration().configure();
 			serviceRegistry = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();
@@ -28,18 +35,11 @@ public class HibernateUtil {
 		}
 	}
 
-	public static SessionFactory getSessionFactory()  {
+	public SessionFactory getSessionFactory()  {
 		if (sessyonFactory == null) {
 			bildSessionFactory();
 		}
 		return sessyonFactory;
-	}
-
-	public static HibernateUtil getInstance() {
-		if(instance == null) {
-			instance = new HibernateUtil();
-		}
-		return instance;
 	}
 
 

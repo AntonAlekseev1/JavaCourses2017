@@ -8,7 +8,7 @@ public class RoomDAO extends AbstractDao<Room> implements IRoomDAO {
 	private static RoomDAO instance;
 
 	private RoomDAO() {
-
+		super(Room.class);
 	}
 
 	public static RoomDAO getInstance() {

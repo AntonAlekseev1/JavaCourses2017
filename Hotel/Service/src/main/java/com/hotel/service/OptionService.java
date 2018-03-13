@@ -3,6 +3,7 @@ package com.hotel.service;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.hotel.Analyzer;
@@ -16,6 +17,7 @@ public class OptionService implements IOptionService {
 
 	private static OptionService instance;
 	private OptionDAO optionDao = OptionDAO.getInstance();
+	private final SessionFactory sessionFactory = HibernateUtil.getInstance().getSessionFactory();
 
 	private OptionService() {
 
@@ -43,7 +45,7 @@ public class OptionService implements IOptionService {
 
 	@Override
 	public String importOptions(String pathToCsv) throws Exception { 
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -57,48 +59,56 @@ public class OptionService implements IOptionService {
 			transaction.commit();
 			return "data was imported from" + path;
 		} catch (Exception e) {
-			transaction.rollback();
+			if(transaction!=null) {
+				transaction.rollback();
+				}
 			throw new Exception(e);
 		}
 	}
 
 	public List<Option> getOption() throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			List<Option> list = optionDao.getAll(session, "id", Option.class);
+			List<Option> list = optionDao.getAll(session, "id");
 			transaction.commit();
 			return list;
 		} catch (Exception e) {
-			transaction.rollback();
+			if(transaction!=null) {
+				transaction.rollback();
+				}
 			throw new Exception(e);
 		}
 	}
 
 	public void addOption(Option option) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
 			optionDao.create(session, option);
 			transaction.commit();
 		} catch (Exception e) {
-			transaction.rollback();
+			if(transaction!=null) {
+				transaction.rollback();
+				}
 			throw new Exception(e);
 		}
 	}
 
 	public Option getById(Integer id) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			Option option = (Option) optionDao.getById(session, id, Option.class);
+			Option option = (Option) optionDao.getById(session, id);
 			transaction.commit();
 			return option;
 		} catch (Exception e) {
-			transaction.rollback();
+			if(transaction!=null) {
+				transaction.rollback();
+				}
 			throw new Exception(e);
 		}
 	}

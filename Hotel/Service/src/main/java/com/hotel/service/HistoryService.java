@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.hotel.api.service.IHistoryService;
@@ -23,6 +24,7 @@ public class HistoryService implements IHistoryService {
 	private static RoomDAO roomDao = RoomDAO.getInstance();
 	private static GuestDao guestDao = GuestDao.getInstance();
 	private HistoryDAO historyDao = HistoryDAO.getInstance();
+	private final SessionFactory sessionFactory = HibernateUtil.getInstance().getSessionFactory();
 
 	private HistoryService(GuestDao guestDAO, RoomDAO roomDAO) {
 		HistoryService.guestDao = guestDAO;
@@ -38,15 +40,17 @@ public class HistoryService implements IHistoryService {
 	}
 
 	public List<History> getHistory() throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			List<History> list = historyDao.getAll(session, "id", History.class);
+			List<History> list = historyDao.getAll(session, "id");
 			transaction.commit();
 			return list;
 		} catch (Exception e) {
-			transaction.rollback();
+			if(transaction!=null) {
+				transaction.rollback();
+				}
 			throw new Exception(e);
 		} 
 	}
@@ -54,12 +58,12 @@ public class HistoryService implements IHistoryService {
 	public void settleGuestInRoom(Integer guestId, Integer roomId, Calendar dateOfArival, Calendar evictDate)
 			throws Exception {
 
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			Guest guest = guestDao.getById(session, guestId, Guest.class);
-			Room room = roomDao.getById(session, roomId, Room.class);
+			Guest guest = guestDao.getById(session, guestId);
+			Room room = roomDao.getById(session, roomId);
 			History history = new History(guest, room, dateOfArival.getTime(), evictDate.getTime());
 			if (guest != null && room != null) {
 				room.getHistory().add(history);
@@ -71,26 +75,28 @@ public class HistoryService implements IHistoryService {
 			}
 			transaction.commit();
 		} catch (Exception e) {
-			transaction.rollback();
+			if(transaction!=null) {
+				transaction.rollback();
+				}
 			throw new Exception(e);
 		}
 	}
 
 	public void evictGuestFromRoom(Integer guestId, Integer roomId) throws Exception {
 
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			Guest guest = guestDao.getById(session, guestId, Guest.class);
-			Room room = roomDao.getById(session, roomId, Room.class);
+			Guest guest = guestDao.getById(session, guestId);
+			Room room = roomDao.getById(session, roomId);
 			for (int i = 0; i < room.getHistory().size(); i++) {
 				if (room.getHistory().get(i) != null && room.getHistory().get(i).getGuest().getId() == guestId) {
 					guest.getHistory().remove(i);
 					room.getHistory().remove(i);
 				}
 			}
-			List<History> list = historyDao.getAll(session, "id", History.class);
+			List<History> list = historyDao.getAll(session, "id");
 			for (int i = 0; i < list.size(); i++) {
 				if (list.get(i).getRoom().getId() == room.getId()) {
 					historyDao.delete(session, list.get(i));
@@ -100,20 +106,24 @@ public class HistoryService implements IHistoryService {
 			roomDao.updute(session, room);
 			transaction.commit();
 		} catch (Exception e) {
-			transaction.rollback();
+			if(transaction!=null) {
+				transaction.rollback();
+				}
 			throw new Exception(e);
 		}
 	}
 
 	public void addHistory(History history) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
 			historyDao.create(session, history);
 			transaction.commit();
 		} catch (Exception e) {
-			transaction.rollback();
+			if(transaction!=null) {
+				transaction.rollback();
+				}
 			throw new Exception(e);
 		}
 	}
@@ -121,15 +131,15 @@ public class HistoryService implements IHistoryService {
 	
 	public Double getTotalPayment(Integer id) throws Exception {
 
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Double summ = null;
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			History history = guestDao.getById(session, id, Guest.class).getHistory().get(0);
+			History history = guestDao.getById(session, id).getHistory().get(0);
 			if (history != null) {
-				Long days = (guestDao.getById(session, id, Guest.class).getHistory().get(0).getEvictDate().getTime()
-						- guestDao.getById(session, id, Guest.class).getHistory().get(0).getDateOfArrival().getTime())
+				Long days = (guestDao.getById(session, id).getHistory().get(0).getEvictDate().getTime()
+						- guestDao.getById(session, id).getHistory().get(0).getDateOfArrival().getTime())
 						/ 86400000;
 				summ = history.getRoom().getPrice() * days;
 				List<Option> options = guestDao.getGuestOptions(session, id);
@@ -140,17 +150,19 @@ public class HistoryService implements IHistoryService {
 			transaction.commit();
 			return summ;
 		} catch (Exception e) {
-			transaction.rollback();
+			if(transaction!=null) {
+				transaction.rollback();
+				}
 			throw new Exception(e);
 		} 
 	}
 
 	public List<Room> getFreeRoomOnDate(Date date) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			List<Room> rooms = roomDao.getAll(session, "id", Room.class);
+			List<Room> rooms = roomDao.getAll(session, "id");
 			for (int i = 0; i < rooms.size(); i++) {
 
 				int historySize = rooms.get(i).getHistory().size();
@@ -164,7 +176,9 @@ public class HistoryService implements IHistoryService {
 			transaction.commit();
 			return rooms;
 		} catch (Exception e) {
-			transaction.rollback();
+			if(transaction!=null) {
+				transaction.rollback();
+				}
 			throw new Exception(e);
 		} 
 	}

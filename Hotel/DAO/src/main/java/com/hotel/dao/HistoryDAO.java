@@ -8,7 +8,7 @@ public class HistoryDAO extends AbstractDao<History> implements IHistoryDAO {
 	private static HistoryDAO instance;
 
 	private HistoryDAO() {
-
+		super(History.class);
 	}
 
 	public static HistoryDAO getInstance() {

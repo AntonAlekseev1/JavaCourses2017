@@ -21,10 +21,15 @@ public abstract class AbstractDao<T extends Entity> implements IGenericDao<T> {
 	private final String UPDATE_EXCEPTION = "Exception in the method update: ";
 	private final String DELETE_EXCEPTION = "Exception in the method delete: ";
 	private final String SAVE_EXCEPTION = "Exception in the method save: ";
+	private Class<T> clazz;
+	
+	public AbstractDao(Class<T> clazz) {
+		this.clazz = clazz;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> getAll(Session session, String name, Class<T> clazz) throws Exception {
+	public List<T> getAll(Session session, String name) throws Exception {
 		List<T> entityList = new ArrayList<>();
 		try {
 			Criteria criteria = session.createCriteria(clazz).addOrder(Order.asc(name));
@@ -38,7 +43,7 @@ public abstract class AbstractDao<T extends Entity> implements IGenericDao<T> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public T getById(Session session, Integer id, Class<T> clazz) throws Exception {
+	public T getById(Session session, Integer id) throws Exception {
 		T entity = null;
 		try {
 			Criteria criteria = session.createCriteria(clazz).add(Restrictions.eq("id", id));

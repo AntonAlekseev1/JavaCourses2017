@@ -1,6 +1,11 @@
 package com.hotel.been;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.hotel.annatation.CsvEntity;
@@ -18,6 +23,8 @@ public class Option extends Entity {
 	@CsvProperty(columnNumber = 3, propertyType = PropertyType.SIMPLE_PROPERTY)
 	@Column(name = "price")
 	private Double price;
+	@ManyToMany(mappedBy = "options",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private List<History> histories;
 
 	public Option() {
 
