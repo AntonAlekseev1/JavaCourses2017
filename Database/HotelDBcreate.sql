@@ -45,3 +45,10 @@ CREATE TABLE IF NOT EXISTS Options_history (
     CONSTRAINT fk_option FOREIGN KEY (id_option)
         REFERENCES Options (id)
 );
+
+CREATE TABLE IF NOT EXISTS Users (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    login VARCHAR(50) UNIQUE,
+    password VARCHAR(50),
+    token VARCHAR(50)
+);

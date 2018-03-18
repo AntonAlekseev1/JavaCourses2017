@@ -1,0 +1,77 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <filter>
+  	<filter-name>SecurityFilter</filter-name>
+  	<display-name>SecurityFilter</display-name>
+  	<description></description>
+  	<filter-class>com.hotel.server.web.filter.SecurityFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>SecurityFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <servlet>
+  	<servlet-name>GuestServelet</servlet-name>
+  	<display-name>GuestServelet</display-name>
+  	<description></description>
+  	<servlet-class>com.hotel.server.web.GuestServelet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>RoomServlet</servlet-name>
+  	<display-name>RoomServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.hotel.server.web.RoomServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>HistoryServlet</servlet-name>
+  	<display-name>HistoryServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.hotel.server.web.HistoryServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>OptionServlet</servlet-name>
+  	<display-name>OptionServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.hotel.server.web.OptionServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<display-name>LoginServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.hotel.server.web.LoginServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>LogoutServlet</servlet-name>
+  	<display-name>LogoutServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.hotel.server.web.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>GuestServelet</servlet-name>
+  	<url-pattern>/GuestServelet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>RoomServlet</servlet-name>
+  	<url-pattern>/RoomServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>HistoryServlet</servlet-name>
+  	<url-pattern>/HistoryServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>OptionServlet</servlet-name>
+  	<url-pattern>/OptionServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<url-pattern>/LoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LogoutServlet</servlet-name>
+  	<url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
+</web-app>

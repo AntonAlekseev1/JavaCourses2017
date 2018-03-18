@@ -17,5 +17,6 @@
         <mapping class="com.hotel.been.Room"></mapping>
         <mapping class="com.hotel.been.Option"></mapping>
         <mapping class="com.hotel.been.History"></mapping>
+        <mapping class ="com.hotel.been.User"></mapping>
     </session-factory> 
 </hibernate-configuration> 
