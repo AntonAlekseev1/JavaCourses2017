@@ -3,9 +3,12 @@ package com.hotel.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.log4j.Logger;
+
 
 public class TokenGenerator {
 	
+	private static final Logger logger = Logger.getLogger(TokenGenerator.class);
 	private static final String KEY = "qwdsll7Uyh";
 	public static String generateToken(String login, String password) {
 		String input = (login+password+KEY);
@@ -23,7 +26,7 @@ public class TokenGenerator {
 	        }
 	        catch (NoSuchAlgorithmException e)
 	        {
-	            e.printStackTrace();
+	           logger.error("Error: ", e);
 	        }return generatedPassword;
 	}
 
