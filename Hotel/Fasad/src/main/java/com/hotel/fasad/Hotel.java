@@ -1,23 +1,25 @@
 package com.hotel.fasad;
 
+import java.time.LocalDateTime;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.hotel.api.fasad.IHotel;
 import com.hotel.been.Guest;
 import com.hotel.been.History;
+import com.hotel.been.LogEntity;
 import com.hotel.been.Option;
 import com.hotel.been.Room;
 import com.hotel.been.User;
 import com.hotel.configurations.Configuration;
 import com.hotel.service.GuestService;
 import com.hotel.service.HistoryService;
+import com.hotel.service.LogEntityService;
 import com.hotel.service.OptionService;
 import com.hotel.service.RoomService;
 import com.hotel.service.UserService;
-import com.hotel.utils.TokenGenerator;
-import com.hotel.api.fasad.IHotel;
 
 public class Hotel implements IHotel {
 	private RoomService roomService;
@@ -25,6 +27,7 @@ public class Hotel implements IHotel {
 	private GuestService guestService;
 	private HistoryService historyService;
 	private UserService userService;
+	private LogEntityService logEntityService;
 
 	private final static Logger logger = Logger.getLogger(Hotel.class);
 	private static Hotel instance;
@@ -37,6 +40,7 @@ public class Hotel implements IHotel {
 		guestService = GuestService.getInstance();
 		historyService = HistoryService.getInstance();
 		userService = UserService.getInstance();
+		logEntityService = LogEntityService.getInstance();
 		Configuration.loadConfiguration(PROPERTIES_PATH);
 		PATH_TO_CSV = String.valueOf(Configuration.getProperties("PATH_TO_CSV"));
 
@@ -427,8 +431,8 @@ public class Hotel implements IHotel {
     @Override
     public synchronized String register(String login, String password) {
     	try {
-    		String token = TokenGenerator.generateToken(login, password);
-    		userService.addUser(new User(login,password, token));
+    //		String token = TokenGenerator.generateToken(login, password);
+    		userService.addUser(new User(login,password));
     		return "registration completed successfully";
     	}catch (Exception e) {
 			logger.error(e);
@@ -445,6 +449,27 @@ public class Hotel implements IHotel {
 			return null;
 		}
     }
-
-
+    @Override
+    public String writeLog(User user, String action) {
+		try {
+			String date = LocalDateTime.now().toString();
+			String name = user.getLogin();
+			logEntityService.addLog(new LogEntity(date, name, action));	
+    	return "";
+		}catch (Exception e) {
+			logger.error(e);
+			return e.getMessage();
+		}
+    	
+    }
+    
+    public String getAllLog() {
+		try {
+			String logList = logEntityService.getAll().toString();
+    	return logList;
+		}catch (Exception e) {
+			logger.error(e);
+			return e.getMessage();
+		}
+    }
 }

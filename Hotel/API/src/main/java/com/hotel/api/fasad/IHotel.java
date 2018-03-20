@@ -80,4 +80,6 @@ public interface IHotel {
 
 	public User signIn(String login, String password);
 
+	public String writeLog(User user, String action);
+
 }

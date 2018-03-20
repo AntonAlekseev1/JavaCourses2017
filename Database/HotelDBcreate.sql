@@ -52,3 +52,10 @@ CREATE TABLE IF NOT EXISTS Users (
     password VARCHAR(50),
     token VARCHAR(50)
 );
+
+CREATE TABLE IF NOT EXISTS Log_table (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    time VARCHAR(50),
+    user_name VARCHAR(50),
+    action VARCHAR(50)
+);

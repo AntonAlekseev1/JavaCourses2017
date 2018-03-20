@@ -30,6 +30,7 @@ public class GuestServelet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String list = hotel.getGuests();
 		response.getWriter().println(list);
+		request.getSession().setAttribute("method","GET");
 	}
 
 	/**
@@ -40,6 +41,7 @@ public class GuestServelet extends HttpServlet {
 		String lastName = request.getParameter("lastName");
 		String guest = hotel.addGuest(name, lastName);
 		response.getWriter().println(guest);
+		request.getSession().setAttribute("method","PUT");
 	}
 
 	@Override
@@ -47,12 +49,14 @@ public class GuestServelet extends HttpServlet {
 		String id = req.getParameter("id");
 		String guest = hotel.getTotalPayment(id);
 		resp.getWriter().println(guest);
+		req.getSession().setAttribute("method","POST");
 	}
 
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String st = req.getParameter("del");
 		 hotel.remuveGuest(st);
+		 req.getSession().setAttribute("method","DELETE");
 	}
 
 }

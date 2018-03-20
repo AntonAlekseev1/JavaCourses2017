@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hotel.api.fasad.IHotel;
+import com.hotel.been.User;
 import com.hotel.fasad.Hotel;
 
 /**
@@ -25,7 +26,7 @@ public class LoginServlet extends HttpServlet {
     }
     
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPut(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -33,6 +34,20 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		if(login!=null && password!=null) {
 		 hotel.register(login, password);
+		}
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String login = request.getParameter("login");
+		String password = request.getParameter("password");
+		if(login!=null && password!=null) {
+			User user = hotel.signIn(login, password);
+			if(user!=null) {
+				request.getSession().setAttribute("User", user);
+				hotel.writeLog(user, "LOGIN");
+				response.getWriter().println("LOGIN");
+			}
 		}
 	}
 }
