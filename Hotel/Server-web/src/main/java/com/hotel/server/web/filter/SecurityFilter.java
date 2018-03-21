@@ -17,7 +17,6 @@ import org.apache.commons.lang3.StringUtils;
 import com.hotel.api.fasad.IHotel;
 import com.hotel.been.User;
 import com.hotel.fasad.Hotel;
-import com.hotel.utils.TokenGenerator;
 
 /**
  * Servlet Filter implementation class SecurityFilter
@@ -43,9 +42,6 @@ public class SecurityFilter implements Filter {
 			throws IOException, ServletException {
 		String url = ((HttpServletRequest) request).getRequestURI();
 		String path = StringUtils.substringAfterLast(url, "/");
-		String login = request.getParameter("login");
-		String password = request.getParameter("password");
-		String token = TokenGenerator.generateToken(login, password);
 		if (!pathFilter.contains(path)) {
 			chain.doFilter(request, response);
 			return;

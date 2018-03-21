@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.hotel.api.fasad.IHotel;
 import com.hotel.been.User;
 import com.hotel.fasad.Hotel;
+import com.hotel.utils.TokenWorker;
 
 /**
  * Servlet implementation class LoginServlet
@@ -33,7 +34,8 @@ public class LoginServlet extends HttpServlet {
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
 		if(login!=null && password!=null) {
-		 hotel.register(login, password);
+			String token = TokenWorker.getToken(login, password);
+		 hotel.register(login, password, token);
 		}
 	}
 
@@ -42,7 +44,9 @@ public class LoginServlet extends HttpServlet {
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
 		if(login!=null && password!=null) {
+			String token = TokenWorker.getToken(login, password);
 			User user = hotel.signIn(login, password);
+			user.setToken(token);
 			if(user!=null) {
 				request.getSession().setAttribute("User", user);
 				hotel.writeLog(user, "LOGIN");

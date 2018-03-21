@@ -29,6 +29,7 @@ public class HistoryServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		response.getWriter().append(hotel.getHistory().replaceAll(",", "\n"));
+		request.getSession().setAttribute("method","GET");
 	}
 
 	/**
@@ -41,6 +42,7 @@ public class HistoryServlet extends HttpServlet {
 		String manth = arr[1];
 		String year = arr[2];
 		response.getWriter().append(hotel.getFreeRoomsOnDate(day, manth, year).replaceAll(",", "\n"));
+		request.getSession().setAttribute("method","POST");
 	}
 
 	/**
@@ -61,6 +63,7 @@ public class HistoryServlet extends HttpServlet {
 		String evictYear = evict[2];
 		response.getWriter().append(hotel.settleGuestInRoom(guestId, roomId, arivalDay, arivalMonth, arivalYear,
 				evictDay, evictMonth, evictYear));
+		request.getSession().setAttribute("method","PUT");
 	}
 
 }

@@ -29,6 +29,7 @@ public class OptionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append(hotel.getAllOptions().replaceAll(",", "\n"));
+		request.getSession().setAttribute("method","GET");
 	}
 
 	/**
@@ -36,6 +37,7 @@ public class OptionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append(hotel.addOptionToGuest(request.getParameter("optionId"), request.getParameter("guestId")));
+		request.getSession().setAttribute("method","POST");
 	}
 
 	/**
@@ -43,6 +45,7 @@ public class OptionServlet extends HttpServlet {
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append(hotel.addOption(request.getParameter("name"), request.getParameter("price")));
+		request.getSession().setAttribute("method","PUT");
 	}
 
 }

@@ -30,6 +30,7 @@ public class RoomServlet extends HttpServlet {
 		response.getWriter().append("All Rooms").println();
 		String list = hotel.getAllRooms().replaceAll(",", "\n");
 		response.getWriter().println(list);
+		request.getSession().setAttribute("method","GET");
 	}
 
 	/**
@@ -39,6 +40,7 @@ public class RoomServlet extends HttpServlet {
 		String id = request.getParameter("id");
 		String price = request.getParameter("newPrice");
 		response.getWriter().append(hotel.chengePriceOfRoom(id, price));
+		request.getSession().setAttribute("method","POST");
 	}
 
 	/**
@@ -50,6 +52,7 @@ public class RoomServlet extends HttpServlet {
 		String stars = request.getParameter("stars");
 		String price = request.getParameter("price");
 		response.getWriter().append(hotel.addRoom(number, copacity, stars, price));
+		request.getSession().setAttribute("method","PUT");
 	}
 
 	/**
@@ -58,6 +61,7 @@ public class RoomServlet extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String st = request.getParameter("del");
 		hotel.removeRoom(st);
+		request.getSession().setAttribute("method","DELETE");
 	}
 
 }
