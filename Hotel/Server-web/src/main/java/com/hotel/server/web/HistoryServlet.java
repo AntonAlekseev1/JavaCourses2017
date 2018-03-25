@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.hotel.api.fasad.IHotel;
@@ -39,7 +40,10 @@ public class HistoryServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try (PrintWriter writer = response.getWriter()) {
 			response.setContentType(JSON_TYPE);
-			writer.println(JsonParser.listToJson(hotel.getHistory()));
+			JSONArray array = new JSONArray(hotel.getHistory());
+			writer.println(array);//JsonParser.listToJson(hotel.getHistory())
+			String login = (String) request.getSession().getAttribute("login");
+			hotel.writeLog(login, "getAllHistories");
 		} catch (Exception e) {
 			try (PrintWriter writer = response.getWriter()) {
 				writer.println(JsonParser.convertToJson(EXCEPTION + e.getMessage()));

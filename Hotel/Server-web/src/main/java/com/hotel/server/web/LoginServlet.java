@@ -45,6 +45,7 @@ public class LoginServlet extends HttpServlet {
 			if (login != null && password != null) {
 				hotel.register(login, password);
 				response.getWriter().println(REGISTREITED);
+				hotel.writeLog(login, REGISTREITED);
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage());

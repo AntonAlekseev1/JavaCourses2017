@@ -38,6 +38,8 @@ public class RoomServlet extends HttpServlet {
 			String list = hotel.getAllRooms();
 			response.setContentType(JSON_TYPE);
 			response.getWriter().println(JsonParser.convertToJson(list));
+			String login = (String) request.getSession().getAttribute("login");
+			hotel.writeLog(login, "getAllRooms");
 		} catch (Exception e) {
 			logger.error(EXCEPTION, e);
 		}

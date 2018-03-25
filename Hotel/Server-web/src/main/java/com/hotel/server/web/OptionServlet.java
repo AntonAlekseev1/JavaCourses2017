@@ -36,6 +36,8 @@ public class OptionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try (PrintWriter writer = response.getWriter()) {
 			writer.println(JsonParser.convertToJson(hotel.getAllOptions().replaceAll(",", "\n")));
+			String login = (String) request.getSession().getAttribute("login");
+			hotel.writeLog(login, "getAllOptions");
 		} catch (Exception e) {
 			logger.error(EXCEPTION, e);
 		}

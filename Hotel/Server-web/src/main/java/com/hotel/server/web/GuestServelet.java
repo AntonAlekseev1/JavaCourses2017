@@ -26,6 +26,7 @@ public class GuestServelet extends HttpServlet {
 	 */
 	public GuestServelet() {
 		super();
+		
 	}
 
 	/**
@@ -36,6 +37,8 @@ public class GuestServelet extends HttpServlet {
 		try {
 			response.setContentType(JSON_TYPE);
 			response.getWriter().println(JsonParser.convertToJson(hotel.getGuests()));
+			String login = (String) request.getSession().getAttribute("login");
+			hotel.writeLog(login, "getAllGuests");
 		} catch (Exception e) {
 			logger.error(EXCEPTION, e);
 		}
