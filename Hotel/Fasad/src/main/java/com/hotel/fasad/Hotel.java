@@ -20,6 +20,8 @@ import com.hotel.service.LogEntityService;
 import com.hotel.service.OptionService;
 import com.hotel.service.RoomService;
 import com.hotel.service.UserService;
+import com.hotel.utils.PasswordEncryptor;
+import com.hotel.utils.TokenWorker;
 
 public class Hotel implements IHotel {
 	private RoomService roomService;
@@ -52,7 +54,8 @@ public class Hotel implements IHotel {
 		}
 		return instance;
 	}
-    @Override
+
+	@Override
 	public String exportGuests() {
 		try {
 			return guestService.exportGuests(PATH_TO_CSV);
@@ -61,7 +64,8 @@ public class Hotel implements IHotel {
 			return "Error" + e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public synchronized String importGuest() {
 		try {
 			return guestService.importGuest(PATH_TO_CSV);
@@ -71,7 +75,8 @@ public class Hotel implements IHotel {
 		}
 
 	}
-    @Override
+
+	@Override
 	public synchronized String addGuest(String name, String lastName) {
 		try {
 			guestService.addGuest(new Guest(name, lastName));
@@ -81,7 +86,8 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public String getNumberOfGuests() {
 		try {
 			return guestService.getNumberOfGuests().toString();
@@ -90,7 +96,8 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public String getGuests() {
 		try {
 			return guestService.getGuests().toString();
@@ -99,7 +106,8 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public String getGuestById(String idStr) {
 		try {
 			Integer id = Integer.valueOf(idStr);
@@ -109,7 +117,8 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public String getGuestOptions(String guestIdStr) {
 		try {
 			Integer guestId = Integer.valueOf(guestIdStr);
@@ -119,11 +128,10 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
-	public String addOptionToGuest(String optionIdStr, String guestIdStr) {
 
-		Integer optionId = Integer.valueOf(optionIdStr);
-		Integer guestId = Integer.valueOf(guestIdStr);
+	@Override
+	public String addOptionToGuest(Integer optionId, Integer guestId) {
+
 		try {
 			guestService.addOptionToGuest(optionId, guestId);
 		} catch (Exception e) {
@@ -131,7 +139,8 @@ public class Hotel implements IHotel {
 		}
 		return "Option was added to guest";
 	}
-    @Override
+
+	@Override
 	public String sortedGuests(String name) {
 		try {
 			return guestService.sortGuests(name).toString();
@@ -140,10 +149,10 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
-	public synchronized String remuveGuest(String idStr) {
+
+	@Override
+	public synchronized String remuveGuest(Integer id) {
 		try {
-			Integer id = Integer.valueOf(idStr);
 			guestService.removeGuest(id);
 			return "Guest was removed";
 		} catch (Exception e) {
@@ -151,20 +160,20 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
-	public String getTotalPayment(String idStr) {
+
+	@Override
+	public Double getTotalPayment(Integer id) throws Exception {
 		try {
-			Integer id = Integer.valueOf(idStr);
-			return historyService.getTotalPayment(id).toString();
+			return historyService.getTotalPayment(id);
 		} catch (Exception e) {
 			logger.error(e);
-			return "Error: " + e.getMessage();
+			throw new Exception("Error: " + e.getMessage());
 		}
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------
-    @Override
-    public String exportRooms() {
+	@Override
+	public String exportRooms() {
 		try {
 			return roomService.exportRooms(PATH_TO_CSV);
 		} catch (Exception e) {
@@ -172,7 +181,8 @@ public class Hotel implements IHotel {
 			return "Error" + e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public synchronized String importRooms() {
 		try {
 			return roomService.importRooms(PATH_TO_CSV);
@@ -181,20 +191,18 @@ public class Hotel implements IHotel {
 			return "Error: " + e.getMessage();
 		}
 	}
-    @Override
-	public synchronized String addRoom(String numberStr, String copacityStr, String numberOfStarsStr, String priceStr) {
-		Integer number = Integer.valueOf(numberStr);
-		Integer copacity = Integer.valueOf(copacityStr);
-		Integer numberOfStars = Integer.valueOf(numberOfStarsStr);
-		Double price = Double.valueOf(priceStr);
+
+	@Override
+	public synchronized String addRoom(Integer number, Integer copacity, Integer stars, Double price) {
 		try {
-			roomService.addRoom(new Room(number, copacity, numberOfStars, price));
+			roomService.addRoom(new Room(number, copacity, stars, price));
 			return "Room was added";
 		} catch (Exception e) {
 			return e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public String getAllRooms() {
 		try {
 			return roomService.getAllRooms().toString();
@@ -204,7 +212,8 @@ public class Hotel implements IHotel {
 		}
 
 	}
-    @Override
+
+	@Override
 	public String getRoomById(String idStr) {
 		try {
 			Integer id = Integer.valueOf(idStr);
@@ -214,18 +223,19 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
-	public String removeRoom(String idStr) {
-		Integer id = Integer.valueOf(idStr);
+
+	@Override
+	public String removeRoom(Integer id) {
 		try {
 			roomService.remove(id);
-			return "Room " + idStr + " was removed";
+			return "Room " + id + " was removed";
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			return e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public String getFreeRooms() {
 		try {
 			return roomService.getFreeRooms().toString();
@@ -235,7 +245,8 @@ public class Hotel implements IHotel {
 		}
 
 	}
-    @Override
+
+	@Override
 	public String getNumberOfRooms() {
 		try {
 			return roomService.getNumberOfRooms().toString();
@@ -244,7 +255,8 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public String getNumberOfFreeRooms() {
 		try {
 			return roomService.getNumberOfFreeRooms().toString();
@@ -253,7 +265,8 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public String sortRooms(String name) {
 
 		try {
@@ -263,10 +276,9 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
-	public synchronized String chengePriceOfRoom(String idStr, String priceStr) {
-		Integer id = Integer.valueOf(idStr);
-		Double price = Double.valueOf(priceStr);
+
+	@Override
+	public synchronized String chengePriceOfRoom(Integer id, Double price) {
 		try {
 			roomService.chengePriseOfRoom(id, price);
 			return "Price was changed";
@@ -275,7 +287,8 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public synchronized String changeRoomStatus(String idStr, String n) {
 
 		Integer id = Integer.valueOf(idStr);
@@ -286,7 +299,8 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public String getLastGuests(String idStr) {
 		try {
 			Integer id = Integer.valueOf(idStr);
@@ -297,7 +311,8 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public synchronized String clone(String idStr, String num) {
 		try {
 			Integer number = Integer.valueOf(num);
@@ -311,13 +326,11 @@ public class Hotel implements IHotel {
 	}
 
 	// ---------------------------------------------------------------------------------------------------
-    @Override
-    public synchronized String settleGuestInRoom(String guestIdStr, String roomIdStr, String arivalDayStr,
+	@Override
+	public synchronized String settleGuestInRoom(Integer guestId, Integer roomId, String arivalDayStr,
 			String arivalMonthStr, String arivalYearStr, String evictDayStr, String evictMonthStr,
 			String evictYearStr) {
 		try {
-			Integer guestId = Integer.valueOf(guestIdStr);
-			Integer roomId = Integer.valueOf(roomIdStr);
 			Integer arivalDay = Integer.valueOf(arivalDayStr);
 			Integer arivalMonth = Integer.valueOf(arivalMonthStr);
 			Integer arivalYear = Integer.valueOf(arivalYearStr);
@@ -332,7 +345,8 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public String getFreeRoomsOnDate(String dayStr, String manthStr, String yearStr) {
 		Integer day = Integer.valueOf(dayStr);
 		Integer manth = Integer.valueOf(manthStr);
@@ -345,11 +359,12 @@ public class Hotel implements IHotel {
 			return rooms.toString();
 		} catch (Exception e) {
 			logger.error("Exception in the method getFreeRoomsOnDate: ", e);
-			return "No free rooms on this date "+e.getMessage();
+			return "No free rooms on this date " + e.getMessage();
 		}
-		
+
 	}
-    @Override
+
+	@Override
 	public synchronized void addHistory(History history) {
 		try {
 			historyService.addHistory(history);
@@ -357,7 +372,8 @@ public class Hotel implements IHotel {
 			logger.error(e);
 		}
 	}
-    @Override
+
+	@Override
 	public synchronized String evictGuestFromRoom(String guestIdStr, String roomIdStr) {
 		try {
 			Integer guestId = Integer.valueOf(guestIdStr);
@@ -369,19 +385,20 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
-	public String getHistory() {
+
+	@Override
+	public List<History> getHistory() throws Exception {
 		try {
-			return historyService.getHistory().toString();
+			return historyService.getHistory();
 		} catch (Exception e) {
 			logger.error(e);
-			return e.getMessage();
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------------------
-    @Override
-    public String exportOptions() {
+	@Override
+	public String exportOptions() {
 		try {
 			return optionService.exportOptions(PATH_TO_CSV);
 		} catch (Exception e) {
@@ -389,7 +406,8 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public synchronized String importOptions() {
 		try {
 			return optionService.importOptions(PATH_TO_CSV);
@@ -398,7 +416,8 @@ public class Hotel implements IHotel {
 			return "Error: " + e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public String getOptionById(String idStr) {
 		try {
 			Integer id = Integer.valueOf(idStr);
@@ -408,10 +427,10 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
-	public synchronized String addOption(String name, String priceStr) {
+
+	@Override
+	public synchronized String addOption(String name, Double price) {
 		try {
-			Double price = Double.valueOf(priceStr);
 			optionService.addOption(new Option(name, price));
 			return "the option thas added";
 		} catch (Exception e) {
@@ -419,7 +438,8 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
+
+	@Override
 	public String getAllOptions() {
 		try {
 			return optionService.getOption().toString();
@@ -428,48 +448,46 @@ public class Hotel implements IHotel {
 			return e.getMessage();
 		}
 	}
-    @Override
-    public synchronized String register(String login, String password) {
-    	try {
-    //		String token = TokenGenerator.generateToken(login, password);
-    		userService.addUser(new User(login,password));
-    		return "registration completed successfully";
-    	}catch (Exception e) {
+
+	@Override
+	public synchronized String register(String login, String password) {
+		try {
+			userService.addUser(new User(login, password));
+			return "registration completed successfully";
+		} catch (Exception e) {
 			logger.error(e);
 			return e.getMessage();
 		}
-    }
-    @Override
-    public User signIn(String login, String password) {
-    	try {
-    		
-    		return userService.getUser(login, password);
-    	}catch (Exception e) {
+	}
+
+	@Override
+	public String signIn(String login, String password) {
+		try {
+			User user = null;
+			String encryptedPassword = PasswordEncryptor.encryptPassword(password);
+			user = userService.getUser(login);
+			String passvordFromDB = user.getPassword();
+			String token = null;
+			if (user != null && passvordFromDB.equals(encryptedPassword)) {
+				token = TokenWorker.generateToken(login);
+			}
+			return token;
+		} catch (Exception e) {
 			logger.error(e);
 			return null;
 		}
-    }
-    @Override
-    public String writeLog(User user, String action) {
+	}
+
+	@Override
+	public String writeLog(String login, String action) {
 		try {
 			String date = LocalDateTime.now().toString();
-			String name = user.getLogin();
-			logEntityService.addLog(new LogEntity(date, name, action));	
-    	return "";
-		}catch (Exception e) {
+			logEntityService.addLog(new LogEntity(date, login, action));
+			return "";
+		} catch (Exception e) {
 			logger.error(e);
 			return e.getMessage();
 		}
-    	
-    }
-    
-    public String getAllLog() {
-		try {
-			String logList = logEntityService.getAll().toString();
-    	return logList;
-		}catch (Exception e) {
-			logger.error(e);
-			return e.getMessage();
-		}
-    }
+
+	}
 }

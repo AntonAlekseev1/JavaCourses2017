@@ -49,8 +49,7 @@ CREATE TABLE IF NOT EXISTS Options_history (
 CREATE TABLE IF NOT EXISTS Users (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     login VARCHAR(50) UNIQUE,
-    password VARCHAR(50),
-    token VARCHAR(50)
+    password VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS Log_table (

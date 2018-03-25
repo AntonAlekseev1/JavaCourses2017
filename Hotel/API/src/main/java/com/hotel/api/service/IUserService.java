@@ -6,7 +6,7 @@ public interface IUserService {
 	
 	public void addUser(User user) throws Exception;
 	
-	public User getUser(String login, String password) throws Exception;
+	public User getUser(String login) throws Exception;
 	
 
 }

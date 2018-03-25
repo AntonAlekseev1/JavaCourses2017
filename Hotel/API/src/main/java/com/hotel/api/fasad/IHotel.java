@@ -1,7 +1,8 @@
 package com.hotel.api.fasad;
 
+import java.util.List;
+
 import com.hotel.been.History;
-import com.hotel.been.User;
 
 public interface IHotel {
 
@@ -19,25 +20,25 @@ public interface IHotel {
 
 	public String getGuestOptions(String guestIdStr);
 
-	public String addOptionToGuest(String optionIdStr, String guestIdStr);
+	public String addOptionToGuest(Integer optionI, Integer guestId);
 
 	public String sortedGuests(String name);
 
-	public String remuveGuest(String idStr);
+	public String remuveGuest(Integer id);
 
-	public String getTotalPayment(String idStr);
+	public Double getTotalPayment(Integer id) throws Exception;
 
 	public String exportRooms();
 
 	public String importRooms();
 
-	public String addRoom(String numberStr, String copacityStr, String numberOfStarsStr, String priceStr);
+	public String addRoom(Integer number, Integer copacity, Integer stars, Double price);
 
 	public String getAllRooms();
 
 	public String getRoomById(String idStr);
 
-	public String removeRoom(String idStr);
+	public String removeRoom(Integer id);
 
 	public String getFreeRooms();
 
@@ -47,7 +48,7 @@ public interface IHotel {
 
 	public String sortRooms(String name);
 
-	public String chengePriceOfRoom(String idStr, String priceStr);
+	public String chengePriceOfRoom(Integer id, Double price);
 
 	public String changeRoomStatus(String idStr, String n);
 
@@ -55,7 +56,7 @@ public interface IHotel {
 
 	public String clone(String idStr, String num);
 
-	public String settleGuestInRoom(String guestIdStr, String roomIdStr, String arivalDayStr, String arivalMonthStr,
+	public String settleGuestInRoom(Integer guestId, Integer roomId, String arivalDayStr, String arivalMonthStr,
 			String arivalYearStr, String evictDayStr, String evictMonthStr, String evictYearStr);
 
 	public String getFreeRoomsOnDate(String dayStr, String manthStr, String yearStr);
@@ -64,7 +65,7 @@ public interface IHotel {
 
 	public String evictGuestFromRoom(String guestIdStr, String roomIdStr);
 
-	public String getHistory();
+	public List<History> getHistory() throws Exception;
 
 	public String exportOptions();
 
@@ -72,14 +73,14 @@ public interface IHotel {
 
 	public String getOptionById(String idStr);
 
-	public String addOption(String name, String priceStr);
+	public String addOption(String name, Double price);
 
 	public String getAllOptions();
 
 	public String register(String login, String password);
 
-	public User signIn(String login, String password);
+	public String signIn(String login, String password);
 
-	public String writeLog(User user, String action);
+	public String writeLog(String login, String action);
 
 }

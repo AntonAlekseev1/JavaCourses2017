@@ -11,8 +11,7 @@ public class User extends Entity {
 	private String login;
 	@Column(name = "password")
 	private String password;
-	@Column(name = "token")
-	private String token;
+
 
 	public User() {
 
@@ -23,11 +22,6 @@ public class User extends Entity {
 		this.password = password;
 	}
 	
-	public User(String login, String password, String token) {
-		this.login = login;
-		this.password = password;
-		this.token = token;
-	}
 
 	public String getLogin() {
 		return login;
@@ -56,12 +50,6 @@ public class User extends Entity {
 		return s.toString();
 	}
 
-	public String getToken() {
-		return token;
-	}
 
-	public void setToken(String token) {
-		this.token = token;
-	}
 
 }
