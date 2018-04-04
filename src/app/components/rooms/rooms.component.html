@@ -1,0 +1,41 @@
+<h1>Список номеров</h1>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>Id</td>
+    <td>Номер</td>
+    <td>Места</td>
+    <td>Звезды</td>
+    <td>Цена</td>
+    <td>Свободен</td>
+    <td>Статус</td>
+    <td></td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let room of rooms">
+    <ng-template [ngTemplateOutlet]="loadTemplate(room)"
+                 [ngTemplateOutletContext]="{ $implicit: room}">
+    </ng-template>
+  </tr>
+  </tbody>
+</table>
+<div>{{statusMessage}}</div>
+
+<!--шаблон для чтения-->
+<ng-template #readOnlyTemplate let-room>
+  <td>{{room.id}}</td>
+  <td>{{room.number}}</td>
+  <td>{{room.copacity}}</td>
+  <td>{{room.stars}}</td>
+  <td>{{room.price}}</td>
+  <td>{{room.isFree}}</td>
+  <td>{{room.status}}</td>
+  <td>
+    <input type="button" value="Изменить" class="btn btn-default" (click)="editRoom(room)" />
+  </td>
+  <td>
+    <input type="button" value="Удалить" (click)="deleteRoom(room)" class="btn btn-danger" />
+  </td>
+</ng-template>

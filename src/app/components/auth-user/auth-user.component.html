@@ -1,0 +1,19 @@
+
+
+  <td>
+    <input type="text"  placeholder="login" [(ngModel)]="user.login" class="form-control" />
+  </td>
+  <td>
+    <input pPassword type="password"  placeholder="password" [(ngModel)]="user.password" class="form-control"/>
+  </td>
+  <td>
+    <input type="button" value="Войти" (click)="signIn() "class="btn btn-success" />
+
+  </td>
+  <td>
+    <input type="button" value="Выйти" (click)="signOut() "class="btn btn-danger" />
+  </td>
+  <div>{{statusMessage}}</div>
+
+
+
