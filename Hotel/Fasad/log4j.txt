@@ -1,0 +1,39 @@
+2018-02-20 00:26:26 ERROR DependecyInjector:61 - java.lang.ClassNotFoundException: com.hotel.dao.RoomDatabaseDAO
+2018-02-20 00:26:27 ERROR DependecyInjector:61 - java.lang.ClassNotFoundException: com.hotel.dao.OptionDatabaseDAO
+2018-02-20 00:26:27 ERROR DependecyInjector:61 - java.lang.ClassNotFoundException: com.hotel.dao.OptionDatabaseDAO
+2018-02-20 00:26:27 ERROR DependecyInjector:61 - java.lang.ClassNotFoundException: com.hotel.dao.GuestDatabaseDAO
+2018-02-20 00:26:27 ERROR DependecyInjector:61 - java.lang.ClassNotFoundException: com.hotel.dao.HistoryDatabaseDAO
+2018-02-20 00:26:27 ERROR DependecyInjector:61 - java.lang.ClassNotFoundException: com.hotel.dao.RoomDatabaseDAO
+2018-02-20 00:26:27 ERROR DependecyInjector:61 - java.lang.ClassNotFoundException: com.hotel.dao.GuestDatabaseDAO
+2018-02-20 00:26:27 ERROR DependecyInjector:61 - java.lang.ClassNotFoundException: com.hotel.dao.HistoryDatabaseDAO
+2018-02-20 00:26:27 ERROR Hotel:131 - java.lang.NullPointerException
+2018-02-20 00:26:30 ERROR ConnectionListner:45 - Connection reset
+2018-02-20 00:35:20 INFO  GuestDAO:58 - (getAll)connection closed
+2018-02-20 00:35:55 INFO  RoomDAO:62 - (getAll)connection closed
+2018-02-20 00:36:11 INFO  OptionDAO:85 - (getById)connection closed
+2018-02-20 00:36:16 ERROR ConnectionListner:45 - Connection reset
+2018-02-20 00:37:49 INFO  GuestDAO:58 - (getAll)connection closed
+2018-02-20 00:37:56 INFO  RoomDAO:207 - (getAll)connection closed
+2018-02-20 00:37:59 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 00:38:15 ERROR Wrapper:45 - invoke method exception null
+2018-02-21 00:38:25 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 00:41:09 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 01:26:06 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 01:53:46 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 18:47:39 ERROR Hotel:75 - java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+2018-02-21 18:48:13 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 18:50:07 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 18:51:33 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 18:54:28 INFO  Configuration:22 - File not found .\Fasad\data\configurations.properties (Системе не удается найти указанный путь)
+2018-02-21 18:54:32 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 18:54:55 INFO  Configuration:22 - File not found \Fasad\data\configurations.properties (Системе не удается найти указанный путь)
+2018-02-21 18:54:58 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 18:55:22 INFO  Configuration:22 - File not found Fasad\data\configurations.properties (Системе не удается найти указанный путь)
+2018-02-21 18:55:25 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 18:56:55 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 19:00:22 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 19:02:35 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 19:14:22 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 20:03:08 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 20:04:20 ERROR ConnectionListner:45 - Connection reset
+2018-02-21 20:19:56 ERROR ConnectionListner:45 - Connection reset

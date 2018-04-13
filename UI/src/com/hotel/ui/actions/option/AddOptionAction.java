@@ -12,7 +12,11 @@ import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
 public class AddOptionAction implements IAction {
+<<<<<<< HEAD:UI/src/com/hotel/ui/actions/option/AddOptionAction.java
 	
+=======
+
+>>>>>>> lesson11:UI/src/com/hotel/ui/actions/option/AddOptionAction.java
 	private final static Logger logger = Logger.getLogger(AddOptionAction.class);
 	private final String actionName = "addOption";
 	private final IConnection connect = Connection.getInstance();
@@ -21,13 +25,18 @@ public class AddOptionAction implements IAction {
 
 	@Override
 	public void execute() {
-		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		try {
 			Printer.print("Enter the option name ");
-			String name=reader.readLine();
+			String name = reader.readLine();
 			Printer.print("Enter the price ");
+<<<<<<< HEAD:UI/src/com/hotel/ui/actions/option/AddOptionAction.java
 			String priceString = reader.readLine();	
 			request = actionName+" "+name+" "+priceString;
+=======
+			String priceString = reader.readLine();
+			request = actionName + " " + name + " " + priceString;
+>>>>>>> lesson11:UI/src/com/hotel/ui/actions/option/AddOptionAction.java
 			response = connect.getResponseFromServer(request);
 			Printer.println(response);
 
@@ -35,7 +44,7 @@ public class AddOptionAction implements IAction {
 			Printer.println("Incorrect input data: " + e.getMessage());
 			logger.error("Exception in the class SettleGuestInRoom: " + e.getMessage());
 		}
-		
+
 	}
 
 }

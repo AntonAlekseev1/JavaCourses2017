@@ -6,10 +6,14 @@ public interface IOption {
 	
 	public void setId(Integer id);
 	
-	public String getOption();
+	public String getName();
 	
 	public Double getPrice();
 	
 	public String toString();
+
+	void setName(String name);
+
+	void setPrice(Double price);
 
 }

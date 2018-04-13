@@ -21,12 +21,12 @@ public class Navigator {
 	}
 
 	public void navigate(Integer index) {
-		if(!currentMenu.equals(null)) {
-		MenuItem menuItem = currentMenu.getMenuItems().get(index);
+		if (!currentMenu.equals(null)) {
+			MenuItem menuItem = currentMenu.getMenuItems().get(index);
 			menuItem.doAction();
 			currentMenu = menuItem.getNextMenu();
 			printMenu();
-			}
+		}
 	}
 
 	public Menu getCurrentMenu() {

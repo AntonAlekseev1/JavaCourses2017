@@ -12,7 +12,11 @@ import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
 public class ChangeRoomPrice implements IAction {
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> lesson11
 	private static final Logger logger = Logger.getLogger(ChangeRoomPrice.class);
 	private final String actionName = "chengePriceOfRoom";
 	private final IConnection connect = Connection.getInstance();
@@ -21,6 +25,7 @@ public class ChangeRoomPrice implements IAction {
 
 	@Override
 	public void execute() {
+<<<<<<< HEAD
 		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
 		try {
 			Printer.print("Enter the room id ");
@@ -36,6 +41,23 @@ public class ChangeRoomPrice implements IAction {
 			logger.error("Exception in the class ChangeRoomPrice: " + e.getMessage());
 		}
 		
+=======
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			Printer.print("Enter the room id ");
+			String idStr = reader.readLine();
+			Printer.print("Enter the new price ");
+			String priceStr = reader.readLine();
+			request = actionName + " " + idStr + " " + priceStr;
+			response = connect.getResponseFromServer(request);
+			Printer.println(response);
+
+		} catch (NumberFormatException | IOException e) {
+			Printer.println("Incorrect input data: " + e.getMessage());
+			logger.error("Exception in the class ChangeRoomPrice: " + e.getMessage());
+		}
+
+>>>>>>> lesson11
 	}
 
 }

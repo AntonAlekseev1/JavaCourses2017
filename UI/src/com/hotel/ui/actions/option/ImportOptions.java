@@ -6,7 +6,11 @@ import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
 public class ImportOptions implements IAction {
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> lesson11
 	private final String actionName = "importOptions";
 	private final IConnection connect = Connection.getInstance();
 	private String request;

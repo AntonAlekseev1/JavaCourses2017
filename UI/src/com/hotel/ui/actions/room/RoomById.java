@@ -17,6 +17,7 @@ public class RoomById implements IAction {
 
 	@Override
 	public void execute() {
+<<<<<<< HEAD
 		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
 		try {
 			Printer.print("Enter the room id ");
@@ -29,6 +30,20 @@ public class RoomById implements IAction {
 			Printer.println("Exception in the class RoomById: "+e.getMessage());
 		}
 		
+=======
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			Printer.print("Enter the room id ");
+			String idStr = reader.readLine();
+			request = actionName + " " + idStr;
+			response = connect.getResponseFromServer(request);
+			Printer.println(response);
+
+		} catch (IOException e) {
+			Printer.println("Exception in the class RoomById: " + e.getMessage());
+		}
+
+>>>>>>> lesson11
 	}
 
 }

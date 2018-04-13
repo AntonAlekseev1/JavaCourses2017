@@ -4,7 +4,13 @@ import java.util.List;
 
 import com.hotel.api.been.RoomStatus;
 
+<<<<<<< HEAD
 public interface IRoom  {
+=======
+public interface IRoom extends IEntity {
+	
+	public IRoom clone() throws CloneNotSupportedException;
+>>>>>>> lesson11
 	
 	public Integer getId();
 	
@@ -29,4 +35,10 @@ public interface IRoom  {
 	public List<IHistory> getHistory();
 	
 	public String toString();
+
+	void setHistory(List<IHistory> history);
+
+	void setNumber(Integer number);
+
+	Integer getNumber();
 }

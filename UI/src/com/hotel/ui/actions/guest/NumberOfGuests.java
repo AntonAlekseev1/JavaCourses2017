@@ -4,6 +4,7 @@ import com.hotel.ui.action.IAction;
 import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
+<<<<<<< HEAD
 public class NumberOfGuests implements IAction{
 	
 	private final String actionName = "getNumberOfGuests";
@@ -18,4 +19,20 @@ public class NumberOfGuests implements IAction{
 		Printer.println(response);	
 	}
 	
+=======
+public class NumberOfGuests implements IAction {
+
+	private final String actionName = "getNumberOfGuests";
+	private String request;
+	private String response;
+
+	@Override
+	public void execute() {
+
+		request = actionName;
+		response = Connection.getInstance().getResponseFromServer(request);
+		Printer.println(response);
+	}
+
+>>>>>>> lesson11
 }

@@ -16,4 +16,8 @@ public interface IGuest {
 
 	public void setHistory(IHistory history);
 
+	void setName(String name);
+
+	void setLastName(String lastName);
+
 }

@@ -16,7 +16,11 @@ public class MenuItem {
 	}
 
 	public void doAction() {
+<<<<<<< HEAD:UI/src/com/hotel/ui/action/MenuItem.java
 	 action.execute();
+=======
+		action.execute();
+>>>>>>> lesson11:UI/src/com/hotel/ui/action/MenuItem.java
 	}
 
 	public Menu getNextMenu() {

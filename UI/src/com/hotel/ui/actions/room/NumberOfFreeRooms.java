@@ -16,7 +16,11 @@ public class NumberOfFreeRooms implements IAction {
 		request = actionName;
 		response = connect.getResponseFromServer(request);
 		Printer.println(response);
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> lesson11
 	}
 
 }

@@ -7,24 +7,30 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-
-
 public class Configuration {
-	
+
 	private final static Logger logger = Logger.getLogger(Configuration.class);
 	private static Properties properties = new Properties();
 
-	public static void loadConfiguration() {
+	public static void loadConfiguration(String propertyPath) {
+		FileInputStream inputStream = null;
 		try {
-			FileInputStream inputStream = new FileInputStream("../Fasad/data/configuratins.properties");
+			inputStream = new FileInputStream(propertyPath);
 			properties.load(inputStream);
-			inputStream.close();	
 
 		} catch (FileNotFoundException e) {
-			logger.info("File not found "+e.getMessage());
+			logger.info("File not found " + e.getMessage());
 
 		} catch (IOException e) {
-			
+			logger.info("Exception I/O stream " + e.getMessage());
+		} finally {
+			try {
+				if (inputStream != null) {
+					inputStream.close();
+				}
+			} catch (IOException e) {
+				logger.info("Exception I/O stream " + e.getMessage());
+			}
 		}
 	}
 

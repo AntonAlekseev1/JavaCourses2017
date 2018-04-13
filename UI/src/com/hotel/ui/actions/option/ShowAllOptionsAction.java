@@ -6,7 +6,11 @@ import com.hotel.ui.client.Connection;
 import com.hotel.utils.Printer;
 
 public class ShowAllOptionsAction implements IAction {
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> lesson11
 	private final String actionName = "getAllOptions";
 	private final IConnection connect = Connection.getInstance();
 	private String request;
@@ -17,7 +21,11 @@ public class ShowAllOptionsAction implements IAction {
 		request = actionName;
 		response = connect.getResponseFromServer(request);
 		Printer.println(response);
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> lesson11
 	}
 
 }

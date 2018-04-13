@@ -1,29 +1,34 @@
 package com.hotel.api.service;
 
-import java.util.Comparator;
 import java.util.List;
 
 import com.hotel.api.been.IGuest;
 import com.hotel.api.been.IRoom;
-import com.hotel.api.repository.IRoomRepository;
+import com.hotel.api.dao.IRoomDAO;
 
 public interface IRoomService {
 	
+<<<<<<< HEAD
 	public void addRoom(IRoom room);
+=======
+	public IRoom clone(IRoom id) throws Exception;
 	
-	public List<IRoom> getAllRoom();
+	public void addRoom(IRoom room) throws Exception;
+>>>>>>> lesson11
 	
-	public IRoomRepository getRooms();
+	public List<IRoom> getAllRooms() throws Exception;
 	
-	public String chengePriseOfRoom(Integer roomId, Double price);
+	public IRoomDAO getRooms();
 	
-	public Integer getNumberOfRooms();
+	public String chengePriseOfRoom(Integer roomId, Double price) throws Exception;
 	
-	public Integer getNumberOfFreeRooms();
+	public Integer getNumberOfRooms() throws Exception;
 	
-	@SuppressWarnings("rawtypes")
-	public void sortRooms( Comparator comparator);
+	public Integer getNumberOfFreeRooms() throws Exception;
 	
+	public List<IGuest> getLastGuests(Integer id, Integer num) throws Exception;
+	
+<<<<<<< HEAD
 	public List<IGuest> getLastGuests(Integer id);
 	
 	public List<IRoom> getFreeRooms();
@@ -31,5 +36,16 @@ public interface IRoomService {
 	public void writeInFile();
 	
 	public void readFromFile();
+=======
+	public List<IRoom> getFreeRooms() throws Exception;
+
+	public List<IRoom> sortRooms(String name) throws Exception;
+	
+	public void remove(Integer id) throws Exception;
+
+	String importRooms(String path) throws Exception;
+
+	String exportRooms(String path) throws Exception;
+>>>>>>> lesson11
 
 }

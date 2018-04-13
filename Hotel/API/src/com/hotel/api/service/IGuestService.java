@@ -1,34 +1,40 @@
 package com.hotel.api.service;
 
-import java.util.Comparator;
 import java.util.List;
 
 import com.hotel.api.been.IGuest;
 import com.hotel.api.been.IOption;
-import com.hotel.api.repository.IGuestRepository;
+import com.hotel.api.dao.IGuestDAO;
 
 public interface IGuestService {
 	
-	@SuppressWarnings( "rawtypes" )
-	public void sortGuests(Comparator comparator);
+	public List<IGuest> sortGuests(String name) throws  Exception;
 	
-	public IGuest getGuestById(Integer id);
+	public IGuest getGuestById(Integer id) throws Exception;
 	
-	public void addGuest(IGuest guest);
+	public void addGuest(IGuest guest) throws Exception;
 	
-	public List<IGuest> getGuests();
+	public List<IGuest> getGuests() throws Exception;
 	
-	public Integer getNumberOfGuests();
+	public Integer getNumberOfGuests() throws Exception;
 	
-	public IGuestRepository getGuest();
+	public IGuestDAO getGuest();
 	
-	public void addOptionToGuest(Integer optionId, Integer guestId);
+	public void addOptionToGuest(Integer optionId, Integer guestId) throws Exception;
 	
-	public List<IOption> getGuestOptions(Integer id);
+	public List<IOption> getGuestOptions(Integer id) throws Exception;
 	
+<<<<<<< HEAD
 	public void writeInFile();
 	
 	public void readFromFile();
 	
+=======
+	public void removeGuest(Integer id) throws Exception;
+
+	String exportGuests(String path) throws Exception;
+
+	String importGuest(String path) throws Exception;
+>>>>>>> lesson11
 
 }

@@ -11,6 +11,7 @@ import com.hotel.fasad.Wrapper;
 import com.hotel.utils.Printer;
 
 public class Server {
+<<<<<<< HEAD
 	
 	private final static  Logger logger = Logger.getLogger(Server.class);
 	private final ArrayList<ConnectionListner> connections = new ArrayList<>();
@@ -18,15 +19,30 @@ public class Server {
 	public Server() {
 		try(ServerSocket serverSocket = new ServerSocket(8030)){
 			while(true) {
+=======
+
+	private final static Logger logger = Logger.getLogger(Server.class);
+	private final ArrayList<ConnectionListner> connections = new ArrayList<>();
+
+	public Server() {
+		try (ServerSocket serverSocket = new ServerSocket(8030)) {
+			while (true) {
+>>>>>>> lesson11
 				Socket socket = serverSocket.accept();
 				Wrapper wrapper = new Wrapper();
 				ConnectionListner listner = new ConnectionListner(socket, wrapper);
 				connections.add(listner);
 				listner.start();
 			}
+<<<<<<< HEAD
 		}catch(IOException e) {
 			logger.error(e.getMessage());
 			Printer.println("Server error "+e.getMessage());
+=======
+		} catch (IOException e) {
+			logger.error(e.getMessage());
+			Printer.println("Server error " + e.getMessage());
+>>>>>>> lesson11
 		}
 	}
 
