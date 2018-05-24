@@ -1,0 +1,20 @@
+<div id="left">
+  <app-users-search></app-users-search>
+  <input type="button" value="AllUsers" (click)="getAllUsers()" class="btn btn-success"/>
+  <ul>
+    <li *ngFor="let user of users">
+      <input type="button" value="{{user.name}}" (click)="getById(user.id)" class="btn btn-success"/> {{user.lastName}}
+      <input id="friends" type="button" value="be friends" (click)="addFriend(user.id)" class="btn btn-success"/>
+    </li>
+  </ul>
+</div>
+<div id="right">
+  <input type="button" value="AllGroups" (click)="getAllGroups()" class="btn btn-success"/>
+  <ul>
+    <li *ngFor="let group of groups">
+      <input type="button" value="{{group.name}}" (click)="getGroupById(group.id)" class="btn btn-success"/>
+      <input id="groups" type="button" value="subscribe" (click)="subscribe(group.id)" class="btn btn-success"/>
+    </li>
+  </ul>
+</div>
+

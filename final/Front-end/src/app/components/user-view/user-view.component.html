@@ -1,0 +1,31 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>header</title>
+</head>
+<body class="Site">
+<header>
+  <h1>Black Box</h1>
+</header>
+<div id="menu">
+  <div><a routerLink="/friends">friends</a>
+  </div>
+  <div><a routerLink="/groups">groups</a>
+  </div>
+  <div><a routerLink="/events">events</a>
+  </div>
+</div>
+<div id="content">
+  <h2>{{user.name}} {{user.lastName}}</h2>
+  <p>Birthday: {{user.birthday | date:'mediumDate'}}</p>
+  <div>
+    <ul>
+      <li *ngFor="let event of events">
+        <span class="badge">{{event.name}}</span> {{event.date | date: 'dd/MM/yyyy'}}
+        <div>{{event.body}}</div>
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

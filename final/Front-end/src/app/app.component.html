@@ -1,0 +1,12 @@
+<html>
+<body>
+<header>
+  <a routerLink="/user">main page</a>
+  <a routerLink="/home">home page</a>
+  <input type="button" value="Log out" (click)="logOut() " class="btn btn-danger"/>
+</header>
+<div id="content">
+  <router-outlet></router-outlet>
+</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>BlackBox</title>
+</head>
+<body class="group_body">
+<div class="wrap">
+  <h2>Create Group</h2>
+  <div class="create">
+    <div>
+      <label for="name">Group name:</label>
+      <input type="text" id="name" placeholder="name" [(ngModel)]="group.name" class="form-control"/>
+    </div>
+  </div>
+  <div id="submit">
+    <input type="button" value="Create" (click)="createGroup() " class="btn btn-success"/>
+  </div>
+  <div id="error">{{errorMessage}}</div>
+</div>
+</body>
+</html>

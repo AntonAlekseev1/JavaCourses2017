@@ -1,0 +1,44 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>header</title>
+</head>
+<body class="Site">
+<header>
+  <h1>Black Box</h1>
+</header>
+<div id="menu">
+  <div><a routerLink="/edit">edit profile</a></div>
+  <div><a routerLink="/friends">friends</a>
+  </div>
+  <div><a routerLink="/groups">groups</a>
+  </div>
+  <div><a routerLink="/events">events</a>
+  </div>
+  <div><a routerLink="/dialogs">dialogs</a>
+  </div>
+</div>
+<div id="content">
+  <h2>{{user.name}} {{user.lastName}}</h2>
+  <p>Birthday: {{user.birthday | date:'mediumDate'}}</p>
+  <div>
+    <input type="text" placeholder="event name" [(ngModel)]="event.name" class="form-control"/>
+  </div>
+  <div>
+    <input type="text" placeholder="new event..." [(ngModel)]="event.body" class="form-control"/>
+  </div>
+  <div>
+    <input type="button" value="Send" (click)="addEvent()" class="btn btn-success"/>
+  </div>
+  <div>
+    <ul>
+      <li *ngFor="let event of events">
+        <span class="badge">{{event.name}}</span> {{event.date | date: 'dd/MM/yyyy/hh:mm'}}
+        <input id="deleteEvent" type="button" value="Delete" (click)="deleteEvent(event.id)" class="btn btn-danger"/>
+        <div>{{event.body}}</div>
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

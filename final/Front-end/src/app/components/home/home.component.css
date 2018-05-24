@@ -1,0 +1,23 @@
+#left {
+  float: left;
+  border: 1px solid #333;
+  width: 45%;
+  padding: 5px;
+  margin: 10px 10px 20px 5px;
+}
+
+#right {
+  float: right;
+  border: 1px solid #333;
+  width: 45%;
+  padding: 5px;
+  margin: 10px 10px 20px 5px;
+}
+
+input {
+  margin: 10px 10px 10px 10px;
+}
+
+#friends, #groups {
+  float: right;
+}

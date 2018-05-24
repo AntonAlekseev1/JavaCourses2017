@@ -1,0 +1,7 @@
+<input type="text" placeholder="Enter the user name" [(ngModel)]="name" class="form-control"/>
+<input type="button" value="Search" (click)="searchUsers() " class="btn btn-success"/>
+<ul>
+  <li *ngFor="let user of users">
+    <input type="button" value="{{user.name}}" (click)="getById(user.id)" class="btn btn-success"/> {{user.lastName}}
+  </li>
+</ul>

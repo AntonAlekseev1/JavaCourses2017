@@ -1,0 +1,38 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>BlackBox</title>
+</head>
+<body class="login_body">
+<div class="wrap" id="reg">
+  <h2>Registration</h2>
+  <div class="login">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" placeholder="name" [(ngModel)]="user.name" class="form-control"/>
+    </div>
+    <div>
+      <div>
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" placeholder="last name" [(ngModel)]="user.lastName" class="form-control"/>
+      </div>
+    </div>
+    <div>
+      <div>
+        <label for="login">Login:</label>
+        <input type="text" id="login" placeholder="login" [(ngModel)]="user.login" class="form-control"/>
+      </div>
+    </div>
+    <div>
+      <label for="pw">Password:</label>
+      <input type="password" id="pw" placeholder="password" [(ngModel)]="user.password" class="form-control"
+             maxlength="15"/>
+    </div>
+  </div>
+  <div id="submit">
+    <input type="button" value="Sign up" (click)="signUp() " class="btn btn-success"/>
+  </div>
+  <div id="error">{{errorMessage}}</div>
+</div>
+</body>
+</html>

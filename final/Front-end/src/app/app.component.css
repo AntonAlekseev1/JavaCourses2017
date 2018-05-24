@@ -1,0 +1,22 @@
+html, body {
+  height: 100%;
+  background: whitesmoke;
+}
+
+#head { /* Верхний блок */
+  padding: 10px;
+}
+
+a {
+  background: cornflowerblue;
+  font-size: 20px;
+  color: black;
+}
+
+#content {
+  position: absolute;
+  min-height: 100%;
+  background: whitesmoke;
+  width: 100%;
+}
+

@@ -1,0 +1,35 @@
+<h1>Groups list</h1>
+<div>
+  <a routerLink="/createGroup">create group</a>
+</div>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>Id</td>
+    <td>Name</td>
+    <td>Creation date</td>
+    <td></td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let group of groups">
+    <ng-template [ngTemplateOutlet]="loadTemplate()"
+                 [ngTemplateOutletContext]="{ $implicit: group}">
+    </ng-template>
+  </tr>
+  </tbody>
+</table>
+
+<!--шаблон для чтения-->
+<ng-template #readOnlyTemplate let-group>
+  <td>{{group.id}}</td>
+  <td><input type="button" value={{group.name}} (click)="getById(group.id)" class="btn btn-success"/>
+  </td>
+  <td>{{group.creationDate | date: 'mediumDate'}}</td>
+  <td>
+    <p *ngIf="(myId===userId)">
+      <input type="button" value="Delete" (click)="removeGroup(group)" class="btn btn-danger"/>
+    </p>
+  </td>
+</ng-template>

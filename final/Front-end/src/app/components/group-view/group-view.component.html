@@ -1,0 +1,42 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>header</title>
+</head>
+<body class="Site">
+<header>
+  <h1>{{group.name}}</h1>
+</header>
+<input id="groups" type="button" value="subscribe" (click)="subscribe(group.id)" class="btn btn-success"/>
+<div id="users">
+  <h3>Users:</h3>
+  <li *ngFor="let user of users">
+    <input type="button" value="{{user.name}}" (click)="getById(user.id)" class="btn btn-success"/> {{user.lastName}}
+  </li>
+</div>
+<div id="content">
+  <div>
+    Admin:<input type="button" value={{[admin.name,admin.lastName]}} (click)="viewGroupAdmin()"
+                 class="btn btn-success"/>
+  </div>
+  <h2>Creation date:{{group.creationDate | date: 'dd/MM/yyyy'}}</h2>
+  <div>
+    <h4>Events:</h4>
+    <div>
+      <input type="text" placeholder="event name" [(ngModel)]="event.name" class="form-control"/>
+    </div>
+    <div>
+      <input type="text" placeholder="new event..." [(ngModel)]="event.body" class="form-control"/>
+    </div>
+    <div>
+      <input type="button" value="Send" (click)="addEvent()" class="btn btn-success"/>
+    </div>
+    <li *ngFor="let event of events">
+      <span class="badge">{{event.name}}</span> {{event.date | date: 'dd/MM/yyyy/hh:mm'}}
+      <input id="deleteEvent" type="button" value="Delete" (click)="deleteEvent(event.id)" class="btn btn-danger"/>
+      <div>{{event.body}}</div>
+    </li>
+  </div>
+</div>
+</body>
+</html>

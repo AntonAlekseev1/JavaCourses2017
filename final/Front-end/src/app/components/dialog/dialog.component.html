@@ -1,0 +1,17 @@
+<html>
+<meta charset="utf-8">
+<header>{{dialog.header}}</header>
+<body class="dialog_body">
+<div class="messages">
+  <li *ngFor="let message of messages">
+    <span>{{message.text}}</span> {{ message.date | date: 'dd/MM/yyyy/hh:mm'}}
+    <div>{{message.userName}} {{message.userLastName }}</div>
+</div>
+<div classs="input">
+  <input type="text" placeholder="Enter the message..." [(ngModel)]="message.text" (keyup.enter)="sendMessage()"/>
+</div>
+<div id="send">
+  <input type="submit" value="Send" (click)="sendMessage()" class="btn btn-success"/>
+</div>
+</body>
+</html>

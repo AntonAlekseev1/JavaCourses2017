@@ -1,0 +1,22 @@
+<h1>{{title}}</h1>
+<td>
+  <div>
+    <input type="text" placeholder="login" [(ngModel)]="user.login" class="form-control"/>
+  </div>
+</td>
+<td>
+  <div>
+    <input type="password" placeholder="password" [(ngModel)]="user.password" class="form-control"/>
+  </div>
+</td>
+<td>
+  <div>
+    <input type="button" value="Sign in" (click)="signIn() " class="btn btn-success"/>
+  </div>
+</td>
+<td>
+  <div>
+    <input type="button" value="Sign up" (click)="signUp() " class="btn btn-success"/>
+  </div>
+</td>
+<div id="error">{{errorMessage}}</div>

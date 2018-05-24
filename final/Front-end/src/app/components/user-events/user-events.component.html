@@ -1,0 +1,10 @@
+<h1>Events</h1>
+<div>
+  <ul>
+    <li *ngFor="let event of events">
+      <span class="badge">{{event.name}}</span> {{event.date | date: 'dd/MM/yyyy'}}
+      <input id="deleteEvent" type="button" value="Delete" (click)="deleteEvent(event.id)" class="btn btn-danger"/>
+      <div>{{event.body}}</div>
+    </li>
+  </ul>
+</div>
